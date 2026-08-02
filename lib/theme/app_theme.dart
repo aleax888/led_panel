@@ -10,15 +10,6 @@ import 'app_text_theme.dart';
 import 'constants/app_typography.dart';
 
 /// Punto único de acceso al theme de la aplicación.
-///
-/// Uso en MaterialApp:
-/// ```dart
-/// MaterialApp(
-///   theme: AppTheme.light,
-///   darkTheme: AppTheme.dark,
-///   themeMode: ThemeMode.system,
-/// )
-/// ```
 class AppTheme {
   AppTheme._();
 

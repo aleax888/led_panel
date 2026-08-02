@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:led_panel/bloc/led_panel_bloc.dart';
 import 'package:led_panel/presentation/widgets/led_panel.dart';
 
-
 /// Página de visualización completa del panel LED.
 ///
 /// Al entrar:
@@ -16,7 +15,7 @@ import 'package:led_panel/presentation/widgets/led_panel.dart';
 ///
 /// El [LedPanel] ocupa el 100% del alto y ancho de [MediaQuery], centrado
 /// verticalmente para que el efecto sea máximo en la pantalla apaisada.
-/// 
+///
 /// Obtiene la configuración del [LedPanelBloc], eliminando prop drilling.
 class DisplayPage extends StatefulWidget {
   const DisplayPage({super.key});
@@ -116,16 +115,12 @@ class _DisplayPageState extends State<DisplayPage> {
                             text: config.text,
                             ledTextColor: config.ledTextColor,
                             panelBackgroundColor: config.panelBackgroundColor,
-                            borderColor: config.borderColor,
                             fontSize: config.fontSize,
                             scrollSpeedPixelsPerSecond:
                                 config.scrollSpeedPixelsPerSecond,
-                            ledGlowRadius: config.ledGlowRadius,
                             fontWeight: config.fontWeight,
-                            borderRadius: config.borderRadius,
                             // Ocupamos todo el alto disponible para máximo impacto.
                             panelHeight: panelHeight,
-                            borderWidth: 0, // Sin bordes en modo display total.
                           ),
                         ],
                       ),

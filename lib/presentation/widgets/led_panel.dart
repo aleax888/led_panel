@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:led_panel/theme/constants/app_colors.dart';
-import 'package:led_panel/theme/constants/app_radius.dart';
 import 'package:led_panel/theme/constants/app_typography.dart';
 
 /// Un Widget que emula un panel LED de texto desplazante (marquee),
@@ -27,9 +26,6 @@ class LedPanel extends StatefulWidget {
   /// Si es null, se deriva de [ledTextColor] automáticamente.
   final Color? ledGlowColor;
 
-  /// Intensidad del resplandor LED (blur radius del shadow).
-  final double ledGlowRadius;
-
   /// Tamaño de la fuente del texto LED.
   final double fontSize;
 
@@ -42,34 +38,17 @@ class LedPanel extends StatefulWidget {
   /// Alto del panel LED. Si es null, se ajusta al contenido más padding.
   final double? panelHeight;
 
-  /// Padding vertical interno del panel.
-  final double verticalPadding;
-
-  /// Radio de los bordes del panel.
-  final double borderRadius;
-
-  /// Color del borde exterior del panel (marco metálico).
-  final Color borderColor;
-
-  /// Grosor del borde exterior del panel.
-  final double borderWidth;
-
   const LedPanel({
     super.key,
     required this.text,
     this.scrollSpeedPixelsPerSecond = 80.0,
-    this.panelBackgroundColor = _LedPanelDefaults.panelBackgroundColor,
-    this.ledTextColor = _LedPanelDefaults.ledTextColor,
+    this.panelBackgroundColor = Colors.black,
+    this.ledTextColor = AppColors.onPrimary,
     this.ledGlowColor,
-    this.ledGlowRadius = _LedPanelDefaults.glowRadius,
-    this.fontSize = _LedPanelDefaults.fontSize,
+    this.fontSize = AppTypography.sizeBodyLg,
     this.fontFamily = AppTypography.fontFamilyMono,
     this.fontWeight = AppTypography.bold,
     this.panelHeight,
-    this.verticalPadding = _LedPanelDefaults.verticalPadding,
-    this.borderRadius = AppRadius.sm,
-    this.borderColor = _LedPanelDefaults.borderColor,
-    this.borderWidth = _LedPanelDefaults.borderWidth,
   });
 
   @override
@@ -201,45 +180,11 @@ class _LedPanelState extends State<LedPanel>
   /// Construye el [TextStyle] compartido entre [_measureTextWidth] y el
   /// [Text] widget para garantizar coherencia entre medición y renderizado.
   TextStyle _buildTextStyle() {
-    final Color resolvedGlowColor = widget.ledGlowColor ??
-        widget.ledTextColor.withValues(
-          alpha: _LedPanelDefaults.primaryGlowOpacity,
-        );
-
     return TextStyle(
       color: widget.ledTextColor,
       fontSize: widget.fontSize,
       fontFamily: widget.fontFamily,
       fontWeight: widget.fontWeight,
-      // El doble shadow simula el resplandor característico de los LEDs reales.
-      shadows: [
-        Shadow(color: resolvedGlowColor, blurRadius: widget.ledGlowRadius),
-        Shadow(
-          color: resolvedGlowColor.withValues(
-            alpha: _LedPanelDefaults.secondaryGlowOpacity,
-          ),
-          blurRadius: widget.ledGlowRadius * _LedPanelDefaults.secondaryGlowMultiplier,
-        ),
-      ],
-    );
-  }
-
-  /// Decoración del "chasis" del panel: color de fondo, marco y la sombra
-  /// que le da sensación de profundidad sobre la superficie.
-  BoxDecoration _buildPanelDecoration() {
-    return BoxDecoration(
-      color: widget.panelBackgroundColor,
-      borderRadius: BorderRadius.circular(widget.borderRadius),
-      border: Border.all(color: widget.borderColor, width: widget.borderWidth),
-      boxShadow: [
-        BoxShadow(
-          color: AppColors.black.withValues(
-            alpha: _LedPanelDefaults.outerShadowOpacity,
-          ),
-          blurRadius: _LedPanelDefaults.outerShadowBlurRadius,
-          offset: _LedPanelDefaults.outerShadowOffset,
-        ),
-      ],
     );
   }
 
@@ -251,40 +196,36 @@ class _LedPanelState extends State<LedPanel>
 
   @override
   Widget build(BuildContext context) {
-    final double resolvedHeight =
-        widget.panelHeight ?? (widget.fontSize + widget.verticalPadding * 2);
+    final double resolvedHeight = widget.panelHeight ?? (widget.fontSize);
 
-    return Container(
-      width: _screenWidth,
-      height: resolvedHeight,
-      decoration: _buildPanelDecoration(),
-      // ClipRect es el guardián del overflow: impide que el texto sea visible
-      // fuera de los límites del panel durante su recorrido de animación.
-      child: ClipRect(
-        child: SizedBox(
-          width: _screenWidth,
-          height: resolvedHeight,
-          child: AnimatedBuilder(
-            animation: _scrollController,
-            builder: (BuildContext context, Widget? child) {
-              return Stack(
-                children: [
-                  // Rejilla decorativa de puntos LED apagados (fondo del panel).
-                  _LedDotGrid(width: _screenWidth, height: resolvedHeight),
-                  // Texto desplazante: el Positioned actualiza `left` en cada frame.
-                  Positioned(
-                    left: _currentLeftPosition,
-                    top: 0,
-                    bottom: 0,
-                    child: child!,
-                  ),
-                ],
-              );
-            },
-            // El Text vive fuera del builder como `child` para que Flutter
-            // no lo reconstruya en cada frame de animación (optimización clave).
-            child: Align(
-              alignment: Alignment.centerLeft,
+    return ClipRect(
+      child: SizedBox(
+        width: _screenWidth,
+        height: resolvedHeight,
+        child: AnimatedBuilder(
+          animation: _scrollController,
+          builder: (BuildContext context, Widget? child) {
+            return Stack(
+              children: [
+                // Texto desplazante: el Positioned actualiza `left` en cada frame.
+                Positioned(
+                  left: _currentLeftPosition,
+                  top: 0,
+                  bottom: 0,
+                  child: child!,
+                ),
+              ],
+            );
+          },
+          // El Text vive fuera del builder como `child` para que Flutter
+          // no lo reconstruya en cada frame de animación (optimización clave).
+          child: SizedBox(
+            width: _textWidth,
+            child: OverflowBox(
+              alignment: Alignment.center,
+              minHeight: 0,
+              maxHeight:
+                  double.infinity, // permite que el texto tome su alto natural
               child: Text(
                 widget.text,
                 maxLines: 1,
@@ -297,85 +238,4 @@ class _LedPanelState extends State<LedPanel>
       ),
     );
   }
-}
-
-// =============================================================================
-// Constantes y widgets internos de soporte
-// =============================================================================
-
-/// Valores por defecto y constantes internas de [LedPanel].
-///
-/// Representan la estética de un panel LED físico (chasis, resplandor,
-/// rejilla de puntos apagados). Se mantienen deliberadamente separados de
-/// la paleta de marca de la app (`AppColors`): este widget simula un
-/// dispositivo real, no una superficie de la interfaz.
-class _LedPanelDefaults {
-  _LedPanelDefaults._();
-
-  // Apariencia por defecto del chasis y el texto LED.
-  static const Color panelBackgroundColor = Color(0xFF0A0A0A);
-  static const Color ledTextColor = Color(0xFFFF4500);
-  static const Color borderColor = Color(0xFF333333);
-  static const double borderWidth = 2.5;
-  static const double glowRadius = 12.0;
-  static const double fontSize = 28.0;
-  static const double verticalPadding = 10.0;
-
-  // Resplandor del texto LED (doble sombra: núcleo + difusión).
-  static const double primaryGlowOpacity = 0.9;
-  static const double secondaryGlowOpacity = 0.5;
-  static const double secondaryGlowMultiplier = 2.5;
-
-  // Sombra exterior del panel (profundidad sobre la superficie).
-  static const double outerShadowOpacity = 0.6;
-  static const double outerShadowBlurRadius = 8.0;
-  static const Offset outerShadowOffset = Offset(0, 4);
-
-  // Rejilla decorativa de puntos LED apagados.
-  static const double dotGridOpacity = 0.03;
-  static const double dotGridSpacing = 6.0;
-  static const double dotGridRadius = 1.0;
-}
-
-/// Dibuja una rejilla de puntos diminutos para simular la matriz de LEDs
-/// apagados que caracteriza a los paneles físicos reales.
-class _LedDotGrid extends StatelessWidget {
-  final double width;
-  final double height;
-
-  const _LedDotGrid({required this.width, required this.height});
-
-  @override
-  Widget build(BuildContext context) {
-    return CustomPaint(
-      size: Size(width, height),
-      painter: _LedDotPainter(),
-    );
-  }
-}
-
-/// [CustomPainter] que dibuja la rejilla de puntos LED apagados.
-///
-/// No expone configuración: el color y el espaciado son fijos
-/// ([_LedPanelDefaults]), por lo que nunca necesita repintarse.
-class _LedDotPainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    final Paint paint = Paint()
-      ..color = AppColors.white.withValues(alpha: _LedPanelDefaults.dotGridOpacity)
-      ..style = PaintingStyle.fill;
-
-    for (double x = _LedPanelDefaults.dotGridSpacing / 2;
-        x < size.width;
-        x += _LedPanelDefaults.dotGridSpacing) {
-      for (double y = _LedPanelDefaults.dotGridSpacing / 2;
-          y < size.height;
-          y += _LedPanelDefaults.dotGridSpacing) {
-        canvas.drawCircle(Offset(x, y), _LedPanelDefaults.dotGridRadius, paint);
-      }
-    }
-  }
-
-  @override
-  bool shouldRepaint(covariant _LedDotPainter oldDelegate) => false;
 }

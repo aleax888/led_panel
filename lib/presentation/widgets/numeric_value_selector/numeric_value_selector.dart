@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:led_panel/presentation/widgets/input_label.dart';
 import 'package:led_panel/presentation/widgets/numeric_value_selector/step_button.dart';
 import 'package:led_panel/theme/constants/app_spacing.dart';
 
@@ -12,8 +13,14 @@ import 'package:led_panel/theme/constants/app_spacing.dart';
 /// Las tres formas de interacción están sincronizadas: cambiar el valor
 /// desde cualquiera de ellas actualiza a las demás.
 class NumericValueSelector extends StatefulWidget {
+  /// Label
+  final String label;
+
+  /// Measurement unit
+  final String? unit;
+
   /// Valor inicial del contador.
-  final int initialValue;
+  final int value;
 
   /// Cantidad en la que decrementa el botón "-".
   final int decrementStep;
@@ -33,14 +40,16 @@ class NumericValueSelector extends StatefulWidget {
 
   const NumericValueSelector({
     super.key,
-    this.initialValue = 0,
+    required this.label,
+    this.unit,
+    this.value = 0,
     this.decrementStep = 1,
     this.incrementStep = 1,
     this.minValue = 0,
     this.maxValue = 100,
     this.onChanged,
   }) : assert(
-         initialValue >= minValue && initialValue <= maxValue,
+         value >= minValue && value <= maxValue,
          'initialValue debe estar entre minValue y maxValue',
        ),
        assert(minValue <= maxValue, 'minValue no puede ser mayor que maxValue'),
@@ -52,7 +61,7 @@ class NumericValueSelector extends StatefulWidget {
 }
 
 class _NumericValueSelectorState extends State<NumericValueSelector> {
-  late int _currentValue = widget.initialValue;
+  late int _currentValue = widget.value;
   late final TextEditingController _textController = TextEditingController(
     text: _currentValue.toString(),
   );
@@ -64,9 +73,76 @@ class _NumericValueSelectorState extends State<NumericValueSelector> {
   }
 
   @override
+  void didUpdateWidget(covariant NumericValueSelector oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.value != oldWidget.value) {
+      setState(() {
+        _currentValue = widget.value;
+        _textController.text = _currentValue.toString();
+      });
+    }
+  }
+
+  @override
   void dispose() {
     _textController.dispose();
     super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      spacing: AppSpacing.sm,
+      children: [
+        Row(
+          crossAxisAlignment: .start,
+          children: [
+            Expanded(child: InputLabel(label: widget.label)),
+            Expanded(
+              flex: 2,
+              child: TextField(
+                controller: _textController,
+                onChanged: _applyTypedValue,
+                keyboardType: .number,
+                textAlign: .end,
+                decoration: InputDecoration(
+                  isDense: true,
+                  suffix: widget.unit != null ? Text(' ${widget.unit}') : null,
+                ),
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+            ),
+          ],
+        ),
+        Row(
+          children: [
+            StepButton(
+              symbol: '−',
+              onPressed: _currentValue > widget.minValue
+                  ? _decrementValue
+                  : null,
+            ),
+            Expanded(
+              child: Slider(
+                value: _currentValue.toDouble(),
+                min: widget.minValue.toDouble(),
+                max: widget.maxValue.toDouble(),
+                divisions: _sliderDivisions,
+                label: '$_currentValue',
+                onChanged: (double value) => _applyValue(value.round()),
+              ),
+            ),
+            StepButton(
+              symbol: '+',
+              onPressed: _currentValue < widget.maxValue
+                  ? _incrementValue
+                  : null,
+            ),
+          ],
+        ),
+      ],
+    );
   }
 
   /// Aplica un nuevo valor proveniente del slider o de los botones,
@@ -104,60 +180,5 @@ class _NumericValueSelectorState extends State<NumericValueSelector> {
           offset: _textController.text.length,
         );
     }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final ColorScheme colorScheme = Theme.of(context).colorScheme;
-
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Row(
-          children: [
-            StepButton(
-              symbol: '−',
-              onPressed: _currentValue > widget.minValue
-                  ? _decrementValue
-                  : null,
-            ),
-            Expanded(
-              child: SliderTheme(
-                data: Theme.of(context).sliderTheme.copyWith(
-                  activeTrackColor: colorScheme.primary,
-                  thumbColor: colorScheme.primary,
-                ),
-                child: Slider(
-                  value: _currentValue.toDouble(),
-                  min: widget.minValue.toDouble(),
-                  max: widget.maxValue.toDouble(),
-                  divisions: _sliderDivisions,
-                  label: '$_currentValue',
-                  onChanged: (double value) => _applyValue(value.round()),
-                ),
-              ),
-            ),
-            StepButton(
-              symbol: '+',
-              onPressed: _currentValue < widget.maxValue
-                  ? _incrementValue
-                  : null,
-            ),
-          ],
-        ),
-        const SizedBox(height: AppSpacing.xs),
-        SizedBox(
-          width: 100,
-          child: TextField(
-            controller: _textController,
-            onChanged: _applyTypedValue,
-            keyboardType: TextInputType.number,
-            textAlign: TextAlign.center,
-            decoration: const InputDecoration(isDense: true),
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-        ),
-      ],
-    );
   }
 }

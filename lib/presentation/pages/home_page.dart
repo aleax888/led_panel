@@ -5,10 +5,10 @@ import 'package:led_panel/bloc/led_panel_bloc.dart';
 import 'package:led_panel/data/led_panel_config_model.dart';
 import 'package:led_panel/presentation/widgets/app_switch.dart';
 import 'package:led_panel/presentation/widgets/color_picker/color_picker_field.dart';
-import 'package:led_panel/presentation/widgets/input_label.dart';
 import 'package:led_panel/presentation/widgets/led_panel.dart';
 import 'package:led_panel/presentation/widgets/numeric_value_selector/numeric_value_selector.dart';
 import 'package:led_panel/theme/constants/app_durations.dart';
+import 'package:led_panel/theme/constants/app_radius.dart';
 import 'package:led_panel/theme/constants/app_spacing.dart';
 
 import 'display_page.dart';
@@ -82,27 +82,33 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 children: [
                   // Led Panel Preview ----------------------------------------------
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: config.panelBackgroundColor,
+                      borderRadius: AppRadius.borderRadiusMd,
+                    ),
+                    margin: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
                     child: LedPanel(
                       text: config.text,
                       ledTextColor: config.ledTextColor,
                       panelBackgroundColor: config.panelBackgroundColor,
-                      borderColor: config.borderColor,
                       fontSize: config.fontSize,
-                      scrollSpeedPixelsPerSecond: config.scrollSpeedPixelsPerSecond,
-                      ledGlowRadius: config.ledGlowRadius,
+                      scrollSpeedPixelsPerSecond:
+                          config.scrollSpeedPixelsPerSecond,
                       fontWeight: config.fontWeight,
-                      borderRadius: config.borderRadius,
                       panelHeight:
-                          screenSize.width * screenSize.width / screenSize.height,
+                          screenSize.width *
+                          screenSize.width /
+                          screenSize.height,
                     ),
                   ),
-              
+
                   // Configuration Controls ----------------------------------------------
                   Expanded(
                     child: SingleChildScrollView(
-                      padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
+                      padding: const EdgeInsets.symmetric(
+                        vertical: AppSpacing.lg,
+                      ),
                       child: Column(
                         spacing: AppSpacing.md,
                         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -114,21 +120,19 @@ class _HomePageState extends State<HomePage> {
                                 bloc.add(LedPanelTextChanged('  $value  ')),
                             maxLines: 2,
                             minLines: 1,
-              
+
                             decoration: const InputDecoration(
                               hintText: 'Escribe el mensaje del panel...',
                             ),
                           ),
-              
+
                           // Color ----------------------------------------------
                           ColorPickerField(
-                            config: config,
-                            onColorChanged: (color) {
-                              bloc.add(LedPanelColorChanged(color));
-                              Navigator.of(context).pop();
-                            },
+                            color: config.ledTextColor,
+                            onChanged: (color) =>
+                                bloc.add(LedPanelColorChanged(color)),
                           ),
-              
+
                           // Font Weight ----------------------------------------------
                           AppSwitch(
                             isOn: config.fontWeight == FontWeight.bold,
@@ -138,52 +142,32 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                           ),
-              
+
                           // Speed ----------------------------------------------
-                          InputLabel(
-                            label:
-                                'VELOCIDAD  ${config.scrollSpeedPixelsPerSecond.round()} px/s',
-                            child: NumericValueSelector(
-                              initialValue: config.scrollSpeedPixelsPerSecond
-                                  .round(),
-                              minValue: 20,
-                              maxValue: 200,
-                              incrementStep: 5,
-                              decrementStep: 5,
-                              onChanged: (value) => bloc.add(
-                                LedPanelSpeedChanged(value.toDouble()),
-                              ),
+                          NumericValueSelector(
+                            label: 'VELOCIDAD',
+                            unit: 'px/s',
+                            value: config.scrollSpeedPixelsPerSecond.round(),
+                            minValue: 20,
+                            maxValue: 200,
+                            incrementStep: 5,
+                            decrementStep: 5,
+                            onChanged: (value) => bloc.add(
+                              LedPanelSpeedChanged(value.toDouble()),
                             ),
                           ),
-              
+
                           // Font Size ----------------------------------------------
-                          InputLabel(
-                            label: 'TAMAÑO  ${config.fontSize.round()} pt',
-                            child: NumericValueSelector(
-                              initialValue: config.fontSize.round(),
-                              minValue: 14,
-                              maxValue: 300,
-                              incrementStep: 2,
-                              decrementStep: 2,
-                              onChanged: (value) => bloc.add(
-                                LedPanelFontSizeChanged(value.toDouble()),
-                              ),
-                            ),
-                          ),
-              
-                          // Glow Radius ----------------------------------------------
-                          InputLabel(
-                            label:
-                                'RESPLANDOR  ${config.ledGlowRadius.round()} px',
-                            child: NumericValueSelector(
-                              initialValue: config.ledGlowRadius.round(),
-                              minValue: 0,
-                              maxValue: 30,
-                              incrementStep: 1,
-                              decrementStep: 1,
-                              onChanged: (value) => bloc.add(
-                                LedPanelGlowRadiusChanged(value.toDouble()),
-                              ),
+                          NumericValueSelector(
+                            label: 'TAMAÑO',
+                            unit: 'pt',
+                            value: config.fontSize.round(),
+                            minValue: 14,
+                            maxValue: 300,
+                            incrementStep: 2,
+                            decrementStep: 2,
+                            onChanged: (value) => bloc.add(
+                              LedPanelFontSizeChanged(value.toDouble()),
                             ),
                           ),
                         ],

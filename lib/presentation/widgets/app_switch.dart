@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'package:led_panel/extensions/context_extension.dart';
+import 'package:led_panel/theme/constants/app_spacing.dart';
+
 /// Interruptor para alternar el peso de la fuente (negrita), con su
 /// color activo ligado al color del LED configurado.
 class AppSwitch extends StatelessWidget {
@@ -11,9 +14,10 @@ class AppSwitch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      spacing: AppSpacing.sm,
       children: [
         Switch(value: isOn, onChanged: onChanged),
-        const Text('NEGRITA'),
+        Text('NEGRITA', style: context.textTheme.labelLarge),
       ],
     );
   }
