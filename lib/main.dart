@@ -1,20 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:led_panel/theme/app_theme.dart';
 
-import 'pages/home_page.dart';
-
+import 'presentation/pages/home_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'bloc/led_panel_bloc.dart';
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown,
-  ]);
-
   runApp(const LedPanelApp());
 }
 
@@ -27,6 +19,7 @@ class LedPanelApp extends StatelessWidget {
       create: (context) => LedPanelBloc(),
       child: MaterialApp(
         title: 'LED Panel',
+        theme: AppTheme.light,
         debugShowCheckedModeBanner: kDebugMode,
         home: const HomePage(),
       ),

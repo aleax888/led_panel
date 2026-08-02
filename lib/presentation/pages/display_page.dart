@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:led_panel/bloc/led_panel_bloc.dart';
-import 'package:led_panel/widgets/led_panel.dart';
+import 'package:led_panel/presentation/widgets/led_panel.dart';
 
 
 /// Página de visualización completa del panel LED.

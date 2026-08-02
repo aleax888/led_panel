@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:led_panel/domain/led_panel_config_model.dart';
+import 'package:led_panel/data/led_panel_config_model.dart';
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
