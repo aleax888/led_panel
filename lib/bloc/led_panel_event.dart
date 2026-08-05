@@ -25,18 +25,3 @@ final class LedPanelFontSizeChanged extends LedPanelEvent {
   final double fontSize;
   const LedPanelFontSizeChanged(this.fontSize);
 }
-
-final class LedPanelGlowRadiusChanged extends LedPanelEvent {
-  final double glowRadius;
-  const LedPanelGlowRadiusChanged(this.glowRadius);
-}
-
-final class LedPanelBorderRadiusChanged extends LedPanelEvent {
-  final double borderRadius;
-  const LedPanelBorderRadiusChanged(this.borderRadius);
-}
-
-final class LedPanelFontWeightChanged extends LedPanelEvent {
-  final FontWeight fontWeight;
-  const LedPanelFontWeightChanged(this.fontWeight);
-}

@@ -2,11 +2,11 @@ part of 'led_panel_bloc.dart';
 
 @immutable
 final class LedPanelState {
-  final LedPanelConfig config;
+  final LedPanelConfigModel config;
 
-  const LedPanelState({this.config = const LedPanelConfig()});
+  const LedPanelState({this.config = const LedPanelConfigModel()});
 
-  LedPanelState copyWith({LedPanelConfig? config}) {
+  LedPanelState copyWith({LedPanelConfigModel? config}) {
     return LedPanelState(config: config ?? this.config);
   }
 }

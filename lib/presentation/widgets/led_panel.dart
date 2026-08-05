@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:led_panel/theme/constants/app_colors.dart';
+import 'package:led_panel/data/led_panel_config_model.dart';
 import 'package:led_panel/theme/constants/app_typography.dart';
 
 /// Un Widget que emula un panel LED de texto desplazante (marquee),
@@ -9,47 +9,13 @@ import 'package:led_panel/theme/constants/app_typography.dart';
 /// de forma continua y sin cortes, calculando el ancho real del texto con
 /// [TextPainter] para garantizar una ilusión perfectamente fluida.
 class LedPanel extends StatefulWidget {
-  /// El texto que se mostrará desplazándose en el panel.
-  final String text;
-
-  /// Velocidad del desplazamiento en píxeles por segundo.
-  /// Valores mayores = animación más rápida.
-  final double scrollSpeedPixelsPerSecond;
-
-  /// Color de fondo del panel (el "chasis" LED).
-  final Color panelBackgroundColor;
-
-  /// Color del texto luminoso del panel.
-  final Color ledTextColor;
-
-  /// Color del "halo" o resplandor que simula la luminosidad LED.
-  /// Si es null, se deriva de [ledTextColor] automáticamente.
-  final Color? ledGlowColor;
-
-  /// Tamaño de la fuente del texto LED.
-  final double fontSize;
-
-  /// Familia tipográfica. Se recomienda una monoespaciada para mayor realismo.
-  final String fontFamily;
-
-  /// Peso de la fuente.
-  final FontWeight fontWeight;
+  /// Configuración completa del panel LED.
+  final LedPanelConfigModel config;
 
   /// Alto del panel LED. Si es null, se ajusta al contenido más padding.
   final double? panelHeight;
 
-  const LedPanel({
-    super.key,
-    required this.text,
-    this.scrollSpeedPixelsPerSecond = 80.0,
-    this.panelBackgroundColor = Colors.black,
-    this.ledTextColor = AppColors.onPrimary,
-    this.ledGlowColor,
-    this.fontSize = AppTypography.sizeBodyLg,
-    this.fontFamily = AppTypography.fontFamilyMono,
-    this.fontWeight = AppTypography.bold,
-    this.panelHeight,
-  });
+  const LedPanel({super.key, required this.config, this.panelHeight});
 
   @override
   State<LedPanel> createState() => _LedPanelState();
@@ -76,9 +42,7 @@ class _LedPanelState extends State<LedPanel>
 
   /// Duración calculada a partir de la distancia total y la velocidad deseada.
   Duration get _animationDuration => Duration(
-    milliseconds:
-        (_totalAnimationTravel / widget.scrollSpeedPixelsPerSecond * 1000)
-            .round(),
+    milliseconds: (_totalAnimationTravel / widget.config.speed * 1000).round(),
   );
 
   /// Posición `left` actual del texto dentro del Stack.
@@ -120,21 +84,68 @@ class _LedPanelState extends State<LedPanel>
     // NUNCA recreamos el AnimationController: solo actualizamos su `duration`
     // y preservamos el `value` actual para que la animación no salte.
     final bool affectsTextWidth =
-        oldWidget.text != widget.text ||
-        oldWidget.fontSize != widget.fontSize ||
-        oldWidget.fontFamily != widget.fontFamily ||
-        oldWidget.fontWeight != widget.fontWeight;
+        oldWidget.config.text != widget.config.text ||
+        oldWidget.config.fontSize != widget.config.fontSize;
 
     final bool affectsSpeedOnly =
-        !affectsTextWidth &&
-        oldWidget.scrollSpeedPixelsPerSecond !=
-            widget.scrollSpeedPixelsPerSecond;
+        !affectsTextWidth && oldWidget.config.speed != widget.config.speed;
 
     if (affectsTextWidth || affectsSpeedOnly) {
       _applyHotUpdate(remeasureText: affectsTextWidth);
     }
     // Cambios de color, glow, borderRadius, etc. no requieren acción aquí:
     // Flutter los recoge automáticamente en el siguiente build().
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final double resolvedHeight =
+        widget.panelHeight ?? (widget.config.fontSize);
+
+    return ClipRect(
+      child: SizedBox(
+        width: _screenWidth,
+        height: resolvedHeight,
+        child: AnimatedBuilder(
+          animation: _scrollController,
+          builder: (BuildContext context, Widget? child) {
+            return Stack(
+              children: [
+                // Texto desplazante: el Positioned actualiza `left` en cada frame.
+                Positioned(
+                  left: _currentLeftPosition,
+                  top: 0,
+                  bottom: 0,
+                  child: child!,
+                ),
+              ],
+            );
+          },
+          // El Text vive fuera del builder como `child` para que Flutter
+          // no lo reconstruya en cada frame de animación (optimización clave).
+          child: SizedBox(
+            width: _textWidth,
+            child: OverflowBox(
+              alignment: Alignment.center,
+              minHeight: 0,
+              maxHeight: double.infinity,
+              child: Text(
+                widget.config.text,
+                maxLines: 1,
+                style: _buildTextStyle(),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   /// Actualiza `_textWidth` (si [remeasureText]) y la `duration` del controller
@@ -169,7 +180,7 @@ class _LedPanelState extends State<LedPanel>
   /// widget para que la medición coincida con el renderizado real.
   double _measureTextWidth() {
     final TextPainter textPainter = TextPainter(
-      text: TextSpan(text: widget.text, style: _buildTextStyle()),
+      text: TextSpan(text: widget.config.text, style: _buildTextStyle()),
       textDirection: TextDirection.ltr,
       maxLines: 1,
     )..layout(minWidth: 0, maxWidth: double.infinity);
@@ -181,61 +192,9 @@ class _LedPanelState extends State<LedPanel>
   /// [Text] widget para garantizar coherencia entre medición y renderizado.
   TextStyle _buildTextStyle() {
     return TextStyle(
-      color: widget.ledTextColor,
-      fontSize: widget.fontSize,
-      fontFamily: widget.fontFamily,
-      fontWeight: widget.fontWeight,
-    );
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final double resolvedHeight = widget.panelHeight ?? (widget.fontSize);
-
-    return ClipRect(
-      child: SizedBox(
-        width: _screenWidth,
-        height: resolvedHeight,
-        child: AnimatedBuilder(
-          animation: _scrollController,
-          builder: (BuildContext context, Widget? child) {
-            return Stack(
-              children: [
-                // Texto desplazante: el Positioned actualiza `left` en cada frame.
-                Positioned(
-                  left: _currentLeftPosition,
-                  top: 0,
-                  bottom: 0,
-                  child: child!,
-                ),
-              ],
-            );
-          },
-          // El Text vive fuera del builder como `child` para que Flutter
-          // no lo reconstruya en cada frame de animación (optimización clave).
-          child: SizedBox(
-            width: _textWidth,
-            child: OverflowBox(
-              alignment: Alignment.center,
-              minHeight: 0,
-              maxHeight:
-                  double.infinity, // permite que el texto tome su alto natural
-              child: Text(
-                widget.text,
-                maxLines: 1,
-                style: _buildTextStyle(),
-                textAlign: TextAlign.center,
-              ),
-            ),
-          ),
-        ),
-      ),
+      color: widget.config.color,
+      fontSize: widget.config.fontSize,
+      fontFamily: AppTypography.fontFamilyMono,
     );
   }
 }

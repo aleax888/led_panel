@@ -3,10 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:led_panel/bloc/led_panel_bloc.dart';
 import 'package:led_panel/data/led_panel_config_model.dart';
-import 'package:led_panel/presentation/widgets/app_switch.dart';
+import 'package:led_panel/extensions/context_extension.dart';
 import 'package:led_panel/presentation/widgets/color_picker/color_picker_field.dart';
 import 'package:led_panel/presentation/widgets/led_panel.dart';
 import 'package:led_panel/presentation/widgets/numeric_value_selector/numeric_value_selector.dart';
+import 'package:led_panel/theme/constants/app_colors.dart';
 import 'package:led_panel/theme/constants/app_durations.dart';
 import 'package:led_panel/theme/constants/app_radius.dart';
 import 'package:led_panel/theme/constants/app_spacing.dart';
@@ -68,10 +69,9 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return BlocBuilder<LedPanelBloc, LedPanelState>(
       builder: (context, state) {
-        final LedPanelConfig config = state.config;
+        final LedPanelConfigModel config = state.config;
         _syncTextController(config.text);
 
-        final Size screenSize = MediaQuery.sizeOf(context);
         final LedPanelBloc bloc = context.read<LedPanelBloc>();
 
         return Scaffold(
@@ -84,22 +84,16 @@ class _HomePageState extends State<HomePage> {
                   // Led Panel Preview ----------------------------------------------
                   Container(
                     decoration: BoxDecoration(
-                      color: config.panelBackgroundColor,
+                      color: AppColors.black,
                       borderRadius: AppRadius.borderRadiusMd,
                     ),
                     margin: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
                     child: LedPanel(
-                      text: config.text,
-                      ledTextColor: config.ledTextColor,
-                      panelBackgroundColor: config.panelBackgroundColor,
-                      fontSize: config.fontSize,
-                      scrollSpeedPixelsPerSecond:
-                          config.scrollSpeedPixelsPerSecond,
-                      fontWeight: config.fontWeight,
+                      config: config,
                       panelHeight:
-                          screenSize.width *
-                          screenSize.width /
-                          screenSize.height,
+                          context.screenSize.width *
+                          context.screenSize.width /
+                          context.screenSize.height,
                     ),
                   ),
 
@@ -128,26 +122,16 @@ class _HomePageState extends State<HomePage> {
 
                           // Color ----------------------------------------------
                           ColorPickerField(
-                            color: config.ledTextColor,
+                            color: config.color,
                             onChanged: (color) =>
                                 bloc.add(LedPanelColorChanged(color)),
-                          ),
-
-                          // Font Weight ----------------------------------------------
-                          AppSwitch(
-                            isOn: config.fontWeight == FontWeight.bold,
-                            onChanged: (isBold) => bloc.add(
-                              LedPanelFontWeightChanged(
-                                isBold ? FontWeight.bold : FontWeight.normal,
-                              ),
-                            ),
                           ),
 
                           // Speed ----------------------------------------------
                           NumericValueSelector(
                             label: 'VELOCIDAD',
                             unit: 'px/s',
-                            value: config.scrollSpeedPixelsPerSecond.round(),
+                            value: config.speed.round(),
                             minValue: 20,
                             maxValue: 200,
                             incrementStep: 5,

@@ -13,9 +13,6 @@ class LedPanelBloc extends Bloc<LedPanelEvent, LedPanelState> {
     on<LedPanelColorChanged>(_onColorChanged);
     on<LedPanelSpeedChanged>(_onSpeedChanged);
     on<LedPanelFontSizeChanged>(_onFontSizeChanged);
-    on<LedPanelGlowRadiusChanged>(_onGlowRadiusChanged);
-    on<LedPanelBorderRadiusChanged>(_onBorderRadiusChanged);
-    on<LedPanelFontWeightChanged>(_onFontWeightChanged);
   }
 
   void _onTextChanged(LedPanelTextChanged event, Emitter<LedPanelState> emit) {
@@ -26,26 +23,14 @@ class LedPanelBloc extends Bloc<LedPanelEvent, LedPanelState> {
     LedPanelColorChanged event,
     Emitter<LedPanelState> emit,
   ) {
-    emit(
-      state.copyWith(
-        config: state.config.copyWith(
-          ledTextColor: event.color,
-          panelBackgroundColor: const Color(0xFF0A0A0A),
-          borderColor: const Color(0xFF333333),
-        ),
-      ),
-    );
+    emit(state.copyWith(config: state.config.copyWith(color: event.color)));
   }
 
   void _onSpeedChanged(
     LedPanelSpeedChanged event,
     Emitter<LedPanelState> emit,
   ) {
-    emit(
-      state.copyWith(
-        config: state.config.copyWith(scrollSpeedPixelsPerSecond: event.speed),
-      ),
-    );
+    emit(state.copyWith(config: state.config.copyWith(speed: event.speed)));
   }
 
   void _onFontSizeChanged(
@@ -54,39 +39,6 @@ class LedPanelBloc extends Bloc<LedPanelEvent, LedPanelState> {
   ) {
     emit(
       state.copyWith(config: state.config.copyWith(fontSize: event.fontSize)),
-    );
-  }
-
-  void _onGlowRadiusChanged(
-    LedPanelGlowRadiusChanged event,
-    Emitter<LedPanelState> emit,
-  ) {
-    emit(
-      state.copyWith(
-        config: state.config.copyWith(ledGlowRadius: event.glowRadius),
-      ),
-    );
-  }
-
-  void _onBorderRadiusChanged(
-    LedPanelBorderRadiusChanged event,
-    Emitter<LedPanelState> emit,
-  ) {
-    emit(
-      state.copyWith(
-        config: state.config.copyWith(borderRadius: event.borderRadius),
-      ),
-    );
-  }
-
-  void _onFontWeightChanged(
-    LedPanelFontWeightChanged event,
-    Emitter<LedPanelState> emit,
-  ) {
-    emit(
-      state.copyWith(
-        config: state.config.copyWith(fontWeight: event.fontWeight),
-      ),
     );
   }
 }

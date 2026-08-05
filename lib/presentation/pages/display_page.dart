@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:led_panel/bloc/led_panel_bloc.dart';
+import 'package:led_panel/extensions/context_extension.dart';
 import 'package:led_panel/presentation/widgets/led_panel.dart';
 
 /// Página de visualización completa del panel LED.
@@ -96,12 +97,6 @@ class _DisplayPageState extends State<DisplayPage> {
             backgroundColor: Colors.black,
             body: OrientationBuilder(
               builder: (BuildContext context, Orientation orientation) {
-                final Size screenSize = MediaQuery.of(context).size;
-
-                // En landscape, width > height. Usamos el tamaño real reportado
-                // por MediaQuery tras la rotación para dimensionar el panel.
-                final double panelHeight = screenSize.height;
-
                 return GestureDetector(
                   // Un tap en cualquier lugar regresa al configurador.
                   onTap: _handleBack,
@@ -112,15 +107,8 @@ class _DisplayPageState extends State<DisplayPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           LedPanel(
-                            text: config.text,
-                            ledTextColor: config.ledTextColor,
-                            panelBackgroundColor: config.panelBackgroundColor,
-                            fontSize: config.fontSize,
-                            scrollSpeedPixelsPerSecond:
-                                config.scrollSpeedPixelsPerSecond,
-                            fontWeight: config.fontWeight,
-                            // Ocupamos todo el alto disponible para máximo impacto.
-                            panelHeight: panelHeight,
+                            config: config,
+                            panelHeight: context.screenSize.height,
                           ),
                         ],
                       ),
