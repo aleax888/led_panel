@@ -13,6 +13,7 @@ class LedPanelBloc extends Bloc<LedPanelEvent, LedPanelState> {
     on<LedPanelColorChanged>(_onColorChanged);
     on<LedPanelSpeedChanged>(_onSpeedChanged);
     on<LedPanelFontSizeChanged>(_onFontSizeChanged);
+    on<LedPanelFontFamilyChanged>(_onFontFamilyChanged);
   }
 
   void _onTextChanged(LedPanelTextChanged event, Emitter<LedPanelState> emit) {
@@ -39,6 +40,17 @@ class LedPanelBloc extends Bloc<LedPanelEvent, LedPanelState> {
   ) {
     emit(
       state.copyWith(config: state.config.copyWith(fontSize: event.fontSize)),
+    );
+  }
+
+  void _onFontFamilyChanged(
+    LedPanelFontFamilyChanged event,
+    Emitter<LedPanelState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        config: state.config.copyWith(fontFamily: event.fontFamily),
+      ),
     );
   }
 }

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:led_panel/bloc/led_panel_bloc.dart';
 import 'package:led_panel/extensions/context_extension.dart';
 import 'package:led_panel/presentation/widgets/color_picker/color_picker_field.dart';
+import 'package:led_panel/presentation/widgets/font_family_selector/font_family_selector.dart';
 import 'package:led_panel/presentation/widgets/led_panel/led_panel.dart';
 import 'package:led_panel/presentation/widgets/numeric_value_selector/numeric_value_selector.dart';
 import 'package:led_panel/theme/constants/app_colors.dart';
@@ -115,6 +116,14 @@ class _HomePageState extends State<HomePage> {
                             decrementStep: 5,
                             onChanged: (value) => bloc.add(
                               LedPanelSpeedChanged(value.toDouble()),
+                            ),
+                          ),
+
+                          // Font Family ----------------------------------------------
+                          FontFamilySelector(
+                            selectedFontFamily: state.config.fontFamily,
+                            onChanged: (fontFamily) => bloc.add(
+                              LedPanelFontFamilyChanged(fontFamily),
                             ),
                           ),
 

@@ -25,3 +25,8 @@ final class LedPanelFontSizeChanged extends LedPanelEvent {
   final double fontSize;
   const LedPanelFontSizeChanged(this.fontSize);
 }
+
+final class LedPanelFontFamilyChanged extends LedPanelEvent {
+  final String fontFamily;
+  const LedPanelFontFamilyChanged(this.fontFamily);
+}
