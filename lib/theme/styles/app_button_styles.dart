@@ -12,7 +12,7 @@ class AppButtonStyles {
   AppButtonStyles._();
 
   static const TextStyle _labelStyle = TextStyle(
-    fontFamily: AppTypography.fontFamily,
+    fontFamily: AppTypography.fontRoboto,
     fontSize: AppTypography.sizeButton,
     fontWeight: AppTypography.semiBold,
     letterSpacing: AppTypography.letterSpacingButton,

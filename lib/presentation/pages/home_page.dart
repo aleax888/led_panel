@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:led_panel/bloc/led_panel_bloc.dart';
 import 'package:led_panel/extensions/context_extension.dart';
 import 'package:led_panel/presentation/widgets/color_picker/color_picker_field.dart';
-import 'package:led_panel/presentation/widgets/led_panel.dart';
+import 'package:led_panel/presentation/widgets/led_panel/led_panel.dart';
 import 'package:led_panel/presentation/widgets/numeric_value_selector/numeric_value_selector.dart';
 import 'package:led_panel/theme/constants/app_colors.dart';
 import 'package:led_panel/theme/constants/app_durations.dart';
@@ -92,7 +92,6 @@ class _HomePageState extends State<HomePage> {
                             ),
                             maxLines: 2,
                             minLines: 1,
-
                             decoration: const InputDecoration(
                               hintText: 'Escribe el mensaje del panel...',
                             ),

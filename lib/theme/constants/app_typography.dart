@@ -5,13 +5,17 @@ import 'package:flutter/material.dart';
 class AppTypography {
   AppTypography._();
 
-  /// Cambia este valor para reemplazar la fuente en toda la app
-  /// (por ejemplo si luego se agrega google_fonts).
-  static const String fontFamily = 'Roboto';
-
-  /// Fuente monoespaciada para elementos con estética de lectura técnica
-  /// (p. ej. etiquetas de un panel LED, valores de sensores, códigos).
-  static const String fontFamilyMono = 'Courier';
+  // ---------------------------------------------------------------------
+  // Familia de fuente
+  // ---------------------------------------------------------------------
+  static const String fontRoboto = 'Roboto';
+  static const String fontIntelOneMono = 'IntelOneMono';
+  static const String fontInter = 'Inter';
+  static const String fontIrishGrover = 'IrishGrover';
+  static const String fontItalianno = 'Italianno';
+  static const String fontKarantina = 'Karantina';
+  static const String fontPixelifySans = 'PixelifySans';
+  static const String fontPoppins = 'Poppins';
 
   // ---------------------------------------------------------------------
   // Tamaños de fuente

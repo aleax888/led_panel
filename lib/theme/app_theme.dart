@@ -37,7 +37,7 @@ class AppTheme {
     return ThemeData(
       useMaterial3: true,
       brightness: isDark ? Brightness.dark : Brightness.light,
-      fontFamily: AppTypography.fontFamily,
+      fontFamily: AppTypography.fontRoboto,
       colorScheme: colorScheme,
       scaffoldBackgroundColor: background,
       canvasColor: background,
@@ -122,7 +122,7 @@ class AppTheme {
             ? AppColors.surfaceVariantDark
             : AppColors.textPrimaryLight,
         contentTextStyle: const TextStyle(
-          fontFamily: AppTypography.fontFamily,
+          fontFamily: AppTypography.fontRoboto,
           fontSize: AppTypography.sizeBodyMd,
           color: AppColors.white,
         ),

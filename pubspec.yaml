@@ -24,3 +24,68 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  fonts:
+    - family: IntelOneMono
+      fonts:
+        - asset: assets/fonts/IntelOneMono/IntelOneMono-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/IntelOneMono/IntelOneMono-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/IntelOneMono/IntelOneMono-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/IntelOneMono/IntelOneMono-Bold.ttf
+          weight: 700
+
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter/Inter_18pt-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Inter/Inter_18pt-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Inter/Inter_18pt-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Inter/Inter_18pt-Bold.ttf
+          weight: 700
+
+    - family: IrishGrover
+      fonts:
+        - asset: assets/fonts/IrishGrover/IrishGrover-Regular.ttf
+          weight: 400
+
+    - family: Italianno
+      fonts:
+        - asset: assets/fonts/Italianno/Italianno-Regular.ttf
+          weight: 400
+
+    - family: Karantina
+      fonts:
+        - asset: assets/fonts/Karantina/Karantina-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Karantina/Karantina-Bold.ttf
+          weight: 700
+
+    - family: PixelifySans
+      fonts:
+        - asset: assets/fonts/PixelifySans/PixelifySans-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/PixelifySans/PixelifySans-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/PixelifySans/PixelifySans-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/PixelifySans/PixelifySans-Bold.ttf
+          weight: 700
+
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/Poppins/Poppins-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Poppins/Poppins-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Poppins/Poppins-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Poppins/Poppins-Bold.ttf
+          weight: 700
+
+  assets:
+    - assets/

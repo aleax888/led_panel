@@ -53,17 +53,17 @@ class AppInputTheme {
         borderSide: const BorderSide(color: AppColors.disabledButton, width: AppSizes.borderWidthThin),
       ),
       hintStyle: TextStyle(
-        fontFamily: AppTypography.fontFamily,
+        fontFamily: AppTypography.fontRoboto,
         fontSize: AppTypography.sizeBodyMd,
         color: hintColor,
       ),
       labelStyle: TextStyle(
-        fontFamily: AppTypography.fontFamily,
+        fontFamily: AppTypography.fontRoboto,
         fontSize: AppTypography.sizeBodyMd,
         color: labelColor,
       ),
       errorStyle: const TextStyle(
-        fontFamily: AppTypography.fontFamily,
+        fontFamily: AppTypography.fontRoboto,
         fontSize: AppTypography.sizeCaption,
         color: AppColors.error,
       ),
