@@ -33,13 +33,13 @@ class FontFamilyOption extends StatelessWidget {
           height: AppSizes.avatarLg,
           decoration: BoxDecoration(
             color: context.colors.surface,
-            shape: BoxShape.circle,
+            shape: .circle,
             border: Border.all(
               color: selected ? context.colors.primary : context.colors.outline,
               width: selected ? 2 : 1,
             ),
           ),
-          alignment: Alignment.center,
+          alignment: .center,
           child: Text(
             'Aa',
             style: TextStyle(

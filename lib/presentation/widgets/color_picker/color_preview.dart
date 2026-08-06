@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:led_panel/extensions/context_extension.dart';
+import 'package:led_panel/presentation/widgets/color_picker/rainbow_angular_gradient.dart';
 import 'package:led_panel/theme/constants/app_radius.dart';
 import 'package:led_panel/theme/constants/app_sizes.dart';
+import 'package:led_panel/theme/constants/app_spacing.dart';
 
 /// Vista previa cuadrada del color actual
 class ColorPreview extends StatelessWidget {
@@ -11,16 +13,18 @@ class ColorPreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: AppSizes.colorSwatchMd,
-      height: AppSizes.colorSwatchMd,
+      width: AppSizes.avatarMd,
+      height: AppSizes.avatarMd,
+      padding: const EdgeInsets.all(AppSpacing.sm),
       decoration: BoxDecoration(
         color: color,
-        borderRadius: AppRadius.borderRadiusXs,
+        borderRadius: AppRadius.borderRadiusSm,
         border: Border.all(
-          color: context.colors.outline,
-          width: AppSizes.borderWidthThick,
+          color: Color.lerp(color, context.colors.onSurface, 0.1) ?? color,
+          width: AppSizes.borderWidthThin,
         ),
       ),
+      child: RainbowAngularGradient(),
     );
   }
 }

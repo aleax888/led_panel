@@ -30,7 +30,7 @@ class AppInputTheme {
     required Color labelColor,
   }) {
     final OutlineInputBorder baseBorder = OutlineInputBorder(
-      borderRadius: AppRadius.borderRadiusMd,
+      borderRadius: AppRadius.borderRadiusLg,
       borderSide: BorderSide(color: borderColor, width: AppSizes.borderWidthThin),
     );
 

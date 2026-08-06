@@ -61,14 +61,6 @@ class AppSizes {
   static const double dividerThickness = 1;
 
   // ---------------------------------------------------------------------
-  // Muestras de color (swatches) y efectos de resplandor (glow)
-  // ---------------------------------------------------------------------
-  static const double colorSwatchSm = 24;
-  static const double colorSwatchMd = 32;
-  static const double colorSwatchLg = 48;
-  static const double glowBlurRadius = 8;
-
-  // ---------------------------------------------------------------------
   // Slider y contadores numéricos
   // ---------------------------------------------------------------------
   static const double sliderTrackHeight = 4;

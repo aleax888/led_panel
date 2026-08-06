@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:led_panel/bloc/led_panel_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:led_panel/extensions/context_extension.dart';
+import 'package:led_panel/presentation/pages/display_page.dart';
 import 'package:led_panel/presentation/widgets/color_picker/color_picker_field.dart';
 import 'package:led_panel/presentation/widgets/font_family_selector/font_family_selector.dart';
 import 'package:led_panel/presentation/widgets/led_panel/led_panel.dart';
@@ -11,8 +14,6 @@ import 'package:led_panel/theme/constants/app_colors.dart';
 import 'package:led_panel/theme/constants/app_durations.dart';
 import 'package:led_panel/theme/constants/app_radius.dart';
 import 'package:led_panel/theme/constants/app_spacing.dart';
-
-import 'display_page.dart';
 
 /// Pantalla principal: configura el mensaje y la apariencia del panel LED,
 /// con una vista previa en vivo y acceso a la reproducción a pantalla completa.
@@ -63,7 +64,7 @@ class _HomePageState extends State<HomePage> {
                   Container(
                     decoration: BoxDecoration(
                       color: AppColors.black,
-                      borderRadius: AppRadius.borderRadiusMd,
+                      borderRadius: AppRadius.borderRadiusLg,
                     ),
                     margin: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
                     child: LedPanel(
@@ -72,6 +73,19 @@ class _HomePageState extends State<HomePage> {
                           context.screenSize.width *
                           context.screenSize.width /
                           context.screenSize.height,
+                    ),
+                  ),
+
+                  // Message ----------------------------------------------
+                  TextField(
+                    controller: _textEditingController,
+                    onChanged: (value) {
+                      bloc.add(LedPanelTextChanged(value));
+                    },
+                    maxLines: 2,
+                    minLines: 1,
+                    decoration: InputDecoration(
+                      hintText: 'Escribe el mensaje del panel...',
                     ),
                   ),
 
@@ -85,24 +99,18 @@ class _HomePageState extends State<HomePage> {
                         spacing: AppSpacing.md,
                         crossAxisAlignment: .stretch,
                         children: [
-                          // Message ----------------------------------------------
-                          TextField(
-                            controller: _textEditingController,
-                            onChanged: (value) => setState(
-                              () => bloc.add(LedPanelTextChanged(value)),
-                            ),
-                            maxLines: 2,
-                            minLines: 1,
-                            decoration: const InputDecoration(
-                              hintText: 'Escribe el mensaje del panel...',
-                            ),
-                          ),
-
                           // Color ----------------------------------------------
                           ColorPickerField(
                             color: state.config.color,
                             onChanged: (color) =>
                                 bloc.add(LedPanelColorChanged(color)),
+                          ),
+
+                          // Font Family ----------------------------------------------
+                          FontFamilySelector(
+                            selectedFontFamily: state.config.fontFamily,
+                            onChanged: (fontFamily) =>
+                                bloc.add(LedPanelFontFamilyChanged(fontFamily)),
                           ),
 
                           // Speed ----------------------------------------------
@@ -116,14 +124,6 @@ class _HomePageState extends State<HomePage> {
                             decrementStep: 5,
                             onChanged: (value) => bloc.add(
                               LedPanelSpeedChanged(value.toDouble()),
-                            ),
-                          ),
-
-                          // Font Family ----------------------------------------------
-                          FontFamilySelector(
-                            selectedFontFamily: state.config.fontFamily,
-                            onChanged: (fontFamily) => bloc.add(
-                              LedPanelFontFamilyChanged(fontFamily),
                             ),
                           ),
 
