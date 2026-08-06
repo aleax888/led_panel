@@ -9,6 +9,8 @@ import 'package:led_panel/presentation/pages/display_page.dart';
 import 'package:led_panel/presentation/widgets/color_picker/color_picker_field.dart';
 import 'package:led_panel/presentation/widgets/font_family_selector/font_family_selector.dart';
 import 'package:led_panel/presentation/widgets/led_panel/led_panel.dart';
+import 'package:led_panel/presentation/widgets/multi_tabs/multi_tabs_view.dart';
+import 'package:led_panel/presentation/widgets/multi_tabs/scrollable_tab.dart';
 import 'package:led_panel/presentation/widgets/numeric_value_selector/numeric_value_selector.dart';
 import 'package:led_panel/theme/constants/app_colors.dart';
 import 'package:led_panel/theme/constants/app_durations.dart';
@@ -25,16 +27,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final TextEditingController _textEditingController = TextEditingController();
+  final TextEditingController _messageController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _textEditingController.text = context
-        .read<LedPanelBloc>()
-        .state
-        .config
-        .text;
+    _messageController.text = context.read<LedPanelBloc>().state.config.text;
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
@@ -43,7 +41,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void dispose() {
-    _textEditingController.dispose();
+    _messageController.dispose();
     super.dispose();
   }
 
@@ -56,29 +54,30 @@ class _HomePageState extends State<HomePage> {
         return Scaffold(
           appBar: AppBar(title: const Text('Led Panel Configuration')),
           body: SafeArea(
-            child: Padding(
-              padding: AppSpacing.screenPadding,
-              child: Column(
-                children: [
-                  // Led Panel Preview ----------------------------------------------
-                  Container(
-                    decoration: BoxDecoration(
-                      color: AppColors.black,
-                      borderRadius: AppRadius.borderRadiusLg,
-                    ),
-                    margin: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
-                    child: LedPanel(
-                      config: state.config,
-                      panelHeight:
-                          context.screenSize.width *
-                          context.screenSize.width /
-                          context.screenSize.height,
-                    ),
+            child: Column(
+              spacing: AppSpacing.md,
+              children: [
+                // Led Panel Preview ----------------------------------------------
+                Container(
+                  margin: AppSpacing.screenPadding,
+                  decoration: BoxDecoration(
+                    color: AppColors.black,
+                    borderRadius: AppRadius.borderRadiusLg,
                   ),
+                  child: LedPanel(
+                    config: state.config,
+                    panelHeight:
+                        context.screenSize.width *
+                        context.screenSize.width /
+                        context.screenSize.height,
+                  ),
+                ),
 
-                  // Message ----------------------------------------------
-                  TextField(
-                    controller: _textEditingController,
+                // Message ----------------------------------------------
+                Padding(
+                  padding: AppSpacing.screenPadding,
+                  child: TextField(
+                    controller: _messageController,
                     onChanged: (value) {
                       bloc.add(LedPanelTextChanged(value));
                     },
@@ -88,16 +87,14 @@ class _HomePageState extends State<HomePage> {
                       hintText: 'Escribe el mensaje del panel...',
                     ),
                   ),
+                ),
 
-                  // Configuration Controls ----------------------------------------------
-                  Expanded(
-                    child: SingleChildScrollView(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: AppSpacing.lg,
-                      ),
-                      child: Column(
-                        spacing: AppSpacing.md,
-                        crossAxisAlignment: .stretch,
+                // Configuration Controls ----------------------------------------------
+                Expanded(
+                  child: MultiTabsView(
+                    tabNames: ['Texto', 'Animación y Fondo'],
+                    tabViews: [
+                      ScrollableTab(
                         children: [
                           // Color ----------------------------------------------
                           ColorPickerField(
@@ -111,20 +108,6 @@ class _HomePageState extends State<HomePage> {
                             selectedFontFamily: state.config.fontFamily,
                             onChanged: (fontFamily) =>
                                 bloc.add(LedPanelFontFamilyChanged(fontFamily)),
-                          ),
-
-                          // Speed ----------------------------------------------
-                          NumericValueSelector(
-                            label: 'VELOCIDAD',
-                            unit: 'px/s',
-                            value: state.config.speed.round(),
-                            minValue: 20,
-                            maxValue: 500,
-                            incrementStep: 5,
-                            decrementStep: 5,
-                            onChanged: (value) => bloc.add(
-                              LedPanelSpeedChanged(value.toDouble()),
-                            ),
                           ),
 
                           // Font Size ----------------------------------------------
@@ -142,10 +125,27 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ],
                       ),
-                    ),
+                      ScrollableTab(
+                        children: [
+                          // Speed ----------------------------------------------
+                          NumericValueSelector(
+                            label: 'VELOCIDAD',
+                            unit: 'px/s',
+                            value: state.config.speed.round(),
+                            minValue: 20,
+                            maxValue: 500,
+                            incrementStep: 5,
+                            decrementStep: 5,
+                            onChanged: (value) => bloc.add(
+                              LedPanelSpeedChanged(value.toDouble()),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
 

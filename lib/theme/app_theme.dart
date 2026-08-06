@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:led_panel/theme/constants/app_opacity.dart';
 import 'styles/app_button_styles.dart';
 import 'constants/app_colors.dart';
-import 'app_input_theme.dart';
+import 'themes/app_input_theme.dart';
 import 'constants/app_radius.dart';
 import 'constants/app_sizes.dart';
 import 'constants/app_spacing.dart';
-import 'app_text_theme.dart';
+import 'themes/app_text_theme.dart';
+import 'themes/app_tab_bar_theme.dart';
 import 'constants/app_typography.dart';
 
 /// Punto único de acceso al theme de la aplicación.
@@ -69,6 +70,7 @@ class AppTheme {
       // Inputs
       // ---------------------------------------------------------------
       inputDecorationTheme: isDark ? AppInputTheme.dark : AppInputTheme.light,
+      tabBarTheme: isDark ? AppTabBarTheme.dark : AppTabBarTheme.light,
 
       // ---------------------------------------------------------------
       // Cards

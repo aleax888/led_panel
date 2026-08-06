@@ -13,7 +13,7 @@ class LedPanelConfigModel {
     this.speed = 80.0,
     this.text = 'HELLO WORLD!',
     this.color = AppColors.primary,
-    this.fontSize = AppTypography.sizeDisplay,
+    this.fontSize = 150.0,
     this.fontFamily = AppTypography.fontPixelifySans,
   });
 

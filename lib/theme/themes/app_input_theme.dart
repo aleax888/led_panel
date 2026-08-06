@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'constants/app_colors.dart';
-import 'constants/app_radius.dart';
-import 'constants/app_sizes.dart';
-import 'constants/app_spacing.dart';
-import 'constants/app_typography.dart';
+import '../constants/app_colors.dart';
+import '../constants/app_radius.dart';
+import '../constants/app_sizes.dart';
+import '../constants/app_spacing.dart';
+import '../constants/app_typography.dart';
 
 /// Theme de los campos de texto (TextField / TextFormField).
 class AppInputTheme {

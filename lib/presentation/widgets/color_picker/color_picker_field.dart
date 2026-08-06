@@ -63,17 +63,11 @@ class _ColorPickerFieldState extends State<ColorPickerField> {
       spacing: AppSpacing.sm,
       crossAxisAlignment: .end,
       children: [
-        Expanded(
-          child: SingleChildScrollView(
-            scrollDirection: .horizontal,
-            child: Row(
-              spacing: AppSpacing.sm,
-              children: [
-                ..._colorOptions.map(
-                  (e) => ColorOption(color: e, onTap: () => _onColorChanged(e)),
-                ),
-              ],
-            ),
+        GestureDetector(
+          onTap: () => _openColorPicker(context),
+          child: InputLabel(
+            label: 'COLOR',
+            child: ColorPreview(color: _selectedColor),
           ),
         ),
         SizedBox(
@@ -85,11 +79,17 @@ class _ColorPickerFieldState extends State<ColorPickerField> {
             color: context.colors.onSurfaceVariant,
           ),
         ),
-        GestureDetector(
-          onTap: () => _openColorPicker(context),
-          child: InputLabel(
-            label: 'Color',
-            child: ColorPreview(color: _selectedColor),
+        Expanded(
+          child: SingleChildScrollView(
+            scrollDirection: .horizontal,
+            child: Row(
+              spacing: AppSpacing.sm,
+              children: [
+                ..._colorOptions.map(
+                  (e) => ColorOption(color: e, onTap: () => _onColorChanged(e)),
+                ),
+              ],
+            ),
           ),
         ),
       ],

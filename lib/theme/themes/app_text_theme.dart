@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'constants/app_colors.dart';
-import 'constants/app_typography.dart';
+import '../constants/app_colors.dart';
+import '../constants/app_typography.dart';
 
 /// Construye el [TextTheme] de la app a partir de los valores
 /// definidos en [AppTypography] y [AppColors].
