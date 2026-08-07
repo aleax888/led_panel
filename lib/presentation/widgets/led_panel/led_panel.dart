@@ -82,8 +82,6 @@ class _LedPanelState extends State<LedPanel>
       _scheduleMaxOffsetUpdate();
     }
 
-    // Si cambia el sentido, reiniciamos el offset para evitar un salto
-    // visual raro (el contenido pasaría a leerse desde el otro extremo).
     if (oldWidget.config.direction != widget.config.direction) {
       _offset.value = _maxOffset - _offset.value;
     }
