@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:led_panel/data/led_panel_config_model.dart';
+import 'package:led_panel/presentation/widgets/led_panel/led_panel_direction_enum.dart';
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
@@ -17,6 +18,7 @@ class LedPanelBloc extends Bloc<LedPanelEvent, LedPanelState> {
     on<LedPanelWordSpacingChanged>(_onWordSpacingChanged);
     on<LedPanelGlowRadiusChanged>(_onGlowRadiusChanged);
     on<LedPanelSpeedChanged>(_onSpeedChanged);
+    on<LedPanelDirectionChanged>(_onDirectionChanged);
     on<LedPanelBackgroundColorChanged>(_onBackgroundColorChanged);
     on<LedPanelLedsColorChanged>(_onLedsColorChanged);
   }
@@ -90,6 +92,15 @@ class LedPanelBloc extends Bloc<LedPanelEvent, LedPanelState> {
     Emitter<LedPanelState> emit,
   ) {
     emit(state.copyWith(config: state.config.copyWith(speed: event.speed)));
+  }
+
+  void _onDirectionChanged(
+    LedPanelDirectionChanged event,
+    Emitter<LedPanelState> emit,
+  ) {
+    emit(
+      state.copyWith(config: state.config.copyWith(direction: event.direction)),
+    );
   }
 
   void _onBackgroundColorChanged(

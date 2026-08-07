@@ -4,6 +4,7 @@ import 'package:led_panel/data/led_panel_config_model.dart';
 import 'package:led_panel/extensions/context_extension.dart';
 import 'package:led_panel/presentation/widgets/led_panel/auxiliary_spacer.dart';
 import 'package:led_panel/presentation/widgets/led_panel/dot_pattern.dart';
+import 'package:led_panel/presentation/widgets/led_panel/led_panel_direction_enum.dart';
 
 /// Un Widget que emula un panel LED de texto desplazante (marquee).
 ///
@@ -14,6 +15,11 @@ import 'package:led_panel/presentation/widgets/led_panel/dot_pattern.dart';
 /// se layoutee a su tamaño REAL (vía [OverflowBox]) sin que el alto fijo
 /// del panel lo comprima — un [Viewport] de scroll necesita alto acotado,
 /// un [Row] suelto no.
+///
+/// El sentido del desplazamiento se controla con [direction]: por defecto
+/// ([LedPanelDirection.toLeft]) el texto entra por la derecha y se mueve
+/// hacia la izquierda; con [LedPanelDirection.toRight] entra por la
+/// izquierda y se mueve hacia la derecha.
 class LedPanel extends StatefulWidget {
   final LedPanelConfigModel config;
   final double? panelHeight;
@@ -37,7 +43,8 @@ class _LedPanelState extends State<LedPanel>
   /// Key sobre la fila de contenido, para leer su ancho real ya calculado.
   final GlobalKey _contentKey = GlobalKey();
 
-  /// Offset horizontal actual.
+  /// Offset horizontal actual (magnitud del desplazamiento, siempre >= 0;
+  /// el signo real que se aplica depende de [LedPanel.direction]).
   final ValueNotifier<double> _offset = ValueNotifier<double>(0.0);
 
   late final Ticker _ticker;
@@ -74,6 +81,12 @@ class _LedPanelState extends State<LedPanel>
     if (layoutMayHaveChanged) {
       _scheduleMaxOffsetUpdate();
     }
+
+    // Si cambia el sentido, reiniciamos el offset para evitar un salto
+    // visual raro (el contenido pasaría a leerse desde el otro extremo).
+    if (oldWidget.config.direction != widget.config.direction) {
+      _offset.value = _maxOffset - _offset.value;
+    }
   }
 
   @override
@@ -104,12 +117,15 @@ class _LedPanelState extends State<LedPanel>
               maxWidth: double.infinity,
               minHeight: 0,
               maxHeight: double.infinity,
-              alignment: const Alignment(-1, 0),
+              alignment: widget.config.direction.alignment,
               child: ValueListenableBuilder<double>(
                 valueListenable: _offset,
                 builder: (context, offset, child) {
                   return Transform.translate(
-                    offset: Offset(-offset, 0),
+                    offset: Offset(
+                      offset * widget.config.direction.multiplier,
+                      0,
+                    ),
                     child: child,
                   );
                 },
@@ -118,7 +134,7 @@ class _LedPanelState extends State<LedPanel>
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const AuxiliarySpacer(),
+                    AuxiliarySpacer(space: _panelWidth),
                     Text(
                       widget.config.text,
                       maxLines: 1,
@@ -137,7 +153,7 @@ class _LedPanelState extends State<LedPanel>
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    const AuxiliarySpacer(),
+                    AuxiliarySpacer(space: _panelWidth),
                   ],
                 ),
               ),

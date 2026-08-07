@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:led_panel/presentation/widgets/led_panel/led_panel_direction_enum.dart';
 import 'package:led_panel/theme/constants/app_colors.dart';
 import 'package:led_panel/theme/constants/app_typography.dart';
 
@@ -13,6 +14,7 @@ class LedPanelConfigModel {
   final double glowRadius;
   // Animation and background
   final double speed;
+  final LedPanelDirection direction;
   final Color backgroundColor;
   final Color ledsColor;
 
@@ -27,6 +29,7 @@ class LedPanelConfigModel {
     this.glowRadius = 20.0,
     // Animation
     this.speed = 80.0,
+    this.direction = .toLeft,
     this.backgroundColor = Colors.black,
     this.ledsColor = const Color(0xFFD9D9D9),
   });
@@ -42,6 +45,7 @@ class LedPanelConfigModel {
     double? glowRadius,
     // Animation
     double? speed,
+    LedPanelDirection? direction,
     Color? backgroundColor,
     Color? ledsColor,
   }) {
@@ -56,6 +60,7 @@ class LedPanelConfigModel {
       glowRadius: glowRadius ?? this.glowRadius,
       // Animation
       speed: speed ?? this.speed,
+      direction: direction ?? this.direction,
       backgroundColor: backgroundColor ?? this.backgroundColor,
       ledsColor: ledsColor ?? this.ledsColor,
     );

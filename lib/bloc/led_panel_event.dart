@@ -46,6 +46,11 @@ final class LedPanelSpeedChanged extends LedPanelEvent {
   const LedPanelSpeedChanged(this.speed);
 }
 
+final class LedPanelDirectionChanged extends LedPanelEvent {
+  final LedPanelDirection direction;
+  const LedPanelDirectionChanged(this.direction);
+}
+
 final class LedPanelBackgroundColorChanged extends LedPanelEvent {
   final Color color;
   const LedPanelBackgroundColorChanged(this.color);

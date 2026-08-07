@@ -1,0 +1,75 @@
+import 'package:flutter/material.dart';
+import 'package:led_panel/extensions/context_extension.dart';
+import 'package:led_panel/presentation/widgets/led_panel/led_panel_direction_enum.dart';
+import 'package:led_panel/theme/constants/app_radius.dart';
+import 'package:led_panel/theme/constants/app_sizes.dart';
+import 'package:led_panel/theme/constants/app_spacing.dart';
+import 'package:led_panel/theme/constants/app_typography.dart';
+
+/// Opción de selección del sentido de animación del panel.
+class DirectionSelectorOption extends StatelessWidget {
+  final LedPanelDirection direction;
+  final bool selected;
+  final VoidCallback? onTap;
+
+  const DirectionSelectorOption({
+    super.key,
+    required this.direction,
+    this.selected = false,
+    this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      button: true,
+      selected: selected,
+      label: direction.name,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: AppRadius.borderRadiusLg,
+        child: Container(
+          height: AppSizes.avatarLg,
+          decoration: BoxDecoration(
+            color: context.colors.surface,
+            borderRadius: AppRadius.borderRadiusLg,
+            border: Border.all(
+              color: selected ? context.colors.primary : context.colors.outline,
+              width: selected
+                  ? AppSizes.borderWidthThick
+                  : AppSizes.borderWidthThin,
+            ),
+          ),
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppSpacing.md,
+            vertical: AppSpacing.sm,
+          ),
+          child: Row(
+            mainAxisAlignment: .center,
+            spacing: AppSpacing.sm,
+            children: [
+              Icon(
+                direction.icon,
+                size: AppSizes.iconMd,
+                color: selected
+                    ? context.colors.primary
+                    : context.colors.onSurface,
+              ),
+              Text(
+                direction.name,
+                style: TextStyle(
+                  fontFamily: AppTypography.fontRoboto,
+                  fontSize: AppTypography.sizeBodyMd,
+                  fontWeight: AppTypography.medium,
+                  color: selected
+                      ? context.colors.primary
+                      : context.colors.onSurface,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

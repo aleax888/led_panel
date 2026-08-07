@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:led_panel/extensions/context_extension.dart';
 import 'package:led_panel/presentation/pages/display_page.dart';
 import 'package:led_panel/presentation/widgets/color_picker/color_picker_field.dart';
+import 'package:led_panel/presentation/widgets/direction_selector/direction_selector.dart';
 import 'package:led_panel/presentation/widgets/font_family_selector/font_family_selector.dart';
 import 'package:led_panel/presentation/widgets/led_panel/led_panel.dart';
 import 'package:led_panel/presentation/widgets/multi_tabs/multi_tabs_view.dart';
@@ -187,6 +188,14 @@ class _HomePageState extends State<HomePage> {
                       ),
                       ScrollableTab(
                         children: [
+                          // Direction ----------------------------------------------
+                          DirectionSelector(
+                            selectedDirection: state.config.direction,
+                            onChanged: (direction) => bloc.add(
+                              LedPanelDirectionChanged(direction),
+                            ),
+                          ),
+
                           // Speed ----------------------------------------------
                           NumericValueSelector(
                             label: 'VELOCIDAD',
