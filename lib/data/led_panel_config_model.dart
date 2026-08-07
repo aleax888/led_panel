@@ -8,6 +8,9 @@ class LedPanelConfigModel {
   final Color color;
   final double fontSize;
   final String fontFamily;
+  final double letterSpacing;
+  final double wordSpacing;
+  final double glowRadius;
 
   const LedPanelConfigModel({
     this.speed = 80.0,
@@ -15,6 +18,9 @@ class LedPanelConfigModel {
     this.color = AppColors.primary,
     this.fontSize = 150.0,
     this.fontFamily = AppTypography.fontPixelifySans,
+    this.letterSpacing = 0.0,
+    this.wordSpacing = 0.0,
+    this.glowRadius = 0.0,
   });
 
   LedPanelConfigModel copyWith({
@@ -23,6 +29,9 @@ class LedPanelConfigModel {
     Color? color,
     double? fontSize,
     String? fontFamily,
+    double? letterSpacing,
+    double? wordSpacing,
+    double? glowRadius,
   }) {
     return LedPanelConfigModel(
       speed: speed ?? this.speed,
@@ -30,6 +39,9 @@ class LedPanelConfigModel {
       color: color ?? this.color,
       fontSize: fontSize ?? this.fontSize,
       fontFamily: fontFamily ?? this.fontFamily,
+      letterSpacing: letterSpacing ?? this.letterSpacing,
+      wordSpacing: wordSpacing ?? this.wordSpacing,
+      glowRadius: glowRadius ?? this.glowRadius,
     );
   }
 }

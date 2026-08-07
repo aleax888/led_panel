@@ -123,6 +123,47 @@ class _HomePageState extends State<HomePage> {
                               LedPanelFontSizeChanged(value.toDouble()),
                             ),
                           ),
+
+                          // Letter Spacing ----------------------------------------------
+                          NumericValueSelector(
+                            label: 'ESPACIADO ENTRE LETRAS',
+                            unit: 'pt',
+                            value: state.config.letterSpacing.round(),
+                            minValue: -10,
+                            maxValue: 50,
+                            incrementStep: 1,
+                            decrementStep: 1,
+                            onChanged: (value) => bloc.add(
+                              LedPanelLetterSpacingChanged(value.toDouble()),
+                            ),
+                          ),
+
+                          // Word Spacing ----------------------------------------------
+                          NumericValueSelector(
+                            label: 'ESPACIADO ENTRE PALABRAS',
+                            unit: 'pt',
+                            value: state.config.wordSpacing.round(),
+                            minValue: -10,
+                            maxValue: 50,
+                            incrementStep: 1,
+                            decrementStep: 1,
+                            onChanged: (value) => bloc.add(
+                              LedPanelWordSpacingChanged(value.toDouble()),
+                            ),
+                          ),
+                          // Glow Radius ----------------------------------------------
+                          NumericValueSelector(
+                            label: 'RESPLANDOR',
+                            unit: 'pt',
+                            value: state.config.glowRadius.round(),
+                            minValue: 0,
+                            maxValue: 50,
+                            incrementStep: 1,
+                            decrementStep: 1,
+                            onChanged: (value) => bloc.add(
+                              LedPanelGlowRadiusChanged(value.toDouble()),
+                            ),
+                          ),
                         ],
                       ),
                       ScrollableTab(

@@ -14,6 +14,9 @@ class LedPanelBloc extends Bloc<LedPanelEvent, LedPanelState> {
     on<LedPanelSpeedChanged>(_onSpeedChanged);
     on<LedPanelFontSizeChanged>(_onFontSizeChanged);
     on<LedPanelFontFamilyChanged>(_onFontFamilyChanged);
+    on<LedPanelLetterSpacingChanged>(_onLetterSpacingChanged);
+    on<LedPanelWordSpacingChanged>(_onWordSpacingChanged);
+    on<LedPanelGlowRadiusChanged>(_onGlowRadiusChanged);
   }
 
   void _onTextChanged(LedPanelTextChanged event, Emitter<LedPanelState> emit) {
@@ -50,6 +53,39 @@ class LedPanelBloc extends Bloc<LedPanelEvent, LedPanelState> {
     emit(
       state.copyWith(
         config: state.config.copyWith(fontFamily: event.fontFamily),
+      ),
+    );
+  }
+
+  void _onLetterSpacingChanged(
+    LedPanelLetterSpacingChanged event,
+    Emitter<LedPanelState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        config: state.config.copyWith(letterSpacing: event.letterSpacing),
+      ),
+    );
+  }
+
+  void _onWordSpacingChanged(
+    LedPanelWordSpacingChanged event,
+    Emitter<LedPanelState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        config: state.config.copyWith(wordSpacing: event.wordSpacing),
+      ),
+    );
+  }
+
+  void _onGlowRadiusChanged(
+    LedPanelGlowRadiusChanged event,
+    Emitter<LedPanelState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        config: state.config.copyWith(glowRadius: event.glowRadius),
       ),
     );
   }

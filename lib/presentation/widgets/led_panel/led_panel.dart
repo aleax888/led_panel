@@ -111,6 +111,14 @@ class _LedPanelState extends State<LedPanel>
                         color: widget.config.color,
                         fontSize: widget.config.fontSize,
                         fontFamily: widget.config.fontFamily,
+                        letterSpacing: widget.config.letterSpacing,
+                        wordSpacing: widget.config.wordSpacing,
+                        shadows: [
+                          Shadow(
+                            color: widget.config.color,
+                            blurRadius: widget.config.glowRadius,
+                          ),
+                        ],
                       ),
                       textAlign: TextAlign.center,
                     ),
