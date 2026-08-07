@@ -12,11 +12,13 @@ import 'package:led_panel/theme/constants/app_spacing.dart';
 /// Campo que muestra el color actual del LED y permite cambiarlo
 /// a través de un selector de color presentado en un diálogo.
 class ColorPickerField extends StatefulWidget {
+  final String label;
   final Color? color;
   final ValueChanged<Color> onChanged;
 
   const ColorPickerField({
     super.key,
+    this.label = 'COLOR',
     required this.color,
     required this.onChanged,
   });
@@ -66,7 +68,7 @@ class _ColorPickerFieldState extends State<ColorPickerField> {
         GestureDetector(
           onTap: () => _openColorPicker(context),
           child: InputLabel(
-            label: 'COLOR',
+            label: widget.label,
             child: ColorPreview(color: _selectedColor),
           ),
         ),

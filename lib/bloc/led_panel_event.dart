@@ -10,15 +10,10 @@ final class LedPanelTextChanged extends LedPanelEvent {
   const LedPanelTextChanged(this.text);
 }
 
-final class LedPanelColorChanged extends LedPanelEvent {
+final class LedPanelTextColorChanged extends LedPanelEvent {
   final Color color;
 
-  const LedPanelColorChanged(this.color);
-}
-
-final class LedPanelSpeedChanged extends LedPanelEvent {
-  final double speed;
-  const LedPanelSpeedChanged(this.speed);
+  const LedPanelTextColorChanged(this.color);
 }
 
 final class LedPanelFontSizeChanged extends LedPanelEvent {
@@ -44,4 +39,19 @@ final class LedPanelWordSpacingChanged extends LedPanelEvent {
 final class LedPanelGlowRadiusChanged extends LedPanelEvent {
   final double glowRadius;
   const LedPanelGlowRadiusChanged(this.glowRadius);
+}
+
+final class LedPanelSpeedChanged extends LedPanelEvent {
+  final double speed;
+  const LedPanelSpeedChanged(this.speed);
+}
+
+final class LedPanelBackgroundColorChanged extends LedPanelEvent {
+  final Color color;
+  const LedPanelBackgroundColorChanged(this.color);
+}
+
+final class LedPanelLedsColorChanged extends LedPanelEvent {
+  final Color color;
+  const LedPanelLedsColorChanged(this.color);
 }

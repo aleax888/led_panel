@@ -12,7 +12,6 @@ import 'package:led_panel/presentation/widgets/led_panel/led_panel.dart';
 import 'package:led_panel/presentation/widgets/multi_tabs/multi_tabs_view.dart';
 import 'package:led_panel/presentation/widgets/multi_tabs/scrollable_tab.dart';
 import 'package:led_panel/presentation/widgets/numeric_value_selector/numeric_value_selector.dart';
-import 'package:led_panel/theme/constants/app_colors.dart';
 import 'package:led_panel/theme/constants/app_durations.dart';
 import 'package:led_panel/theme/constants/app_radius.dart';
 import 'package:led_panel/theme/constants/app_spacing.dart';
@@ -68,16 +67,13 @@ class _HomePageState extends State<HomePage> {
                 // Led Panel Preview ----------------------------------------------
                 Container(
                   margin: AppSpacing.screenPadding,
-                  decoration: BoxDecoration(
-                    color: AppColors.black,
-                    borderRadius: AppRadius.borderRadiusLg,
-                  ),
                   child: Stack(
                     children: [
                       LedPanel(
                         config: state.config.copyWithProportion(proportion),
                         panelWidth: fixedPanelWidth,
                         panelHeight: fixedPanelHeight,
+                        borderRadius: AppRadius.borderRadiusLg,
                       ),
                       // Play Button ------------------------------------------------------
                       Positioned(
@@ -120,9 +116,9 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           // Color ----------------------------------------------
                           ColorPickerField(
-                            color: state.config.color,
+                            color: state.config.textColor,
                             onChanged: (color) =>
-                                bloc.add(LedPanelColorChanged(color)),
+                                bloc.add(LedPanelTextColorChanged(color)),
                           ),
 
                           // Font Family ----------------------------------------------
@@ -137,7 +133,7 @@ class _HomePageState extends State<HomePage> {
                             label: 'TAMAÑO',
                             unit: 'pt',
                             value: state.config.fontSize.round(),
-                            minValue: 14,
+                            minValue: 100,
                             maxValue: 300,
                             incrementStep: 2,
                             decrementStep: 2,
@@ -203,6 +199,22 @@ class _HomePageState extends State<HomePage> {
                             onChanged: (value) => bloc.add(
                               LedPanelSpeedChanged(value.toDouble()),
                             ),
+                          ),
+
+                          // Background Color ----------------------------------------------
+                          ColorPickerField(
+                            label: 'FONDO',
+                            color: state.config.backgroundColor,
+                            onChanged: (color) =>
+                                bloc.add(LedPanelBackgroundColorChanged(color)),
+                          ),
+
+                          // Leds Color ----------------------------------------------
+                          ColorPickerField(
+                            label: 'LEDS',
+                            color: state.config.ledsColor,
+                            onChanged: (color) =>
+                                bloc.add(LedPanelLedsColorChanged(color)),
                           ),
                           SizedBox(),
                         ],

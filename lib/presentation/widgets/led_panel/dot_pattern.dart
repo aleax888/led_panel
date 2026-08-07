@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 
 class DotPattern extends StatelessWidget {
+  final double radius;
+  final double spacing;
+  final Color color;
   const DotPattern({
     super.key,
     this.radius = 3,
     this.spacing = 1,
-    this.color = const Color.fromARGB(30, 217, 217, 217),
+    this.color = const Color(0xFFD9D9D9),
   });
-
-  final double radius;
-  final double spacing;
-  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +37,10 @@ class DotPatternPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final paint = Paint()..color = color;
+    final paint = Paint()
+      ..color = (Color.lerp(color, Color(0xFFD9D9D9), 0.2) ?? color).withAlpha(
+        30,
+      );
     final step = radius * 2 + spacing;
 
     for (double y = radius; y < size.height; y += step) {

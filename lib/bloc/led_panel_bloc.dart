@@ -10,31 +10,26 @@ part 'led_panel_state.dart';
 class LedPanelBloc extends Bloc<LedPanelEvent, LedPanelState> {
   LedPanelBloc() : super(const LedPanelState()) {
     on<LedPanelTextChanged>(_onTextChanged);
-    on<LedPanelColorChanged>(_onColorChanged);
-    on<LedPanelSpeedChanged>(_onSpeedChanged);
+    on<LedPanelTextColorChanged>(_onTextColorChanged);
     on<LedPanelFontSizeChanged>(_onFontSizeChanged);
     on<LedPanelFontFamilyChanged>(_onFontFamilyChanged);
     on<LedPanelLetterSpacingChanged>(_onLetterSpacingChanged);
     on<LedPanelWordSpacingChanged>(_onWordSpacingChanged);
     on<LedPanelGlowRadiusChanged>(_onGlowRadiusChanged);
+    on<LedPanelSpeedChanged>(_onSpeedChanged);
+    on<LedPanelBackgroundColorChanged>(_onBackgroundColorChanged);
+    on<LedPanelLedsColorChanged>(_onLedsColorChanged);
   }
 
   void _onTextChanged(LedPanelTextChanged event, Emitter<LedPanelState> emit) {
     emit(state.copyWith(config: state.config.copyWith(text: event.text)));
   }
 
-  void _onColorChanged(
-    LedPanelColorChanged event,
+  void _onTextColorChanged(
+    LedPanelTextColorChanged event,
     Emitter<LedPanelState> emit,
   ) {
-    emit(state.copyWith(config: state.config.copyWith(color: event.color)));
-  }
-
-  void _onSpeedChanged(
-    LedPanelSpeedChanged event,
-    Emitter<LedPanelState> emit,
-  ) {
-    emit(state.copyWith(config: state.config.copyWith(speed: event.speed)));
+    emit(state.copyWith(config: state.config.copyWith(textColor: event.color)));
   }
 
   void _onFontSizeChanged(
@@ -88,5 +83,30 @@ class LedPanelBloc extends Bloc<LedPanelEvent, LedPanelState> {
         config: state.config.copyWith(glowRadius: event.glowRadius),
       ),
     );
+  }
+
+  void _onSpeedChanged(
+    LedPanelSpeedChanged event,
+    Emitter<LedPanelState> emit,
+  ) {
+    emit(state.copyWith(config: state.config.copyWith(speed: event.speed)));
+  }
+
+  void _onBackgroundColorChanged(
+    LedPanelBackgroundColorChanged event,
+    Emitter<LedPanelState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        config: state.config.copyWith(backgroundColor: event.color),
+      ),
+    );
+  }
+
+  void _onLedsColorChanged(
+    LedPanelLedsColorChanged event,
+    Emitter<LedPanelState> emit,
+  ) {
+    emit(state.copyWith(config: state.config.copyWith(ledsColor: event.color)));
   }
 }

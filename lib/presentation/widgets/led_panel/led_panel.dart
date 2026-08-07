@@ -18,12 +18,14 @@ class LedPanel extends StatefulWidget {
   final LedPanelConfigModel config;
   final double? panelHeight;
   final double? panelWidth;
+  final BorderRadius? borderRadius;
 
   const LedPanel({
     super.key,
     required this.config,
     this.panelHeight,
     this.panelWidth,
+    this.borderRadius,
   });
 
   @override
@@ -41,10 +43,10 @@ class _LedPanelState extends State<LedPanel>
   late final Ticker _ticker;
   Duration _lastElapsed = Duration.zero;
 
-  /// Ancho total desplazable (screenWidth + textWidth), cacheado y
-  /// recalculado post-frame cuando cambia el layout del contenido.
+  /// Ancho total desplazable.
   double _maxOffset = 0.0;
 
+  double get _panelHeight => widget.panelHeight ?? context.screenSize.height;
   double get _panelWidth => widget.panelWidth ?? context.screenSize.width;
 
   @override
@@ -83,15 +85,20 @@ class _LedPanelState extends State<LedPanel>
 
   @override
   Widget build(BuildContext context) {
-    return ClipRect(
-      child: SizedBox(
+    return ClipRRect(
+      borderRadius: widget.borderRadius ?? BorderRadius.circular(0.0),
+      child: Container(
         width: _panelWidth,
-        height: widget.panelHeight,
+        height: _panelHeight,
+        decoration: BoxDecoration(
+          color: widget.config.backgroundColor,
+          borderRadius: widget.borderRadius,
+        ),
         child: Stack(
           alignment: .center,
           clipBehavior: .hardEdge,
           children: [
-            const DotPattern(),
+            DotPattern(color: widget.config.ledsColor),
             OverflowBox(
               minWidth: 0,
               maxWidth: double.infinity,
@@ -116,14 +123,14 @@ class _LedPanelState extends State<LedPanel>
                       widget.config.text,
                       maxLines: 1,
                       style: TextStyle(
-                        color: widget.config.color,
+                        color: widget.config.textColor,
                         fontSize: widget.config.fontSize,
                         fontFamily: widget.config.fontFamily,
                         letterSpacing: widget.config.letterSpacing,
                         wordSpacing: widget.config.wordSpacing,
                         shadows: [
                           Shadow(
-                            color: widget.config.color,
+                            color: widget.config.textColor,
                             blurRadius: widget.config.glowRadius,
                           ),
                         ],
