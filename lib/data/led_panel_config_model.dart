@@ -20,7 +20,7 @@ class LedPanelConfigModel {
     this.fontFamily = AppTypography.fontPixelifySans,
     this.letterSpacing = 0.0,
     this.wordSpacing = 0.0,
-    this.glowRadius = 0.0,
+    this.glowRadius = 20.0,
   });
 
   LedPanelConfigModel copyWith({
@@ -42,6 +42,16 @@ class LedPanelConfigModel {
       letterSpacing: letterSpacing ?? this.letterSpacing,
       wordSpacing: wordSpacing ?? this.wordSpacing,
       glowRadius: glowRadius ?? this.glowRadius,
+    );
+  }
+
+  LedPanelConfigModel copyWithProportion(double proportion) {
+    return copyWith(
+      speed: speed * proportion,
+      fontSize: fontSize * proportion,
+      letterSpacing: letterSpacing * proportion,
+      wordSpacing: wordSpacing * proportion,
+      glowRadius: glowRadius * proportion,
     );
   }
 }

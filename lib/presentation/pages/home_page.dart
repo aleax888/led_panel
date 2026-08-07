@@ -50,6 +50,13 @@ class _HomePageState extends State<HomePage> {
     return BlocBuilder<LedPanelBloc, LedPanelState>(
       builder: (context, state) {
         final LedPanelBloc bloc = context.read<LedPanelBloc>();
+        final double fixedPanelWidth =
+            context.screenSize.width - AppSpacing.screenPadding.horizontal;
+        final double fixedPanelHeight =
+            ((context.screenSize.width - AppSpacing.screenPadding.horizontal) *
+                context.screenSize.width) /
+            context.screenSize.height;
+        final double proportion = fixedPanelWidth / context.screenSize.height;
 
         return Scaffold(
           appBar: AppBar(title: const Text('Led Panel Configuration')),
@@ -57,6 +64,7 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               spacing: AppSpacing.md,
               children: [
+                SizedBox(),
                 // Led Panel Preview ----------------------------------------------
                 Container(
                   margin: AppSpacing.screenPadding,
@@ -64,12 +72,26 @@ class _HomePageState extends State<HomePage> {
                     color: AppColors.black,
                     borderRadius: AppRadius.borderRadiusLg,
                   ),
-                  child: LedPanel(
-                    config: state.config,
-                    panelHeight:
-                        context.screenSize.width *
-                        context.screenSize.width /
-                        context.screenSize.height,
+                  child: Stack(
+                    children: [
+                      LedPanel(
+                        config: state.config.copyWithProportion(proportion),
+                        panelWidth: fixedPanelWidth,
+                        panelHeight: fixedPanelHeight,
+                      ),
+                      // Play Button ------------------------------------------------------
+                      Positioned(
+                        right: AppSpacing.xs,
+                        top: AppSpacing.xs,
+                        child: IconButton(
+                          onPressed: _navigateToDisplay,
+                          icon: Icon(
+                            Icons.open_in_full_rounded,
+                            color: context.colors.onPrimary,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
 
@@ -164,6 +186,7 @@ class _HomePageState extends State<HomePage> {
                               LedPanelGlowRadiusChanged(value.toDouble()),
                             ),
                           ),
+                          SizedBox(),
                         ],
                       ),
                       ScrollableTab(
@@ -181,6 +204,7 @@ class _HomePageState extends State<HomePage> {
                               LedPanelSpeedChanged(value.toDouble()),
                             ),
                           ),
+                          SizedBox(),
                         ],
                       ),
                     ],
@@ -188,12 +212,6 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],
             ),
-          ),
-
-          // Play Button ------------------------------------------------------
-          floatingActionButton: FloatingActionButton(
-            onPressed: _navigateToDisplay,
-            child: const Icon(Icons.play_arrow),
           ),
         );
       },

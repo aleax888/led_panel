@@ -17,8 +17,14 @@ import 'package:led_panel/presentation/widgets/led_panel/dot_pattern.dart';
 class LedPanel extends StatefulWidget {
   final LedPanelConfigModel config;
   final double? panelHeight;
+  final double? panelWidth;
 
-  const LedPanel({super.key, required this.config, this.panelHeight});
+  const LedPanel({
+    super.key,
+    required this.config,
+    this.panelHeight,
+    this.panelWidth,
+  });
 
   @override
   State<LedPanel> createState() => _LedPanelState();
@@ -38,6 +44,8 @@ class _LedPanelState extends State<LedPanel>
   /// Ancho total desplazable (screenWidth + textWidth), cacheado y
   /// recalculado post-frame cuando cambia el layout del contenido.
   double _maxOffset = 0.0;
+
+  double get _panelWidth => widget.panelWidth ?? context.screenSize.width;
 
   @override
   void initState() {
@@ -77,7 +85,7 @@ class _LedPanelState extends State<LedPanel>
   Widget build(BuildContext context) {
     return ClipRect(
       child: SizedBox(
-        width: context.screenSize.width,
+        width: _panelWidth,
         height: widget.panelHeight,
         child: Stack(
           alignment: .center,
@@ -141,7 +149,7 @@ class _LedPanelState extends State<LedPanel>
       final renderBox =
           _contentKey.currentContext?.findRenderObject() as RenderBox?;
       if (renderBox == null || !renderBox.hasSize) return;
-      final double rawMax = renderBox.size.width - context.screenSize.width;
+      final double rawMax = renderBox.size.width - _panelWidth;
       _maxOffset = rawMax > 0 ? rawMax : 0;
     });
   }
