@@ -11,7 +11,6 @@ class ScrollableTab extends StatelessWidget {
       padding: AppSpacing.screenPadding,
       child: Column(
         spacing: AppSpacing.md,
-        crossAxisAlignment: .stretch,
         children: children,
       ),
     );

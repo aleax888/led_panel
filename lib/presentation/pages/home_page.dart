@@ -11,7 +11,7 @@ import 'package:led_panel/presentation/widgets/direction_selector/direction_sele
 import 'package:led_panel/presentation/widgets/font_family_selector/font_family_selector.dart';
 import 'package:led_panel/presentation/widgets/led_panel/led_panel.dart';
 import 'package:led_panel/presentation/widgets/multi_tabs/multi_tabs_view.dart';
-import 'package:led_panel/presentation/widgets/multi_tabs/scrollable_tab.dart';
+import 'package:led_panel/presentation/widgets/multi_tabs/separated_list_tab.dart';
 import 'package:led_panel/presentation/widgets/numeric_value_selector/numeric_value_selector.dart';
 import 'package:led_panel/theme/constants/app_durations.dart';
 import 'package:led_panel/theme/constants/app_radius.dart';
@@ -113,7 +113,7 @@ class _HomePageState extends State<HomePage> {
                   child: MultiTabsView(
                     tabNames: ['Texto', 'Animación y Fondo'],
                     tabViews: [
-                      ScrollableTab(
+                      SeparatedListTab(
                         children: [
                           // Color ----------------------------------------------
                           ColorPickerField(
@@ -140,6 +140,20 @@ class _HomePageState extends State<HomePage> {
                             decrementStep: 2,
                             onChanged: (value) => bloc.add(
                               LedPanelFontSizeChanged(value.toDouble()),
+                            ),
+                          ),
+
+                          // Glow Radius ----------------------------------------------
+                          NumericValueSelector(
+                            label: 'RESPLANDOR',
+                            unit: 'pt',
+                            value: state.config.glowRadius.round(),
+                            minValue: 0,
+                            maxValue: 50,
+                            incrementStep: 1,
+                            decrementStep: 1,
+                            onChanged: (value) => bloc.add(
+                              LedPanelGlowRadiusChanged(value.toDouble()),
                             ),
                           ),
 
@@ -170,30 +184,16 @@ class _HomePageState extends State<HomePage> {
                               LedPanelWordSpacingChanged(value.toDouble()),
                             ),
                           ),
-                          // Glow Radius ----------------------------------------------
-                          NumericValueSelector(
-                            label: 'RESPLANDOR',
-                            unit: 'pt',
-                            value: state.config.glowRadius.round(),
-                            minValue: 0,
-                            maxValue: 50,
-                            incrementStep: 1,
-                            decrementStep: 1,
-                            onChanged: (value) => bloc.add(
-                              LedPanelGlowRadiusChanged(value.toDouble()),
-                            ),
-                          ),
                           SizedBox(),
                         ],
                       ),
-                      ScrollableTab(
+                      SeparatedListTab(
                         children: [
                           // Direction ----------------------------------------------
                           DirectionSelector(
                             selectedDirection: state.config.direction,
-                            onChanged: (direction) => bloc.add(
-                              LedPanelDirectionChanged(direction),
-                            ),
+                            onChanged: (direction) =>
+                                bloc.add(LedPanelDirectionChanged(direction)),
                           ),
 
                           // Speed ----------------------------------------------
