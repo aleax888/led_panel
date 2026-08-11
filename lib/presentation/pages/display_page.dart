@@ -64,7 +64,10 @@ class _DisplayPageState extends State<DisplayPage> {
   }
 
   void _exitImmersivePortrait() {
-    SystemChrome.setEnabledSystemUIMode(.manual);
+    SystemChrome.setEnabledSystemUIMode(
+      .manual,
+      overlays: SystemUiOverlay.values,
+    );
     SystemChrome.setPreferredOrientations([.portraitUp, .portraitDown]);
   }
 
