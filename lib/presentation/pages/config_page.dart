@@ -43,6 +43,8 @@ class _ConfigPageState extends State<ConfigPage> {
   @override
   void deactivate() {
     _saveConfig();
+    final LedPanelBloc ledPanelBloc = context.read<LedPanelBloc>();
+    ledPanelBloc.add(LedPanelClosed());
     super.deactivate();
   }
 
