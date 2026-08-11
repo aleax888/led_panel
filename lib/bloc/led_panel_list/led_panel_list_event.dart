@@ -7,7 +7,8 @@ class LedPanelListOpened extends LedPanelListEvent {}
 
 class LedPanelListConfigSaved extends LedPanelListEvent {
   final LedPanelConfigModel config;
-  LedPanelListConfigSaved(this.config);
+  final Function(LedPanelConfigModel config) callBack;
+  LedPanelListConfigSaved(this.config, this.callBack);
 }
 
 class LedPanelListConfigDeleted extends LedPanelListEvent {

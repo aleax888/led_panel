@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:led_panel/bloc/led_panel/led_panel_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:led_panel/bloc/led_panel_list/led_panel_list_bloc.dart';
+import 'package:led_panel/data/led_panel_config_model.dart';
 
 import 'package:led_panel/extensions/context_extension.dart';
 import 'package:led_panel/presentation/pages/display_page.dart';
@@ -14,14 +15,14 @@ import 'package:led_panel/presentation/widgets/led_panel/led_panel.dart';
 import 'package:led_panel/presentation/widgets/multi_tabs/multi_tabs_view.dart';
 import 'package:led_panel/presentation/widgets/multi_tabs/separated_list_tab.dart';
 import 'package:led_panel/presentation/widgets/numeric_value_selector/numeric_value_selector.dart';
-import 'package:led_panel/theme/constants/app_durations.dart';
 import 'package:led_panel/theme/constants/app_radius.dart';
 import 'package:led_panel/theme/constants/app_spacing.dart';
 
 /// Pantalla principal: configura el mensaje y la apariencia del panel LED,
 /// con una vista previa en vivo y acceso a la reproducción a pantalla completa.
 class ConfigPage extends StatefulWidget {
-  const ConfigPage({super.key});
+  final LedPanelConfigModel? initialConfig;
+  const ConfigPage({super.key, this.initialConfig});
 
   @override
   State<ConfigPage> createState() => _ConfigPageState();
@@ -33,6 +34,7 @@ class _ConfigPageState extends State<ConfigPage> {
   @override
   void initState() {
     super.initState();
+    context.read<LedPanelBloc>().add(LedPanelConfigSelected(widget.initialConfig));
     _messageController.text = context.read<LedPanelBloc>().state.config.text;
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
@@ -43,8 +45,7 @@ class _ConfigPageState extends State<ConfigPage> {
   @override
   void deactivate() {
     _saveConfig();
-    final LedPanelBloc ledPanelBloc = context.read<LedPanelBloc>();
-    ledPanelBloc.add(LedPanelClosed());
+    context.read<LedPanelBloc>().add(LedPanelUnselected());
     super.deactivate();
   }
 
@@ -257,21 +258,19 @@ class _ConfigPageState extends State<ConfigPage> {
 
   void _navigateToDisplay() {
     _saveConfig();
-    Navigator.of(context).push(
-      PageRouteBuilder(
-        pageBuilder: (_, animation, _) => const DisplayPage(),
-        transitionsBuilder: (_, animation, _, child) => FadeTransition(
-          opacity: CurvedAnimation(parent: animation, curve: Curves.easeIn),
-          child: child,
-        ),
-        transitionDuration: AppDurations.slow,
-      ),
-    );
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (context) => const DisplayPage()));
   }
 
   void _saveConfig() {
     final LedPanelBloc ledPanelBloc = context.read<LedPanelBloc>();
     final LedPanelListBloc ledPanelListBloc = context.read<LedPanelListBloc>();
-    ledPanelListBloc.add(LedPanelListConfigSaved(ledPanelBloc.state.config));
+    ledPanelListBloc.add(
+      LedPanelListConfigSaved(
+        ledPanelBloc.state.config,
+        (config) => ledPanelBloc.add(LedPanelConfigSelected(config)),
+      ),
+    );
   }
 }

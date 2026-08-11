@@ -5,10 +5,10 @@ sealed class LedPanelEvent {
   const LedPanelEvent();
 }
 
-final class LedPanelClosed extends LedPanelEvent {}
+final class LedPanelUnselected extends LedPanelEvent {}
 
 final class LedPanelConfigSelected extends LedPanelEvent {
-  final LedPanelConfigModel config;
+  final LedPanelConfigModel? config;
   const LedPanelConfigSelected(this.config);
 }
 

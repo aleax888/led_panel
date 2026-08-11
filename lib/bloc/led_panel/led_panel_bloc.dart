@@ -10,7 +10,7 @@ part 'led_panel_state.dart';
 
 class LedPanelBloc extends Bloc<LedPanelEvent, LedPanelState> {
   LedPanelBloc() : super(const LedPanelState()) {
-    on<LedPanelClosed>(_onClosed);
+    on<LedPanelUnselected>(_onUnselected);
     on<LedPanelConfigSelected>(_onConfigSelected);
     on<LedPanelTextChanged>(_onTextChanged);
     on<LedPanelTextColorChanged>(_onTextColorChanged);
@@ -25,7 +25,7 @@ class LedPanelBloc extends Bloc<LedPanelEvent, LedPanelState> {
     on<LedPanelLedsColorChanged>(_onLedsColorChanged);
   }
 
-  void _onClosed(LedPanelClosed event, Emitter<LedPanelState> emit) {
+  void _onUnselected(LedPanelUnselected event, Emitter<LedPanelState> emit) {
     emit(const LedPanelState());
   }
 
@@ -33,7 +33,9 @@ class LedPanelBloc extends Bloc<LedPanelEvent, LedPanelState> {
     LedPanelConfigSelected event,
     Emitter<LedPanelState> emit,
   ) {
-    emit(state.copyWith(config: event.config));
+    event.config == null
+        ? emit(const LedPanelState())
+        : emit(state.copyWith(config: event.config));
   }
 
   void _onTextChanged(LedPanelTextChanged event, Emitter<LedPanelState> emit) {

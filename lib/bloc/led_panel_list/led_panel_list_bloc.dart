@@ -32,14 +32,14 @@ class LedPanelListBloc extends Bloc<LedPanelListEvent, LedPanelListState> {
     LedPanelListConfigSaved event,
     Emitter<LedPanelListState> emit,
   ) async {
-    await _repository.save(
-      event.config.copyWith(
-        id: event.config.id ?? DateTime.now().millisecondsSinceEpoch.toString(),
-        createdAt: DateTime.now(),
-      ),
+    final LedPanelConfigModel updatedConfig = event.config.copyWith(
+      id: event.config.id ?? DateTime.now().millisecondsSinceEpoch.toString(),
+      createdAt: DateTime.now(),
     );
+    await _repository.save(updatedConfig);
     final list = await _repository.getAll();
     emit(state.copyWith(configList: _sorted(list)));
+    event.callBack.call(updatedConfig);
   }
 
   Future<void> _onConfigDeleted(

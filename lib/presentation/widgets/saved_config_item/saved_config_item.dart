@@ -5,6 +5,7 @@ import 'package:led_panel/bloc/led_panel_list/led_panel_list_bloc.dart';
 import 'package:led_panel/data/led_panel_config_model.dart';
 import 'package:led_panel/extensions/context_extension.dart';
 import 'package:led_panel/presentation/pages/config_page.dart';
+import 'package:led_panel/presentation/pages/display_page.dart';
 import 'package:led_panel/presentation/widgets/led_panel/led_panel.dart';
 import 'package:led_panel/presentation/widgets/saved_config_item/delete_validation_dialog.dart';
 import 'package:led_panel/presentation/widgets/saved_config_item/favorite_button.dart';
@@ -61,11 +62,14 @@ class _SavedConfigItemState extends State<SavedConfigItem> {
             mainAxisAlignment: .spaceBetween,
             crossAxisAlignment: .end,
             children: [
-              LedPanel(
-                config: widget.config.copyWithProportion(proportion),
-                panelWidth: fixedPanelWidth,
-                panelHeight: fixedPanelHeight,
-                borderRadius: AppRadius.borderRadiusLg,
+              InkWell(
+                onTap: _onLaunch,
+                child: LedPanel(
+                  config: widget.config.copyWithProportion(proportion),
+                  panelWidth: fixedPanelWidth,
+                  panelHeight: fixedPanelHeight,
+                  borderRadius: AppRadius.borderRadiusLg,
+                ),
               ),
               Expanded(
                 child: Row(
@@ -86,13 +90,12 @@ class _SavedConfigItemState extends State<SavedConfigItem> {
     );
   }
 
-  void _onEdit() {
-    context.read<LedPanelBloc>().add(LedPanelConfigSelected(widget.config));
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => ConfigPage()),
-    );
-  }
+  void _onEdit() => Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => ConfigPage(initialConfig: widget.config),
+    ),
+  );
 
   Future<void> _onDelete() async {
     final bool? confirmDelete = await showDialog<bool>(
@@ -109,5 +112,12 @@ class _SavedConfigItemState extends State<SavedConfigItem> {
 
   void _onFavorite() {
     context.read<LedPanelListBloc>().add(LedPanelListFavorite(widget.config));
+  }
+
+  void _onLaunch() {
+    context.read<LedPanelBloc>().add(LedPanelConfigSelected(widget.config));
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (context) => const DisplayPage()));
   }
 }
