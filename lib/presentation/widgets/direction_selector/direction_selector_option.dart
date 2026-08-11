@@ -8,7 +8,7 @@ import 'package:led_panel/theme/constants/app_typography.dart';
 
 /// Opción de selección del sentido de animación del panel.
 class DirectionSelectorOption extends StatelessWidget {
-  final LedPanelDirection direction;
+  final LedPanelDirectionEnum direction;
   final bool selected;
   final VoidCallback? onTap;
 

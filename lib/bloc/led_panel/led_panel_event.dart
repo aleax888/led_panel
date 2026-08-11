@@ -5,6 +5,11 @@ sealed class LedPanelEvent {
   const LedPanelEvent();
 }
 
+final class LedPanelConfigSelected extends LedPanelEvent {
+  final LedPanelConfigModel config;
+  const LedPanelConfigSelected(this.config);
+}
+
 final class LedPanelTextChanged extends LedPanelEvent {
   final String text;
   const LedPanelTextChanged(this.text);
@@ -47,7 +52,7 @@ final class LedPanelSpeedChanged extends LedPanelEvent {
 }
 
 final class LedPanelDirectionChanged extends LedPanelEvent {
-  final LedPanelDirection direction;
+  final LedPanelDirectionEnum direction;
   const LedPanelDirectionChanged(this.direction);
 }
 

@@ -34,6 +34,7 @@ class AppSizes {
   static const double buttonHeightSm = 36;
   static const double buttonHeightMd = 48;
   static const double buttonHeightLg = 56;
+  static const double buttonHeightXl = 80;
   static const double buttonMinWidth = 88;
 
   // ---------------------------------------------------------------------

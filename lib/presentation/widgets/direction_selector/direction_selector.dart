@@ -7,8 +7,8 @@ import 'package:led_panel/theme/constants/app_spacing.dart';
 
 /// Selector horizontal del sentido del desplazamiento del texto.
 class DirectionSelector extends StatelessWidget {
-  final LedPanelDirection selectedDirection;
-  final ValueChanged<LedPanelDirection>? onChanged;
+  final LedPanelDirectionEnum selectedDirection;
+  final ValueChanged<LedPanelDirectionEnum>? onChanged;
 
   const DirectionSelector({
     super.key,
@@ -25,7 +25,7 @@ class DirectionSelector extends StatelessWidget {
         child: Row(
           spacing: AppSpacing.md,
           children: [
-            ...LedPanelDirection.values.map(
+            ...LedPanelDirectionEnum.values.map(
               (e) => Expanded(
                 child: DirectionSelectorOption(
                   direction: e,

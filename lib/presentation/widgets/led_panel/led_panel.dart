@@ -17,8 +17,8 @@ import 'package:led_panel/presentation/widgets/led_panel/led_panel_direction_enu
 /// un [Row] suelto no.
 ///
 /// El sentido del desplazamiento se controla con [direction]: por defecto
-/// ([LedPanelDirection.toLeft]) el texto entra por la derecha y se mueve
-/// hacia la izquierda; con [LedPanelDirection.toRight] entra por la
+/// ([LedPanelDirectionEnum.toLeft]) el texto entra por la derecha y se mueve
+/// hacia la izquierda; con [LedPanelDirectionEnum.toRight] entra por la
 /// izquierda y se mueve hacia la derecha.
 class LedPanel extends StatefulWidget {
   final LedPanelConfigModel config;
@@ -129,8 +129,8 @@ class _LedPanelState extends State<LedPanel>
                 },
                 child: Row(
                   key: _contentKey,
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: .min,
+                  crossAxisAlignment: .center,
                   children: [
                     AuxiliarySpacer(space: _panelWidth),
                     Text(
@@ -149,7 +149,7 @@ class _LedPanelState extends State<LedPanel>
                           ),
                         ],
                       ),
-                      textAlign: TextAlign.center,
+                      textAlign: .center,
                     ),
                     AuxiliarySpacer(space: _panelWidth),
                   ],

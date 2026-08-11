@@ -8,7 +8,6 @@ class ScrollableTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: AppSpacing.screenPadding,
       child: Column(
         spacing: AppSpacing.md,
         children: children,

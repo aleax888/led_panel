@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 /// Dirección en la que se desplaza el contenido de un [LedPanel].
-enum LedPanelDirection { toLeft, toRight }
+enum LedPanelDirectionEnum { toLeft, toRight }
 
-extension LedPanelDirectionExtension on LedPanelDirection {
+extension LedPanelDirectionExtension on LedPanelDirectionEnum {
   /// Icono asociado al sentido de desplazamiento.
   IconData get icon {
     switch (this) {

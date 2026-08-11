@@ -4,10 +4,6 @@ import 'package:led_panel/presentation/widgets/multi_tabs/multi_tabs_bar.dart';
 import 'package:led_panel/theme/constants/app_spacing.dart';
 
 /// Vista reutilizable con múltiples pestañas y contenido por tab.
-///
-/// Recibe una lista de nombres para las tabs y otra lista de widgets para el
-/// contenido correspondiente. Opcionalmente puede recibir un [TabController]
-/// externo para controlar el estado desde fuera del widget.
 class MultiTabsView extends StatefulWidget {
   final List<String> tabNames;
   final List<Widget> tabViews;
@@ -72,17 +68,21 @@ class _MultiTabsViewState extends State<MultiTabsView>
   @override
   Widget build(BuildContext context) {
     return Column(
+      spacing: AppSpacing.lg,
       children: [
-        Padding(
-          padding: widget.padding ?? const EdgeInsets.all(AppSpacing.md),
-          child: MultiTabsBar(
-            controller: _controller,
-            tabNames: widget.tabNames,
-            onTap: widget.onTabChanged,
-          ),
+        MultiTabsBar(
+          controller: _controller,
+          tabNames: widget.tabNames,
+          onTap: widget.onTabChanged,
         ),
         Expanded(
-          child: TabBarView(controller: _controller, children: widget.tabViews),
+          child: Container(
+            padding: widget.padding,
+            child: TabBarView(
+              controller: _controller,
+              children: widget.tabViews,
+            ),
+          ),
         ),
       ],
     );
