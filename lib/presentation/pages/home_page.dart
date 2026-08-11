@@ -4,7 +4,7 @@ import 'package:led_panel/bloc/led_panel_list/led_panel_list_bloc.dart';
 import 'package:led_panel/presentation/pages/config_page.dart';
 import 'package:led_panel/presentation/widgets/multi_tabs/multi_tabs_view.dart';
 import 'package:led_panel/presentation/widgets/multi_tabs/scrollable_tab.dart';
-import 'package:led_panel/presentation/widgets/saved_config_item.dart';
+import 'package:led_panel/presentation/widgets/saved_config_item/saved_config_item.dart';
 import 'package:led_panel/theme/constants/app_sizes.dart';
 import 'package:led_panel/theme/constants/app_spacing.dart';
 
@@ -56,13 +56,23 @@ class _HomePageState extends State<HomePage> {
                               ScrollableTab(
                                 children: state.configList
                                     .where((e) => !e.favorite)
-                                    .map((e) => SavedConfigItem(config: e))
+                                    .map(
+                                      (e) => SavedConfigItem(
+                                        key: ValueKey(e.id),
+                                        config: e,
+                                      ),
+                                    )
                                     .toList(),
                               ),
                               ScrollableTab(
                                 children: state.configList
                                     .where((e) => e.favorite)
-                                    .map((e) => SavedConfigItem(config: e))
+                                    .map(
+                                      (e) => SavedConfigItem(
+                                        key: ValueKey(e.id),
+                                        config: e,
+                                      ),
+                                    )
                                     .toList(),
                               ),
                             ],

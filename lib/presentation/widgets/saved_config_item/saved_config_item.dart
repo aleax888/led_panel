@@ -6,6 +6,8 @@ import 'package:led_panel/data/led_panel_config_model.dart';
 import 'package:led_panel/extensions/context_extension.dart';
 import 'package:led_panel/presentation/pages/config_page.dart';
 import 'package:led_panel/presentation/widgets/led_panel/led_panel.dart';
+import 'package:led_panel/presentation/widgets/saved_config_item/delete_validation_dialog.dart';
+import 'package:led_panel/presentation/widgets/saved_config_item/favorite_button.dart';
 import 'package:led_panel/theme/constants/app_radius.dart';
 import 'package:led_panel/theme/constants/app_sizes.dart';
 import 'package:led_panel/theme/constants/app_spacing.dart';
@@ -33,7 +35,7 @@ class _SavedConfigItemState extends State<SavedConfigItem> {
         fixedRelation;
     final double proportion = fixedPanelWidth / context.screenSize.height;
     return Container(
-      padding: AppSpacing.cardPadding,
+      padding: AppSpacing.cardPadding.copyWith(top: 0.0),
       decoration: BoxDecoration(
         color: context.colors.surface,
         border: Border.all(
@@ -43,9 +45,18 @@ class _SavedConfigItemState extends State<SavedConfigItem> {
         borderRadius: AppRadius.borderRadiusLg,
       ),
       child: Column(
-        spacing: AppSpacing.md,
         crossAxisAlignment: .start,
         children: [
+          Row(
+            mainAxisAlignment: .spaceBetween,
+            children: [
+              Text(AppDateFormater.long(widget.config.createdAt)),
+              FavoriteButton(
+                isFavorite: widget.config.favorite,
+                onChanged: _onFavorite,
+              ),
+            ],
+          ),
           Row(
             mainAxisAlignment: .spaceBetween,
             crossAxisAlignment: .end,
@@ -70,41 +81,33 @@ class _SavedConfigItemState extends State<SavedConfigItem> {
               ),
             ],
           ),
-          Row(
-            mainAxisAlignment: .spaceBetween,
-            children: [
-              Text(AppDateFormater.long(widget.config.createdAt)),
-              IconButton(
-                onPressed: _onFavorite,
-                icon: Icon(
-                  widget.config.favorite
-                      ? Icons.star_rate_rounded
-                      : Icons.star_border_rounded,
-                ),
-              ),
-            ],
-          ),
         ],
       ),
     );
   }
 
   void _onEdit() {
-    final LedPanelBloc ledPanelBloc = context.read<LedPanelBloc>();
-    ledPanelBloc.add(LedPanelConfigSelected(widget.config));
+    context.read<LedPanelBloc>().add(LedPanelConfigSelected(widget.config));
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => ConfigPage()),
     );
   }
 
-  void _onDelete() {
-    final LedPanelListBloc ledPanelListBloc = context.read<LedPanelListBloc>();
-    ledPanelListBloc.add(LedPanelListConfigDeleted(widget.config.id ?? ''));
+  Future<void> _onDelete() async {
+    final bool? confirmDelete = await showDialog<bool>(
+      context: context,
+      builder: (_) => const DeleteValidationDialog(),
+    );
+
+    if (mounted && confirmDelete == true) {
+      context.read<LedPanelListBloc>().add(
+        LedPanelListConfigDeleted(widget.config.id ?? ''),
+      );
+    }
   }
 
   void _onFavorite() {
-    final LedPanelListBloc ledPanelListBloc = context.read<LedPanelListBloc>();
-    ledPanelListBloc.add(LedPanelListFavorite(widget.config));
+    context.read<LedPanelListBloc>().add(LedPanelListFavorite(widget.config));
   }
 }

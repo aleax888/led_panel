@@ -29,7 +29,7 @@ class AppButtonStyles {
         minimumSize: const Size(AppSizes.buttonMinWidth, AppSizes.buttonHeightMd),
         padding: AppSpacing.buttonPadding,
         elevation: AppSizes.elevationSm,
-        shape: const RoundedRectangleBorder(borderRadius: AppRadius.borderRadiusMd),
+        shape: const RoundedRectangleBorder(borderRadius: AppRadius.borderRadiusLg),
         textStyle: _labelStyle,
       ),
     );
