@@ -4,8 +4,10 @@ import 'package:led_panel/theme/constants/app_colors.dart';
 import 'package:led_panel/theme/constants/app_typography.dart';
 
 class LedPanelConfigModel {
+  // Metadata
   final String? id;
   final DateTime? createdAt;
+  final bool favorite;
   // Text Style
   final String text;
   final Color textColor;
@@ -21,8 +23,10 @@ class LedPanelConfigModel {
   final Color ledsColor;
 
   const LedPanelConfigModel({
+    // Metadata
     this.id,
     this.createdAt,
+    this.favorite = false,
     // Text Style
     this.text = 'HELLO WORLD!',
     this.textColor = AppColors.primary,
@@ -39,8 +43,10 @@ class LedPanelConfigModel {
   });
 
   LedPanelConfigModel copyWith({
+    // Metadata
     String? id,
     DateTime? createdAt,
+    bool? favorite,
     // Text Style
     String? text,
     Color? textColor,
@@ -56,8 +62,10 @@ class LedPanelConfigModel {
     Color? ledsColor,
   }) {
     return LedPanelConfigModel(
+      // Metadata
       id: id ?? this.id,
       createdAt: createdAt ?? this.createdAt,
+      favorite: favorite ?? this.favorite,
       // Text Style
       text: text ?? this.text,
       textColor: textColor ?? this.textColor,
@@ -86,8 +94,10 @@ class LedPanelConfigModel {
 
   factory LedPanelConfigModel.fromJson(Map<String, dynamic> json) {
     return LedPanelConfigModel(
+      // Metadata
       id: json['id'],
       createdAt: DateTime.tryParse(json['created_at'] ?? ''),
+      favorite: json['favorite'] ?? false,
       // Text Style
       text: json['text'] as String? ?? 'HELLO WORLD!',
       textColor: json['text_color'] != null
@@ -116,8 +126,10 @@ class LedPanelConfigModel {
 
   Map<String, dynamic> toJson() {
     return {
+      // Metadata
       'id': id,
       'created_at': createdAt?.toIso8601String(),
+      'favorite': favorite,
       // Text Style
       'text': text,
       'text_color': textColor.toARGB32(),

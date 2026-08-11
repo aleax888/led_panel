@@ -55,11 +55,13 @@ class _HomePageState extends State<HomePage> {
                             tabViews: [
                               ScrollableTab(
                                 children: state.configList
+                                    .where((e) => !e.favorite)
                                     .map((e) => SavedConfigItem(config: e))
                                     .toList(),
                               ),
                               ScrollableTab(
                                 children: state.configList
+                                    .where((e) => e.favorite)
                                     .map((e) => SavedConfigItem(config: e))
                                     .toList(),
                               ),

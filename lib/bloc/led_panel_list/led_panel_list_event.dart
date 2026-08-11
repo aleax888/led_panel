@@ -14,3 +14,8 @@ class LedPanelListConfigDeleted extends LedPanelListEvent {
   final String id;
   LedPanelListConfigDeleted(this.id);
 }
+
+class LedPanelListFavorite extends LedPanelListEvent {
+  final LedPanelConfigModel config;
+  LedPanelListFavorite(this.config);
+}

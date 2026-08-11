@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/date_symbol_data_local.dart' as intl_local_data;
 
 import 'package:led_panel/bloc/led_panel_list/led_panel_list_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,6 +9,7 @@ import 'package:led_panel/presentation/pages/home_page.dart';
 import 'package:led_panel/theme/app_theme.dart';
 
 void main() {
+  intl_local_data.initializeDateFormatting();
   runApp(const LedPanelApp());
 }
 

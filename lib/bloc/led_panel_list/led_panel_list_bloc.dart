@@ -13,6 +13,7 @@ class LedPanelListBloc extends Bloc<LedPanelListEvent, LedPanelListState> {
     on<LedPanelListOpened>(_onOpened);
     on<LedPanelListConfigSaved>(_onConfigSaved);
     on<LedPanelListConfigDeleted>(_onConfigDeleted);
+    on<LedPanelListFavorite>(_onFavorite);
   }
 
   final LedPanelListRepository _repository =
@@ -46,6 +47,20 @@ class LedPanelListBloc extends Bloc<LedPanelListEvent, LedPanelListState> {
     Emitter<LedPanelListState> emit,
   ) async {
     await _repository.delete(event.id);
+    final list = await _repository.getAll();
+    emit(state.copyWith(configList: _sorted(list)));
+  }
+
+  Future<void> _onFavorite(
+    LedPanelListFavorite event,
+    Emitter<LedPanelListState> emit,
+  ) async {
+    await _repository.save(
+      event.config.copyWith(
+        favorite: !event.config.favorite,
+        createdAt: DateTime.now(),
+      ),
+    );
     final list = await _repository.getAll();
     emit(state.copyWith(configList: _sorted(list)));
   }

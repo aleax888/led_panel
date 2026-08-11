@@ -13,6 +13,7 @@ dependencies:
   cupertino_icons: ^1.0.8
 
   flutter_bloc: ^9.1.1
+  intl: ^0.20.3
   shared_preferences: ^2.5.5
   flutter_colorpicker: ^1.1.0
 

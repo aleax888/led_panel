@@ -9,6 +9,7 @@ import 'package:led_panel/presentation/widgets/led_panel/led_panel.dart';
 import 'package:led_panel/theme/constants/app_radius.dart';
 import 'package:led_panel/theme/constants/app_sizes.dart';
 import 'package:led_panel/theme/constants/app_spacing.dart';
+import 'package:led_panel/utils/app_date_formater.dart';
 
 class SavedConfigItem extends StatefulWidget {
   final LedPanelConfigModel config;
@@ -47,6 +48,7 @@ class _SavedConfigItemState extends State<SavedConfigItem> {
         children: [
           Row(
             mainAxisAlignment: .spaceBetween,
+            crossAxisAlignment: .end,
             children: [
               LedPanel(
                 config: widget.config.copyWithProportion(proportion),
@@ -58,17 +60,30 @@ class _SavedConfigItemState extends State<SavedConfigItem> {
                 child: Row(
                   mainAxisAlignment: .end,
                   children: [
+                    IconButton(onPressed: _onDelete, icon: Icon(Icons.delete)),
                     IconButton(
                       onPressed: _onEdit,
                       icon: Icon(Icons.edit_square),
                     ),
-                    IconButton(onPressed: _onDelete, icon: Icon(Icons.delete)),
                   ],
                 ),
               ),
             ],
           ),
-          Text(widget.config.createdAt?.toString() ?? "Unknow"),
+          Row(
+            mainAxisAlignment: .spaceBetween,
+            children: [
+              Text(AppDateFormater.long(widget.config.createdAt)),
+              IconButton(
+                onPressed: _onFavorite,
+                icon: Icon(
+                  widget.config.favorite
+                      ? Icons.star_rate_rounded
+                      : Icons.star_border_rounded,
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );
@@ -86,5 +101,10 @@ class _SavedConfigItemState extends State<SavedConfigItem> {
   void _onDelete() {
     final LedPanelListBloc ledPanelListBloc = context.read<LedPanelListBloc>();
     ledPanelListBloc.add(LedPanelListConfigDeleted(widget.config.id ?? ''));
+  }
+
+  void _onFavorite() {
+    final LedPanelListBloc ledPanelListBloc = context.read<LedPanelListBloc>();
+    ledPanelListBloc.add(LedPanelListFavorite(widget.config));
   }
 }
