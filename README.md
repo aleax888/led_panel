@@ -6,7 +6,6 @@
   - [Table of Contents](#table-of-contents)
   - [Overview](#overview)
   - [Demo](#demo)
-    - [Screenshots](#screenshots)
   - [Features](#features)
     - [Highlighted Capabilities](#highlighted-capabilities)
       - [Message Editor](#message-editor)
@@ -25,11 +24,22 @@ LED Panel is a Flutter mobile application that enables users to design and previ
 
 ## Demo
 
-### Screenshots
-
-| Home | Configuration | LED Display | Animated Preview |
-|:---:|:---:|:---:|:---:|
-| ![Home view](./docs/home.png) | ![Configuration editor](./docs/config.png) | ![Fullscreen LED display](./docs/led_panel.png) | ![Animated preview](./docs/led_panel_gif.gif) |
+<table align="center" style="border: none; border-collapse: collapse;">
+  <tr style="border: none;">
+    <td align="center" style="border: none;">
+      <strong>Home</strong><br><br>
+      <img src="./docs/home.png" width="250" alt="Home view">
+    </td>
+    <td align="center" style="border: none;">
+      <strong>Configuration</strong><br><br>
+      <img src="./docs/config.png" width="250" alt="Configuration editor">
+    </td>
+    <td align="center" style="border: none;">
+      <strong>Animated Preview</strong><br><br>
+      <img src="./docs/led_panel_gif.gif" width="250" alt="Animated preview">
+    </td>
+  </tr>
+</table>
 
 
 ## Features
