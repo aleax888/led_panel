@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:led_panel/extensions/context_extension.dart';
 import 'package:led_panel/theme/constants/app_spacing.dart';
 
-/// Etiqueta pequeña que identifica un campo de entrada.
+/// Displays a label above an optional input widget.
 class InputLabel extends StatelessWidget {
   final String label;
   final Widget? child;

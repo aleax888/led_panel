@@ -8,6 +8,7 @@ import 'package:led_panel/presentation/widgets/saved_config_item/saved_config_it
 import 'package:led_panel/theme/constants/app_sizes.dart';
 import 'package:led_panel/theme/constants/app_spacing.dart';
 
+// Home page.
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -38,6 +39,8 @@ class _HomePageState extends State<HomePage> {
                     crossAxisAlignment: .start,
                     children: [
                       SizedBox(),
+
+                      // New config ----------------------------------------------
                       Container(
                         width: .infinity,
                         height: AppSizes.buttonHeightXl,
@@ -47,12 +50,15 @@ class _HomePageState extends State<HomePage> {
                           child: Text('+ NEW'),
                         ),
                       ),
+
+                      // History ----------------------------------------------
                       Expanded(
                         child: Container(
                           padding: AppSpacing.screenPadding,
                           child: MultiTabsView(
-                            tabNames: ['RECIENTES', 'FAVORITOS'],
+                            tabNames: ['RECENTS', 'FAVORITES'],
                             tabViews: [
+                              // Recents ----------------------------------------------
                               ScrollableTab(
                                 children: state.configList
                                     .where((e) => !e.favorite)
@@ -64,6 +70,8 @@ class _HomePageState extends State<HomePage> {
                                     )
                                     .toList(),
                               ),
+
+                              // Favorities ----------------------------------------------
                               ScrollableTab(
                                 children: state.configList
                                     .where((e) => e.favorite)

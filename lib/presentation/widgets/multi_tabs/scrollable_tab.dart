@@ -4,6 +4,7 @@ import 'package:led_panel/presentation/widgets/animated_widget_list/animated_wid
 import 'package:led_panel/presentation/widgets/no_content_feedback.dart';
 import 'package:led_panel/theme/constants/app_spacing.dart';
 
+/// Displays tab content in an animated, scrollable list.
 class ScrollableTab extends StatelessWidget {
   final List<Widget> children;
 

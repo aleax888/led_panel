@@ -9,8 +9,7 @@ import 'package:led_panel/theme/constants/app_radius.dart';
 import 'package:led_panel/theme/constants/app_sizes.dart';
 import 'package:led_panel/theme/constants/app_spacing.dart';
 
-/// Campo que muestra el color actual del LED y permite cambiarlo
-/// a través de un selector de color presentado en un diálogo.
+/// Provides a color field with a preview, picker dialog, and quick color options.
 class ColorPickerField extends StatefulWidget {
   final String label;
   final Color? color;
@@ -65,6 +64,7 @@ class _ColorPickerFieldState extends State<ColorPickerField> {
       spacing: AppSpacing.sm,
       crossAxisAlignment: .end,
       children: [
+        // Preview ----------------------------------------------
         GestureDetector(
           onTap: () => _openColorPicker(context),
           child: InputLabel(
@@ -72,6 +72,8 @@ class _ColorPickerFieldState extends State<ColorPickerField> {
             child: ColorPreview(color: _selectedColor),
           ),
         ),
+
+        // Divider ----------------------------------------------
         SizedBox(
           height: AppSizes.avatarMd,
           child: VerticalDivider(
@@ -81,6 +83,8 @@ class _ColorPickerFieldState extends State<ColorPickerField> {
             color: context.colors.onSurfaceVariant,
           ),
         ),
+
+        // Options ----------------------------------------------
         Expanded(
           child: SingleChildScrollView(
             scrollDirection: .horizontal,

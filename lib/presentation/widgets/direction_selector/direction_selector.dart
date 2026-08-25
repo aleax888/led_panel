@@ -5,7 +5,7 @@ import 'package:led_panel/presentation/widgets/led_panel/led_panel_direction_enu
 import 'package:led_panel/theme/constants/app_sizes.dart';
 import 'package:led_panel/theme/constants/app_spacing.dart';
 
-/// Selector horizontal del sentido del desplazamiento del texto.
+/// Displays a horizontal selector for the text scrolling direction.
 class DirectionSelector extends StatelessWidget {
   final LedPanelDirectionEnum selectedDirection;
   final ValueChanged<LedPanelDirectionEnum>? onChanged;
@@ -19,12 +19,13 @@ class DirectionSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InputLabel(
-      label: 'DIRECCIÓN',
+      label: 'DIRECTION',
       child: SizedBox(
         height: AppSizes.avatarMd,
         child: Row(
           spacing: AppSpacing.md,
           children: [
+            // Options ----------------------------------------------
             ...LedPanelDirectionEnum.values.map(
               (e) => Expanded(
                 child: DirectionSelectorOption(

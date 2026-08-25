@@ -4,9 +4,7 @@ import 'package:led_panel/extensions/context_extension.dart';
 import 'package:led_panel/theme/constants/app_sizes.dart';
 import 'package:led_panel/theme/constants/app_typography.dart';
 
-/// Opción de selección de familia tipográfica.
-///
-/// Renderiza un botón circular con el sample "Aa" usando la fuente dada.
+/// Displays a selectable font family option.
 class FontFamilyOption extends StatelessWidget {
   final String fontFamily;
   final bool selected;
@@ -40,6 +38,7 @@ class FontFamilyOption extends StatelessWidget {
             ),
           ),
           alignment: .center,
+          // Short text to show the font aspect ----------------------------------------------
           child: Text(
             'Aa',
             style: TextStyle(

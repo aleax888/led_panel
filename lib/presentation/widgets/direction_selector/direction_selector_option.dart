@@ -6,7 +6,7 @@ import 'package:led_panel/theme/constants/app_sizes.dart';
 import 'package:led_panel/theme/constants/app_spacing.dart';
 import 'package:led_panel/theme/constants/app_typography.dart';
 
-/// Opción de selección del sentido de animación del panel.
+/// Displays a selectable panel animation direction option.
 class DirectionSelectorOption extends StatelessWidget {
   final LedPanelDirectionEnum direction;
   final bool selected;
@@ -48,6 +48,7 @@ class DirectionSelectorOption extends StatelessWidget {
             mainAxisAlignment: .center,
             spacing: AppSpacing.sm,
             children: [
+              // Option icon ----------------------------------------------
               Icon(
                 direction.icon,
                 size: AppSizes.iconMd,
@@ -55,6 +56,8 @@ class DirectionSelectorOption extends StatelessWidget {
                     ? context.colors.primary
                     : context.colors.onSurface,
               ),
+
+              // Option label ----------------------------------------------
               Text(
                 direction.name,
                 style: TextStyle(

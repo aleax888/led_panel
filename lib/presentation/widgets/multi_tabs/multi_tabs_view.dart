@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:led_panel/presentation/widgets/multi_tabs/multi_tabs_bar.dart';
 import 'package:led_panel/theme/constants/app_spacing.dart';
 
-/// Vista reutilizable con múltiples pestañas y contenido por tab.
+/// Displays multiple tabs and their corresponding content views.
 class MultiTabsView extends StatefulWidget {
   final List<String> tabNames;
   final List<Widget> tabViews;
@@ -20,7 +20,7 @@ class MultiTabsView extends StatefulWidget {
     this.padding,
   }) : assert(
          tabNames.length == tabViews.length,
-         'tabNames y tabViews deben tener la misma longitud',
+         'tabNames and tabViews must have the same length',
        );
 
   @override
@@ -70,11 +70,14 @@ class _MultiTabsViewState extends State<MultiTabsView>
     return Column(
       spacing: AppSpacing.lg,
       children: [
+        // Tab bar ----------------------------------------------
         MultiTabsBar(
           controller: _controller,
           tabNames: widget.tabNames,
           onTap: widget.onTabChanged,
         ),
+
+        // Tab views ----------------------------------------------
         Expanded(
           child: Container(
             padding: widget.padding,

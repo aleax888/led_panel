@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// Displays a repeating dotted background pattern.
 class DotPattern extends StatelessWidget {
   final double radius;
   final double spacing;
@@ -24,6 +25,7 @@ class DotPattern extends StatelessWidget {
   }
 }
 
+/// Paints evenly spaced dots across the available area.
 class DotPatternPainter extends CustomPainter {
   DotPatternPainter({
     required this.radius,

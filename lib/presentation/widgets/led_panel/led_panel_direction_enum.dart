@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-/// Dirección en la que se desplaza el contenido de un [LedPanel].
+/// Direction in which the content of a [LedPanel] moves.
 enum LedPanelDirectionEnum { toLeft, toRight }
 
 extension LedPanelDirectionExtension on LedPanelDirectionEnum {
-  /// Icono asociado al sentido de desplazamiento.
+  /// Icon associated with the movement direction.
   IconData get icon {
     switch (this) {
       case .toLeft:
@@ -14,17 +14,17 @@ extension LedPanelDirectionExtension on LedPanelDirectionEnum {
     }
   }
 
-  /// Nombre legible para mostrar en la interfaz.
+  /// Human-readable name shown in the interface.
   String get name {
     switch (this) {
       case .toLeft:
-        return 'Izquierda';
+        return 'Left';
       case .toRight:
-        return 'Derecha';
+        return 'Right';
     }
   }
 
-  /// Multiplicador de offset
+  /// Offset multiplier.
   double get multiplier {
     switch (this) {
       case .toLeft:
@@ -34,7 +34,7 @@ extension LedPanelDirectionExtension on LedPanelDirectionEnum {
     }
   }
 
-  /// Alineación de overflow
+  /// Overflow alignment.
   Alignment get alignment {
     switch (this) {
       case .toLeft:

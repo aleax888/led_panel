@@ -14,6 +14,7 @@ import 'package:led_panel/theme/constants/app_sizes.dart';
 import 'package:led_panel/theme/constants/app_spacing.dart';
 import 'package:led_panel/utils/app_date_formater.dart';
 
+/// Displays a saved LED panel configuration with actions and a preview.
 class SavedConfigItem extends StatefulWidget {
   final LedPanelConfigModel config;
   const SavedConfigItem({super.key, required this.config});
@@ -51,7 +52,10 @@ class _SavedConfigItemState extends State<SavedConfigItem> {
           Row(
             mainAxisAlignment: .spaceBetween,
             children: [
+              // Date ----------------------------------------------
               Text(AppDateFormater.long(widget.config.createdAt)),
+
+              // Fav button ----------------------------------------------
               FavoriteButton(
                 isFavorite: widget.config.favorite,
                 onChanged: _onFavorite,
@@ -62,6 +66,7 @@ class _SavedConfigItemState extends State<SavedConfigItem> {
             mainAxisAlignment: .spaceBetween,
             crossAxisAlignment: .end,
             children: [
+              // Config Preview ----------------------------------------------
               InkWell(
                 onTap: _onLaunch,
                 child: LedPanel(
@@ -75,7 +80,10 @@ class _SavedConfigItemState extends State<SavedConfigItem> {
                 child: Row(
                   mainAxisAlignment: .end,
                   children: [
+                    // Delete ----------------------------------------------
                     IconButton(onPressed: _onDelete, icon: Icon(Icons.delete)),
+
+                    // Edit ----------------------------------------------
                     IconButton(
                       onPressed: _onEdit,
                       icon: Icon(Icons.edit_square),

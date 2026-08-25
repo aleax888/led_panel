@@ -3,39 +3,15 @@ import 'package:led_panel/presentation/widgets/input_label.dart';
 import 'package:led_panel/presentation/widgets/numeric_value_selector/step_button.dart';
 import 'package:led_panel/theme/constants/app_spacing.dart';
 
-/// Un widget que permite seleccionar una cantidad mediante un slider.
-///
-/// El control principal es un [Slider], acompañado de:
-/// - Un botón "−" a la izquierda para decrementar en [decrementStep].
-/// - Un botón "+" a la derecha para incrementar en [incrementStep].
-/// - Un campo de texto para digitar el valor exacto a mano.
-///
-/// Las tres formas de interacción están sincronizadas: cambiar el valor
-/// desde cualquiera de ellas actualiza a las demás.
+/// Provides synchronized slider, step button, and text field value controls.
 class NumericValueSelector extends StatefulWidget {
-  /// Label
   final String label;
-
-  /// Measurement unit
   final String? unit;
-
-  /// Valor inicial del contador.
   final int value;
-
-  /// Cantidad en la que decrementa el botón "-".
   final int decrementStep;
-
-  /// Cantidad en la que incrementa el botón "+".
   final int incrementStep;
-
-  /// Valor mínimo permitido. El contador no puede ir por debajo de esto.
   final int minValue;
-
-  /// Valor máximo permitido. El contador no puede exceder esto.
   final int maxValue;
-
-  /// Callback que se dispara cuando la cantidad cambia.
-  /// Recibe el nuevo valor como parámetro.
   final ValueChanged<int>? onChanged;
 
   const NumericValueSelector({
@@ -50,11 +26,11 @@ class NumericValueSelector extends StatefulWidget {
     this.onChanged,
   }) : assert(
          value >= minValue && value <= maxValue,
-         'initialValue debe estar entre minValue y maxValue',
+         'initialValue must be between minValue and maxValue',
        ),
-       assert(minValue <= maxValue, 'minValue no puede ser mayor que maxValue'),
-       assert(decrementStep > 0, 'decrementStep debe ser mayor que 0'),
-       assert(incrementStep > 0, 'incrementStep debe ser mayor que 0');
+       assert(minValue <= maxValue, 'minValue cannot be greater than maxValue'),
+       assert(decrementStep > 0, 'decrementStep must be greater than 0'),
+       assert(incrementStep > 0, 'incrementStep must be greater than 0');
 
   @override
   State<NumericValueSelector> createState() => _NumericValueSelectorState();
@@ -66,7 +42,6 @@ class _NumericValueSelectorState extends State<NumericValueSelector> {
     text: _currentValue.toString(),
   );
 
-  /// Número de divisiones del slider, de modo que se mueva en pasos de 1.
   int? get _sliderDivisions {
     final int range = widget.maxValue - widget.minValue;
     return range > 0 ? range : null;
@@ -98,7 +73,10 @@ class _NumericValueSelectorState extends State<NumericValueSelector> {
         Row(
           crossAxisAlignment: .start,
           children: [
+            // Label ----------------------------------------------
             Expanded(child: InputLabel(label: widget.label)),
+
+            // Text input ----------------------------------------------
             Expanded(
               flex: 2,
               child: TextField(
@@ -117,12 +95,15 @@ class _NumericValueSelectorState extends State<NumericValueSelector> {
         ),
         Row(
           children: [
+            // Decrement input ----------------------------------------------
             StepButton(
               symbol: '−',
               onPressed: _currentValue > widget.minValue
                   ? _decrementValue
                   : null,
             ),
+
+            // Slider input ----------------------------------------------
             Expanded(
               child: Slider(
                 value: _currentValue.toDouble(),
@@ -133,6 +114,8 @@ class _NumericValueSelectorState extends State<NumericValueSelector> {
                 onChanged: (double value) => _applyValue(value.round()),
               ),
             ),
+
+            // Increment input ----------------------------------------------
             StepButton(
               symbol: '+',
               onPressed: _currentValue < widget.maxValue
@@ -145,8 +128,7 @@ class _NumericValueSelectorState extends State<NumericValueSelector> {
     );
   }
 
-  /// Aplica un nuevo valor proveniente del slider o de los botones,
-  /// y sincroniza el campo de texto con el resultado.
+  /// Applies a value from the slider or buttons and synchronizes the text field.
   void _applyValue(int newValue) {
     final int clampedValue = newValue.clamp(widget.minValue, widget.maxValue);
     setState(() {
@@ -160,9 +142,8 @@ class _NumericValueSelectorState extends State<NumericValueSelector> {
 
   void _incrementValue() => _applyValue(_currentValue + widget.incrementStep);
 
-  /// Aplica un valor digitado a mano. Solo reescribe el campo de texto
-  /// si el valor tuvo que ajustarse a los límites, para no interrumpir
-  /// al usuario mientras sigue escribiendo.
+  /// Applies a manually entered value, updating the field only when clamping
+  /// is needed so typing is not interrupted.
   void _applyTypedValue(String rawValue) {
     if (rawValue.isEmpty) return;
 

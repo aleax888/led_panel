@@ -6,20 +6,7 @@ import 'package:led_panel/presentation/widgets/led_panel/auxiliary_spacer.dart';
 import 'package:led_panel/presentation/widgets/led_panel/dot_pattern.dart';
 import 'package:led_panel/presentation/widgets/led_panel/led_panel_direction_enum.dart';
 
-/// Un Widget que emula un panel LED de texto desplazante (marquee).
-///
-/// La animación se logra trasladando (`Transform.translate`) un [Row]
-/// compuesto por [AuxiliarySpacer] + texto + [AuxiliarySpacer] (cada
-/// spacer con el ancho exacto de la pantalla), en vez de usar un
-/// [ScrollController]/[SingleChildScrollView]: eso permite que el [Row]
-/// se layoutee a su tamaño REAL (vía [OverflowBox]) sin que el alto fijo
-/// del panel lo comprima — un [Viewport] de scroll necesita alto acotado,
-/// un [Row] suelto no.
-///
-/// El sentido del desplazamiento se controla con [direction]: por defecto
-/// ([LedPanelDirectionEnum.toLeft]) el texto entra por la derecha y se mueve
-/// hacia la izquierda; con [LedPanelDirectionEnum.toRight] entra por la
-/// izquierda y se mueve hacia la derecha.
+/// Displays an animated scrolling LED text panel.
 class LedPanel extends StatefulWidget {
   final LedPanelConfigModel config;
   final double? panelHeight;
@@ -40,17 +27,17 @@ class LedPanel extends StatefulWidget {
 
 class _LedPanelState extends State<LedPanel>
     with SingleTickerProviderStateMixin {
-  /// Key sobre la fila de contenido, para leer su ancho real ya calculado.
+  /// Key for reading the calculated width of the content row.
   final GlobalKey _contentKey = GlobalKey();
 
-  /// Offset horizontal actual (magnitud del desplazamiento, siempre >= 0;
-  /// el signo real que se aplica depende de [LedPanel.direction]).
+  /// Current horizontal offset magnitude. The applied sign depends on the
+  /// panel direction.
   final ValueNotifier<double> _offset = ValueNotifier<double>(0.0);
 
   late final Ticker _ticker;
   Duration _lastElapsed = Duration.zero;
 
-  /// Ancho total desplazable.
+  /// Total scrollable width.
   double _maxOffset = 0.0;
 
   double get _panelHeight => widget.panelHeight ?? context.screenSize.height;
@@ -96,6 +83,7 @@ class _LedPanelState extends State<LedPanel>
 
   @override
   Widget build(BuildContext context) {
+    // Main LED panel UI ----------------------------------------------
     return ClipRRect(
       borderRadius: widget.borderRadius ?? BorderRadius.circular(0.0),
       child: Container(
@@ -109,7 +97,10 @@ class _LedPanelState extends State<LedPanel>
           alignment: .center,
           clipBehavior: .hardEdge,
           children: [
+            // Dot pattern ----------------------------------------------
             DotPattern(color: widget.config.ledsColor),
+
+            // Animated text ----------------------------------------------
             OverflowBox(
               minWidth: 0,
               maxWidth: double.infinity,
@@ -132,7 +123,10 @@ class _LedPanelState extends State<LedPanel>
                   mainAxisSize: .min,
                   crossAxisAlignment: .center,
                   children: [
+                    // Spacer (animation logic) ----------------------------------------------
                     AuxiliarySpacer(space: _panelWidth),
+
+                    // Led text ----------------------------------------------
                     Text(
                       widget.config.text,
                       maxLines: 1,
@@ -151,6 +145,8 @@ class _LedPanelState extends State<LedPanel>
                       ),
                       textAlign: .center,
                     ),
+
+                    // Spacer (animation logic) ----------------------------------------------
                     AuxiliarySpacer(space: _panelWidth),
                   ],
                 ),
@@ -162,8 +158,8 @@ class _LedPanelState extends State<LedPanel>
     );
   }
 
-  /// Espera a que el frame actual termine su fase de layout y refresca
-  /// [_maxOffset] leyendo el ancho real de la fila vía [_contentKey].
+  /// Waits for layout to finish, then refreshes [_maxOffset] using the row's
+  /// calculated width from [_contentKey].
   void _scheduleMaxOffsetUpdate() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;

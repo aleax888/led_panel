@@ -4,7 +4,7 @@ import 'package:led_panel/extensions/context_extension.dart';
 import 'package:led_panel/theme/constants/app_colors.dart';
 import 'package:led_panel/theme/constants/app_spacing.dart';
 
-/// Diálogo de selección de color del LED.
+/// Displays a dialog for selecting an LED color.
 class ColorPickerDialog extends StatefulWidget {
   final Color initialColor;
 
@@ -20,11 +20,9 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(
-        'Seleccionar color del LED',
-        style: context.textTheme.titleMedium,
-      ),
+      title: Text('Select LED color', style: context.textTheme.titleMedium),
       content: SingleChildScrollView(
+        // Main color selection control ----------------------------------------------
         child: ColorPicker(
           pickerColor: _pickedColor,
           onColorChanged: (Color color) => setState(() => _pickedColor = color),
@@ -35,10 +33,13 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
         vertical: AppSpacing.sm,
       ),
       actions: [
+        // Cancel button ----------------------------------------------
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
           child: Text('Cancel', style: context.textTheme.labelLarge),
         ),
+
+        // Done button ----------------------------------------------
         ElevatedButton(
           onPressed: () => Navigator.of(context).pop(_pickedColor),
           child: Text(

@@ -5,7 +5,7 @@ import 'package:led_panel/theme/constants/app_radius.dart';
 import 'package:led_panel/theme/constants/app_sizes.dart';
 import 'package:led_panel/theme/constants/app_spacing.dart';
 
-/// Barra de pestañas reutilizable para el selector de múltiples tabs.
+/// Displays a reusable bar for selecting between multiple tabs.
 class MultiTabsBar extends StatelessWidget {
   final TabController controller;
   final List<String> tabNames;

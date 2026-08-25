@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:led_panel/extensions/context_extension.dart';
 
+/// Adds horizontal spacing based on a provided or screen width.
 class AuxiliarySpacer extends StatelessWidget {
   final double? space;
   const AuxiliarySpacer({super.key, this.space});

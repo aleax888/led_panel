@@ -6,10 +6,7 @@ import 'package:led_panel/theme/constants/app_spacing.dart';
 import 'package:led_panel/theme/constants/app_sizes.dart';
 import 'package:led_panel/theme/constants/app_typography.dart';
 
-/// Selector horizontal de familias tipográficas.
-///
-/// Muestra las familias registradas en [AppTypography] y expone un callback
-/// cuando el usuario selecciona una opción.
+/// Displays a horizontal selector for font families.
 class FontFamilySelector extends StatelessWidget {
   final String selectedFontFamily;
   final ValueChanged<String>? onChanged;
@@ -34,9 +31,10 @@ class FontFamilySelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InputLabel(
-      label: 'FUENTE',
+      label: 'FONT',
       child: SizedBox(
         height: AppSizes.avatarLg,
+        // Options ----------------------------------------------
         child: ListView.separated(
           scrollDirection: .horizontal,
           physics: const BouncingScrollPhysics(),

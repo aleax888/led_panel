@@ -4,8 +4,7 @@ import 'package:led_panel/theme/constants/app_opacity.dart';
 import 'package:led_panel/theme/constants/app_radius.dart';
 import 'package:led_panel/theme/constants/app_spacing.dart';
 
-/// Botón cuadrado con un símbolo, usado para incrementar o decrementar
-/// el valor del [NumericValueSelector] en un paso específico.
+/// Displays a square button for incrementing or decrementing a value.
 class StepButton extends StatefulWidget {
   final String symbol;
   final VoidCallback? onPressed;

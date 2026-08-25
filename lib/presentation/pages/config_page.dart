@@ -18,8 +18,7 @@ import 'package:led_panel/presentation/widgets/numeric_value_selector/numeric_va
 import 'package:led_panel/theme/constants/app_radius.dart';
 import 'package:led_panel/theme/constants/app_spacing.dart';
 
-/// Pantalla principal: configura el mensaje y la apariencia del panel LED,
-/// con una vista previa en vivo y acceso a la reproducción a pantalla completa.
+/// Configuration page.
 class ConfigPage extends StatefulWidget {
   final LedPanelConfigModel? initialConfig;
   const ConfigPage({super.key, this.initialConfig});
@@ -86,7 +85,7 @@ class _ConfigPageState extends State<ConfigPage> {
                         panelHeight: fixedPanelHeight,
                         borderRadius: AppRadius.borderRadiusLg,
                       ),
-                      // Play Button ------------------------------------------------------
+                      // Play Button ----------------------------------------------
                       Positioned(
                         right: AppSpacing.xs,
                         top: AppSpacing.xs,

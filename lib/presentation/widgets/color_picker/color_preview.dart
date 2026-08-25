@@ -5,7 +5,7 @@ import 'package:led_panel/theme/constants/app_radius.dart';
 import 'package:led_panel/theme/constants/app_sizes.dart';
 import 'package:led_panel/theme/constants/app_spacing.dart';
 
-/// Vista previa cuadrada del color actual
+/// Displays the selected color with a rainbow picker indicator.
 class ColorPreview extends StatelessWidget {
   final Color color;
   const ColorPreview({super.key, required this.color});

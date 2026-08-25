@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// Botón de favorito reutilizable.
+/// Displays a button for toggling a configuration's favorite status.
 class FavoriteButton extends StatefulWidget {
   final bool isFavorite;
   final VoidCallback onChanged;
@@ -57,7 +57,9 @@ class _FavoriteButtonState extends State<FavoriteButton>
     return ScaleTransition(
       scale: _scaleAnimation,
       child: IconButton(
-        tooltip: widget.isFavorite ? 'Quitar de favoritos' : 'Marcar favorito',
+        tooltip: widget.isFavorite
+          ? 'Remove from favorites'
+          : 'Add to favorites',
         onPressed: _handleTap,
         icon: Icon(
           widget.isFavorite

@@ -3,6 +3,7 @@ import 'package:led_panel/extensions/context_extension.dart';
 import 'package:led_panel/theme/constants/app_radius.dart';
 import 'package:led_panel/theme/constants/app_sizes.dart';
 
+/// Displays a tappable color swatch.
 class ColorOption extends StatelessWidget {
   final Color color;
   final VoidCallback? onTap;

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:led_panel/presentation/widgets/animated_widget_list/fade_animation.dart';
 
+/// Displays a list of widgets with fade animations when items are added or removed.
 class AnimatedWidgetList extends StatefulWidget {
   final List<Widget> children;
   final EdgeInsetsGeometry? itemPadding;
@@ -34,6 +35,24 @@ class _AnimatedWidgetListState extends State<AnimatedWidgetList> {
     _syncList(widget.children);
   }
 
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedList(
+      key: _listKey,
+      initialItemCount: _items.length,
+      itemBuilder: (context, index, animation) {
+        return Padding(
+          padding: widget.itemPadding ?? EdgeInsets.zero,
+          child: FadeAnimation(animation: animation, child: _items[index]),
+        );
+      },
+    );
+  }
+
+  /// Reconciles the displayed items with [newChildren] using each widget's key.
+  ///
+  /// Missing items are removed with an exit animation, existing items are
+  /// updated, and new items are inserted at their corresponding positions.
   void _syncList(List<Widget> newChildren) {
     final newByKey = {for (final widget in newChildren) widget.key: widget};
 
@@ -66,19 +85,5 @@ class _AnimatedWidgetListState extends State<AnimatedWidgetList> {
         _listKey.currentState?.insertItem(index, duration: widget.duration);
       }
     }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedList(
-      key: _listKey,
-      initialItemCount: _items.length,
-      itemBuilder: (context, index, animation) {
-        return Padding(
-          padding: widget.itemPadding ?? EdgeInsets.zero,
-          child: FadeAnimation(animation: animation, child: _items[index]),
-        );
-      },
-    );
   }
 }

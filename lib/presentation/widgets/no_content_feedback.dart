@@ -4,7 +4,7 @@ import 'package:led_panel/extensions/context_extension.dart';
 import 'package:led_panel/theme/constants/app_sizes.dart';
 import 'package:led_panel/theme/constants/app_spacing.dart';
 
-/// Widget para mostrar un estado vacío en listas.
+/// Displays feedback when a list has no content.
 class NoContentFeedback extends StatelessWidget {
   const NoContentFeedback({super.key});
 
