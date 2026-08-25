@@ -3,8 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:led_panel/bloc/led_panel/led_panel_bloc.dart';
 import 'package:led_panel/presentation/widgets/led_panel/led_panel.dart';
+import 'package:led_panel/presentation/widgets/lock_display_button.dart';
+import 'package:led_panel/theme/constants/app_spacing.dart';
 
-/// Página de visualización completa del panel LED.
+/// Full LED panel display page.
 class DisplayPage extends StatefulWidget {
   const DisplayPage({super.key});
 
@@ -13,6 +15,8 @@ class DisplayPage extends StatefulWidget {
 }
 
 class _DisplayPageState extends State<DisplayPage> {
+  bool _isDisplayLocked = false;
+
   @override
   void initState() {
     super.initState();
@@ -30,27 +34,39 @@ class _DisplayPageState extends State<DisplayPage> {
     return BlocBuilder<LedPanelBloc, LedPanelState>(
       builder: (context, state) {
         return PopScope(
-          // Interceptamos el back gesture para restaurar el estado del sistema
-          // antes de que Flutter ejecute el pop.
           canPop: false,
           onPopInvokedWithResult: (bool didPop, _) {
             if (!didPop) _handleBack();
           },
           child: Scaffold(
             backgroundColor: Colors.black,
-            body: OrientationBuilder(
-              builder: (BuildContext context, Orientation orientation) {
-                return GestureDetector(
-                  // Un tap en cualquier lugar regresa al configurador.
-                  onTap: _handleBack,
-                  child: SizedBox.expand(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [LedPanel(config: state.config)],
-                    ),
+            body: Stack(
+              children: [
+                // Display ----------------------------------------------
+                OrientationBuilder(
+                  builder: (BuildContext context, Orientation orientation) {
+                    return GestureDetector(
+                      onTap: _isDisplayLocked ? null : _handleBack,
+                      child: SizedBox.expand(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [LedPanel(config: state.config)],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+
+                // Lock/Unlock button ----------------------------------------------
+                Positioned(
+                  right: AppSpacing.xs,
+                  top: AppSpacing.xs,
+                  child: LockDisplayButton(
+                    isLocked: _isDisplayLocked,
+                    onPressed: _toggleDisplayLock,
                   ),
-                );
-              },
+                ),
+              ],
             ),
           ),
         );
@@ -74,5 +90,11 @@ class _DisplayPageState extends State<DisplayPage> {
   void _handleBack() {
     _exitImmersivePortrait();
     Navigator.of(context).pop();
+  }
+
+  void _toggleDisplayLock() {
+    setState(() {
+      _isDisplayLocked = !_isDisplayLocked;
+    });
   }
 }

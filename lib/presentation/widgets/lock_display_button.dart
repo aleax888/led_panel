@@ -1,0 +1,39 @@
+import 'package:flutter/material.dart';
+import 'package:led_panel/extensions/context_extension.dart';
+
+/// Displays an animated button for locking or unlocking the display.
+class LockDisplayButton extends StatelessWidget {
+  final bool isLocked;
+  final VoidCallback onPressed;
+
+  const LockDisplayButton({
+    super.key,
+    required this.isLocked,
+    required this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      onPressed: onPressed,
+      tooltip: isLocked ? 'Lock' : 'Unlock',
+      icon: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 300),
+        transitionBuilder: (Widget child, Animation<double> animation) {
+          return SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(0, -1),
+              end: Offset.zero,
+            ).animate(animation),
+            child: child,
+          );
+        },
+        child: Icon(
+          isLocked ? Icons.lock_rounded : Icons.lock_open_rounded,
+          key: ValueKey<bool>(isLocked),
+          color: context.colors.onPrimary,
+        ),
+      ),
+    );
+  }
+}
