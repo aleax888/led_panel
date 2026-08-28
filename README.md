@@ -20,7 +20,7 @@
 
 ## Overview
 
-<p>
+
 LED Panel is a Flutter mobile application that enables users to design and preview scrolling LED-style text messages. It is aimed at casual users and hobbyists who want to create animated LED displays for events, personal signage, or demo purposes.
 
 <a href="https://aleax888.itch.io/led-panel">
@@ -30,7 +30,7 @@ LED Panel is a Flutter mobile application that enables users to design and previ
     <strong>Abailable on itch.io</strong>
   </div>
 </a>
-</p>
+
 
 ## Demo
 
