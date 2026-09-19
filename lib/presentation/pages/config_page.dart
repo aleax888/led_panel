@@ -29,12 +29,14 @@ class ConfigPage extends StatefulWidget {
 
 class _ConfigPageState extends State<ConfigPage> {
   final TextEditingController _messageController = TextEditingController();
+  final FocusNode _messageFocusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
-    context.read<LedPanelBloc>().add(LedPanelConfigSelected(widget.initialConfig));
-    _messageController.text = context.read<LedPanelBloc>().state.config.text;
+    final LedPanelBloc ledPanelBloc = context.read<LedPanelBloc>();
+    ledPanelBloc.add(LedPanelConfigSelected(widget.initialConfig));
+    _messageController.text = ledPanelBloc.state.config.text;
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
@@ -43,7 +45,7 @@ class _ConfigPageState extends State<ConfigPage> {
 
   @override
   void deactivate() {
-    _saveConfig();
+    _saveConfig(updateSelectedConfig: false);
     context.read<LedPanelBloc>().add(LedPanelUnselected());
     super.deactivate();
   }
@@ -51,6 +53,7 @@ class _ConfigPageState extends State<ConfigPage> {
   @override
   void dispose() {
     _messageController.dispose();
+    _messageFocusNode.dispose();
     super.dispose();
   }
 
@@ -106,8 +109,18 @@ class _ConfigPageState extends State<ConfigPage> {
                   padding: AppSpacing.screenPadding,
                   child: TextField(
                     controller: _messageController,
+                    focusNode: _messageFocusNode,
                     onChanged: (value) {
                       ledPanelBloc.add(LedPanelTextChanged(value));
+                    },
+                    onSubmitted: (value) {
+                      _messageFocusNode.unfocus();
+                    },
+                    onEditingComplete: () {
+                      _messageFocusNode.unfocus();
+                    },
+                    onTapOutside: (event) {
+                      _messageFocusNode.unfocus();
                     },
                     maxLines: 2,
                     minLines: 1,
@@ -262,13 +275,15 @@ class _ConfigPageState extends State<ConfigPage> {
     ).push(MaterialPageRoute(builder: (context) => const DisplayPage()));
   }
 
-  void _saveConfig() {
+  void _saveConfig({bool updateSelectedConfig = true}) {
     final LedPanelBloc ledPanelBloc = context.read<LedPanelBloc>();
     final LedPanelListBloc ledPanelListBloc = context.read<LedPanelListBloc>();
     ledPanelListBloc.add(
       LedPanelListConfigSaved(
         ledPanelBloc.state.config,
-        (config) => ledPanelBloc.add(LedPanelConfigSelected(config)),
+        (config) => updateSelectedConfig
+            ? ledPanelBloc.add(LedPanelConfigSelected(config))
+            : null,
       ),
     );
   }

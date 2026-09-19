@@ -39,7 +39,7 @@ class LedPanelBloc extends Bloc<LedPanelEvent, LedPanelState> {
   }
 
   void _onTextChanged(LedPanelTextChanged event, Emitter<LedPanelState> emit) {
-    emit(state.copyWith(config: state.config.copyWith(text: event.text)));
+    emit(state.copyWith(config: state.config.copyWith(text: event.text.replaceAll('\n', ' '))));
   }
 
   void _onTextColorChanged(

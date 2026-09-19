@@ -22,10 +22,10 @@ class DotPattern extends StatefulWidget {
 
   const DotPattern({
     super.key,
-    this.tileSize = 50,
-    this.tilePadding = 10,
+    this.tileSize = 15,
+    this.tilePadding = 2,
     this.color = const Color(0xFFD9D9D9),
-    this.shape = DotShape.heart,
+    this.shape = DotShape.circle,
   });
 
   @override
