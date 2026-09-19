@@ -98,7 +98,7 @@ class _LedPanelState extends State<LedPanel>
           clipBehavior: .hardEdge,
           children: [
             // Dot pattern ----------------------------------------------
-            DotPattern(color: widget.config.ledsColor),
+            RepaintBoundary(child: DotPattern(color: widget.config.ledsColor)),
 
             // Animated text ----------------------------------------------
             OverflowBox(

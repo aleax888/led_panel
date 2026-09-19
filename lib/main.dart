@@ -27,6 +27,7 @@ class LedPanelApp extends StatelessWidget {
         title: 'LED Panel',
         theme: AppTheme.light,
         debugShowCheckedModeBanner: kDebugMode,
+        showPerformanceOverlay: true,
         home: const HomePage(),
       ),
     );
