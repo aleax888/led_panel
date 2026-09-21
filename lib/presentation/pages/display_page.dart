@@ -15,6 +15,7 @@ class DisplayPage extends StatefulWidget {
 }
 
 class _DisplayPageState extends State<DisplayPage> {
+  bool _isDisplayLoading = true;
   bool _isDisplayLocked = false;
 
   @override
@@ -24,72 +25,70 @@ class _DisplayPageState extends State<DisplayPage> {
   }
 
   @override
-  void dispose() {
-    _exitImmersivePortrait();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return BlocBuilder<LedPanelBloc, LedPanelState>(
       builder: (context, state) {
         return PopScope(
           canPop: false,
           onPopInvokedWithResult: (bool didPop, _) {
-            if (!didPop) _handleBack();
+            if (!didPop && !_isDisplayLocked) _handleBack();
           },
           child: Scaffold(
             backgroundColor: Colors.black,
-            body: Stack(
-              children: [
-                // Display ----------------------------------------------
-                OrientationBuilder(
-                  builder: (BuildContext context, Orientation orientation) {
-                    return GestureDetector(
-                      onTap: _isDisplayLocked ? null : _handleBack,
-                      child: SizedBox.expand(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [LedPanel(config: state.config)],
+            body: _isDisplayLoading
+                ? Center(child: CircularProgressIndicator())
+                : Stack(
+                    children: [
+                      // Display ----------------------------------------------
+                      GestureDetector(
+                        onTap: _isDisplayLocked ? null : _handleBack,
+                        child: SizedBox.expand(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [LedPanel(config: state.config)],
+                          ),
                         ),
                       ),
-                    );
-                  },
-                ),
 
-                // Lock/Unlock button ----------------------------------------------
-                Positioned(
-                  right: AppSpacing.xs,
-                  top: AppSpacing.xs,
-                  child: LockDisplayButton(
-                    isLocked: _isDisplayLocked,
-                    onPressed: _toggleDisplayLock,
+                      // Lock/Unlock button ----------------------------------------------
+                      Positioned(
+                        right: AppSpacing.xs,
+                        top: AppSpacing.xs,
+                        child: LockDisplayButton(
+                          isLocked: _isDisplayLocked,
+                          onPressed: _toggleDisplayLock,
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ],
-            ),
           ),
         );
       },
     );
   }
 
-  void _enterImmersiveLandscape() {
-    SystemChrome.setEnabledSystemUIMode(.immersiveSticky);
-    SystemChrome.setPreferredOrientations([.landscapeLeft, .landscapeRight]);
+  Future<void> _enterImmersiveLandscape() async {
+    setState(() => _isDisplayLoading = true);
+    await Future.wait([
+      SystemChrome.setEnabledSystemUIMode(.immersiveSticky),
+      SystemChrome.setPreferredOrientations([.landscapeLeft, .landscapeRight]),
+    ]).then((_) => setState(() => _isDisplayLoading = false));
   }
 
-  void _exitImmersivePortrait() {
-    SystemChrome.setEnabledSystemUIMode(
-      .manual,
-      overlays: SystemUiOverlay.values,
-    );
-    SystemChrome.setPreferredOrientations([.portraitUp, .portraitDown]);
+  Future<void> _exitImmersivePortrait() async {
+    setState(() => _isDisplayLoading = true);
+    await Future.wait([
+      SystemChrome.setEnabledSystemUIMode(
+        .manual,
+        overlays: SystemUiOverlay.values,
+      ),
+      SystemChrome.setPreferredOrientations([.portraitUp, .portraitDown]),
+    ]).then((_) => setState(() => _isDisplayLoading = false));
   }
 
-  void _handleBack() {
-    _exitImmersivePortrait();
-    Navigator.of(context).pop();
+  Future<void> _handleBack() async {
+    await _exitImmersivePortrait();
+    if (mounted) Navigator.of(context).pop();
   }
 
   void _toggleDisplayLock() {
