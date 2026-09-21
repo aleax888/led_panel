@@ -3,7 +3,6 @@ import 'package:flutter/scheduler.dart';
 import 'package:led_panel/data/enums/marquee_text_direction_enum.dart';
 import 'package:led_panel/data/models/animations/marquee_config_model.dart';
 import 'package:led_panel/data/models/led_panel/text_config_model.dart';
-import 'package:led_panel/extensions/context_extension.dart';
 import 'package:led_panel/presentation/widgets/led_panel/auxiliary_spacer.dart';
 import 'package:led_panel/presentation/widgets/led_panel/text.dart';
 
@@ -11,17 +10,13 @@ import 'package:led_panel/presentation/widgets/led_panel/text.dart';
 class MarqueeText extends StatefulWidget {
   final TextConfigModel textConfig;
   final MarqueeConfigModel config;
-  final double? panelHeight;
-  final double? panelWidth;
-  final BorderRadius? borderRadius;
+  final double panelWidth;
 
   const MarqueeText({
     super.key,
     required this.textConfig,
     required this.config,
-    this.panelHeight,
-    this.panelWidth,
-    this.borderRadius,
+    required this.panelWidth,
   });
 
   @override
@@ -43,9 +38,6 @@ class _MarqueeTextState extends State<MarqueeText>
   /// Total scrollable width.
   double _maxOffset = 0.0;
 
-  // double get _panelHeight => widget.panelHeight ?? context.screenSize.height;
-  double get _panelWidth => widget.panelWidth ?? context.screenSize.width;
-
   @override
   void initState() {
     super.initState();
@@ -66,7 +58,8 @@ class _MarqueeTextState extends State<MarqueeText>
     final bool layoutMayHaveChanged =
         oldWidget.textConfig.message != widget.textConfig.message ||
         oldWidget.textConfig.fontSize != widget.textConfig.fontSize ||
-        oldWidget.textConfig.fontFamily != widget.textConfig.fontFamily;
+        oldWidget.textConfig.fontFamily != widget.textConfig.fontFamily ||
+        oldWidget.panelWidth != widget.panelWidth;
 
     if (layoutMayHaveChanged) {
       _scheduleMaxOffsetUpdate();
@@ -96,6 +89,7 @@ class _MarqueeTextState extends State<MarqueeText>
       child: ValueListenableBuilder<double>(
         valueListenable: _offset,
         builder: (context, offset, child) {
+          // print('Offset: ${offset.toString().padRight(30)}, MaxOffset: $_maxOffset');
           return Transform.translate(
             offset: Offset(offset * widget.config.direction.multiplier, 0),
             child: child,
@@ -107,13 +101,13 @@ class _MarqueeTextState extends State<MarqueeText>
           crossAxisAlignment: .center,
           children: [
             // Spacer (animation logic) ----------------------------------------------
-            AuxiliarySpacer(space: _panelWidth),
+            AuxiliarySpacer(space: widget.panelWidth),
 
             // Led text ----------------------------------------------
             StyledText(textConfig: widget.textConfig),
 
             // Spacer (animation logic) ----------------------------------------------
-            AuxiliarySpacer(space: _panelWidth),
+            AuxiliarySpacer(space: widget.panelWidth),
           ],
         ),
       ),
@@ -128,7 +122,7 @@ class _MarqueeTextState extends State<MarqueeText>
       final renderBox =
           _contentKey.currentContext?.findRenderObject() as RenderBox?;
       if (renderBox == null || !renderBox.hasSize) return;
-      final double rawMax = renderBox.size.width - _panelWidth;
+      final double rawMax = renderBox.size.width - widget.panelWidth;
       _maxOffset = rawMax > 0 ? rawMax : 0;
     });
   }
