@@ -71,6 +71,7 @@ class _NumericValueSelectorState extends State<NumericValueSelector> {
       spacing: AppSpacing.sm,
       children: [
         Row(
+          spacing: AppSpacing.sm,
           crossAxisAlignment: .start,
           children: [
             // Label ----------------------------------------------

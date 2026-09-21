@@ -71,7 +71,7 @@ class _ConfigPageState extends State<ConfigPage> {
         final double proportion = fixedPanelWidth / context.screenSize.height;
 
         return Scaffold(
-          appBar: AppBar(title: const Text('Led Panel Configuration')),
+          appBar: AppBar(title: const Text('Customization')),
           body: SafeArea(
             child: Column(
               spacing: AppSpacing.md,
@@ -104,41 +104,38 @@ class _ConfigPageState extends State<ConfigPage> {
                   ),
                 ),
 
-                // Message ----------------------------------------------
-                Padding(
-                  padding: AppSpacing.screenPadding,
-                  child: TextField(
-                    controller: _messageController,
-                    focusNode: _messageFocusNode,
-                    onChanged: (value) {
-                      ledPanelBloc.add(LedPanelTextChanged(value));
-                    },
-                    onSubmitted: (value) {
-                      _messageFocusNode.unfocus();
-                    },
-                    onEditingComplete: () {
-                      _messageFocusNode.unfocus();
-                    },
-                    onTapOutside: (event) {
-                      _messageFocusNode.unfocus();
-                    },
-                    maxLines: 2,
-                    minLines: 1,
-                    decoration: InputDecoration(
-                      hintText: 'Escribe el mensaje del panel...',
-                    ),
-                  ),
-                ),
-
                 // Configuration Controls ----------------------------------------------
                 Expanded(
                   child: Padding(
                     padding: AppSpacing.screenPadding,
                     child: MultiTabsView(
-                      tabNames: ['TEXT', 'ANIMATION'],
+                      tabNames: ['Text', 'Effects', 'BG'],
                       tabViews: [
                         SeparatedListTab(
                           children: [
+                            // Message ----------------------------------------------
+                            TextField(
+                              controller: _messageController,
+                              focusNode: _messageFocusNode,
+                              onChanged: (value) {
+                                ledPanelBloc.add(LedPanelTextChanged(value));
+                              },
+                              onSubmitted: (value) {
+                                _messageFocusNode.unfocus();
+                              },
+                              onEditingComplete: () {
+                                _messageFocusNode.unfocus();
+                              },
+                              onTapOutside: (event) {
+                                _messageFocusNode.unfocus();
+                              },
+                              maxLines: 2,
+                              minLines: 1,
+                              decoration: InputDecoration(
+                                hintText: 'Type your message...',
+                              ),
+                            ),
+
                             // Color ----------------------------------------------
                             ColorPickerField(
                               color: state.config.textColor,
@@ -157,7 +154,7 @@ class _ConfigPageState extends State<ConfigPage> {
 
                             // Font Size ----------------------------------------------
                             NumericValueSelector(
-                              label: 'TAMAÑO',
+                              label: 'SIZE',
                               unit: 'pt',
                               value: state.config.fontSize.round(),
                               minValue: 100,
@@ -171,7 +168,7 @@ class _ConfigPageState extends State<ConfigPage> {
 
                             // Glow Radius ----------------------------------------------
                             NumericValueSelector(
-                              label: 'RESPLANDOR',
+                              label: 'GLOW',
                               unit: 'pt',
                               value: state.config.glowRadius.round(),
                               minValue: 0,
@@ -185,7 +182,7 @@ class _ConfigPageState extends State<ConfigPage> {
 
                             // Letter Spacing ----------------------------------------------
                             NumericValueSelector(
-                              label: 'ESPACIADO ENTRE LETRAS',
+                              label: 'LETTER SPACING',
                               unit: 'pt',
                               value: state.config.letterSpacing.round(),
                               minValue: -10,
@@ -199,7 +196,7 @@ class _ConfigPageState extends State<ConfigPage> {
 
                             // Word Spacing ----------------------------------------------
                             NumericValueSelector(
-                              label: 'ESPACIADO ENTRE PALABRAS',
+                              label: 'WORD SPACING',
                               unit: 'pt',
                               value: state.config.wordSpacing.round(),
                               minValue: -10,
@@ -224,7 +221,7 @@ class _ConfigPageState extends State<ConfigPage> {
 
                             // Speed ----------------------------------------------
                             NumericValueSelector(
-                              label: 'VELOCIDAD',
+                              label: 'SPEED',
                               unit: 'px/s',
                               value: state.config.speed.round(),
                               minValue: 20,
@@ -235,10 +232,13 @@ class _ConfigPageState extends State<ConfigPage> {
                                 LedPanelSpeedChanged(value.toDouble()),
                               ),
                             ),
-
+                          ],
+                        ),
+                        SeparatedListTab(
+                          children: [
                             // Background Color ----------------------------------------------
                             ColorPickerField(
-                              label: 'FONDO',
+                              label: 'BG',
                               color: state.config.backgroundColor,
                               onChanged: (color) => ledPanelBloc.add(
                                 LedPanelBackgroundColorChanged(color),
