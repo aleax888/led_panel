@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:led_panel/data/led_panel_config_model.dart';
-import 'package:led_panel/presentation/widgets/led_panel/led_panel_direction_enum.dart';
+import 'package:led_panel/data/models/led_panel/led_panel_config_model.dart';
+import 'package:led_panel/data/enums/marquee_text_direction_enum.dart';
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
@@ -39,14 +39,28 @@ class LedPanelBloc extends Bloc<LedPanelEvent, LedPanelState> {
   }
 
   void _onTextChanged(LedPanelTextChanged event, Emitter<LedPanelState> emit) {
-    emit(state.copyWith(config: state.config.copyWith(text: event.text.replaceAll('\n', ' '))));
+    emit(
+      state.copyWith(
+        config: state.config.copyWith(
+          text: state.config.text.copyWith(
+            message: event.text.replaceAll('\n', ' '),
+          ),
+        ),
+      ),
+    );
   }
 
   void _onTextColorChanged(
     LedPanelTextColorChanged event,
     Emitter<LedPanelState> emit,
   ) {
-    emit(state.copyWith(config: state.config.copyWith(textColor: event.color)));
+    emit(
+      state.copyWith(
+        config: state.config.copyWith(
+          text: state.config.text.copyWith(color: event.color),
+        ),
+      ),
+    );
   }
 
   void _onFontSizeChanged(
@@ -54,7 +68,11 @@ class LedPanelBloc extends Bloc<LedPanelEvent, LedPanelState> {
     Emitter<LedPanelState> emit,
   ) {
     emit(
-      state.copyWith(config: state.config.copyWith(fontSize: event.fontSize)),
+      state.copyWith(
+        config: state.config.copyWith(
+          text: state.config.text.copyWith(fontSize: event.fontSize),
+        ),
+      ),
     );
   }
 
@@ -64,7 +82,9 @@ class LedPanelBloc extends Bloc<LedPanelEvent, LedPanelState> {
   ) {
     emit(
       state.copyWith(
-        config: state.config.copyWith(fontFamily: event.fontFamily),
+        config: state.config.copyWith(
+          text: state.config.text.copyWith(fontFamily: event.fontFamily),
+        ),
       ),
     );
   }
@@ -75,7 +95,9 @@ class LedPanelBloc extends Bloc<LedPanelEvent, LedPanelState> {
   ) {
     emit(
       state.copyWith(
-        config: state.config.copyWith(letterSpacing: event.letterSpacing),
+        config: state.config.copyWith(
+          text: state.config.text.copyWith(letterSpacing: event.letterSpacing),
+        ),
       ),
     );
   }
@@ -86,7 +108,9 @@ class LedPanelBloc extends Bloc<LedPanelEvent, LedPanelState> {
   ) {
     emit(
       state.copyWith(
-        config: state.config.copyWith(wordSpacing: event.wordSpacing),
+        config: state.config.copyWith(
+          text: state.config.text.copyWith(wordSpacing: event.wordSpacing),
+        ),
       ),
     );
   }
@@ -97,7 +121,9 @@ class LedPanelBloc extends Bloc<LedPanelEvent, LedPanelState> {
   ) {
     emit(
       state.copyWith(
-        config: state.config.copyWith(glowRadius: event.glowRadius),
+        config: state.config.copyWith(
+          text: state.config.text.copyWith(glowRadius: event.glowRadius),
+        ),
       ),
     );
   }
@@ -106,16 +132,28 @@ class LedPanelBloc extends Bloc<LedPanelEvent, LedPanelState> {
     LedPanelSpeedChanged event,
     Emitter<LedPanelState> emit,
   ) {
-    emit(state.copyWith(config: state.config.copyWith(speed: event.speed)));
+    // emit(
+    //   state.copyWith(
+    //     config: state.config.copyWith(
+    //       animation: state.config.animation.copyWith(speed: event.speed),
+    //     ),
+    //   ),
+    // );
   }
 
   void _onDirectionChanged(
     LedPanelDirectionChanged event,
     Emitter<LedPanelState> emit,
   ) {
-    emit(
-      state.copyWith(config: state.config.copyWith(direction: event.direction)),
-    );
+    // emit(
+    //   state.copyWith(
+    //     config: state.config.copyWith(
+    //       animation: state.config.animation.copyWith(
+    //         direction: event.direction,
+    //       ),
+    //     ),
+    //   ),
+    // );
   }
 
   void _onBackgroundColorChanged(
@@ -124,7 +162,9 @@ class LedPanelBloc extends Bloc<LedPanelEvent, LedPanelState> {
   ) {
     emit(
       state.copyWith(
-        config: state.config.copyWith(backgroundColor: event.color),
+        config: state.config.copyWith(
+          background: state.config.background.copyWith(color: event.color),
+        ),
       ),
     );
   }
@@ -133,6 +173,12 @@ class LedPanelBloc extends Bloc<LedPanelEvent, LedPanelState> {
     LedPanelLedsColorChanged event,
     Emitter<LedPanelState> emit,
   ) {
-    emit(state.copyWith(config: state.config.copyWith(ledsColor: event.color)));
+    emit(
+      state.copyWith(
+        config: state.config.copyWith(
+          background: state.config.background.copyWith(ledsColor: event.color),
+        ),
+      ),
+    );
   }
 }

@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:led_panel/bloc/led_panel/led_panel_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:led_panel/bloc/led_panel_list/led_panel_list_bloc.dart';
-import 'package:led_panel/data/led_panel_config_model.dart';
+import 'package:led_panel/data/models/led_panel/led_panel_config_model.dart';
 
 import 'package:led_panel/extensions/context_extension.dart';
 import 'package:led_panel/presentation/pages/display_page.dart';
@@ -36,7 +36,7 @@ class _ConfigPageState extends State<ConfigPage> {
     super.initState();
     final LedPanelBloc ledPanelBloc = context.read<LedPanelBloc>();
     ledPanelBloc.add(LedPanelConfigSelected(widget.initialConfig));
-    _messageController.text = ledPanelBloc.state.config.text;
+    _messageController.text = ledPanelBloc.state.config.text.message;
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
@@ -83,10 +83,10 @@ class _ConfigPageState extends State<ConfigPage> {
                   child: Stack(
                     children: [
                       LedPanel(
-                        config: state.config.copyWithProportion(proportion),
                         panelWidth: fixedPanelWidth,
                         panelHeight: fixedPanelHeight,
                         borderRadius: AppRadius.borderRadiusLg,
+                        config: state.config.copyWithProportion(proportion),
                       ),
                       // Play Button ----------------------------------------------
                       Positioned(
@@ -109,7 +109,7 @@ class _ConfigPageState extends State<ConfigPage> {
                   child: Padding(
                     padding: AppSpacing.screenPadding,
                     child: MultiTabsView(
-                      tabNames: ['Text', 'Effects', 'BG'],
+                      tabNames: ['Text', 'Effect', 'BG'],
                       tabViews: [
                         SeparatedListTab(
                           children: [
@@ -138,7 +138,7 @@ class _ConfigPageState extends State<ConfigPage> {
 
                             // Color ----------------------------------------------
                             ColorPickerField(
-                              color: state.config.textColor,
+                              color: state.config.text.color,
                               onChanged: (color) => ledPanelBloc.add(
                                 LedPanelTextColorChanged(color),
                               ),
@@ -146,7 +146,7 @@ class _ConfigPageState extends State<ConfigPage> {
 
                             // Font Family ----------------------------------------------
                             FontFamilySelector(
-                              selectedFontFamily: state.config.fontFamily,
+                              selectedFontFamily: state.config.text.fontFamily,
                               onChanged: (fontFamily) => ledPanelBloc.add(
                                 LedPanelFontFamilyChanged(fontFamily),
                               ),
@@ -156,7 +156,7 @@ class _ConfigPageState extends State<ConfigPage> {
                             NumericValueSelector(
                               label: 'SIZE',
                               unit: 'pt',
-                              value: state.config.fontSize.round(),
+                              value: state.config.text.fontSize.round(),
                               minValue: 100,
                               maxValue: 300,
                               incrementStep: 2,
@@ -170,7 +170,7 @@ class _ConfigPageState extends State<ConfigPage> {
                             NumericValueSelector(
                               label: 'GLOW',
                               unit: 'pt',
-                              value: state.config.glowRadius.round(),
+                              value: state.config.text.glowRadius.round(),
                               minValue: 0,
                               maxValue: 50,
                               incrementStep: 1,
@@ -184,7 +184,7 @@ class _ConfigPageState extends State<ConfigPage> {
                             NumericValueSelector(
                               label: 'LETTER SPACING',
                               unit: 'pt',
-                              value: state.config.letterSpacing.round(),
+                              value: state.config.text.letterSpacing.round(),
                               minValue: -10,
                               maxValue: 50,
                               incrementStep: 1,
@@ -198,7 +198,7 @@ class _ConfigPageState extends State<ConfigPage> {
                             NumericValueSelector(
                               label: 'WORD SPACING',
                               unit: 'pt',
-                              value: state.config.wordSpacing.round(),
+                              value: state.config.text.wordSpacing.round(),
                               minValue: -10,
                               maxValue: 50,
                               incrementStep: 1,
@@ -212,26 +212,26 @@ class _ConfigPageState extends State<ConfigPage> {
                         SeparatedListTab(
                           children: [
                             // Direction ----------------------------------------------
-                            DirectionSelector(
-                              selectedDirection: state.config.direction,
-                              onChanged: (direction) => ledPanelBloc.add(
-                                LedPanelDirectionChanged(direction),
-                              ),
-                            ),
+                            // DirectionSelector(
+                            //   selectedDirection: state.config.direction,
+                            //   onChanged: (direction) => ledPanelBloc.add(
+                            //     LedPanelDirectionChanged(direction),
+                            //   ),
+                            // ),
 
-                            // Speed ----------------------------------------------
-                            NumericValueSelector(
-                              label: 'SPEED',
-                              unit: 'px/s',
-                              value: state.config.speed.round(),
-                              minValue: 20,
-                              maxValue: 500,
-                              incrementStep: 5,
-                              decrementStep: 5,
-                              onChanged: (value) => ledPanelBloc.add(
-                                LedPanelSpeedChanged(value.toDouble()),
-                              ),
-                            ),
+                            // // Speed ----------------------------------------------
+                            // NumericValueSelector(
+                            //   label: 'SPEED',
+                            //   unit: 'px/s',
+                            //   value: state.config.speed.round(),
+                            //   minValue: 20,
+                            //   maxValue: 500,
+                            //   incrementStep: 5,
+                            //   decrementStep: 5,
+                            //   onChanged: (value) => ledPanelBloc.add(
+                            //     LedPanelSpeedChanged(value.toDouble()),
+                            //   ),
+                            // ),
                           ],
                         ),
                         SeparatedListTab(
@@ -239,7 +239,7 @@ class _ConfigPageState extends State<ConfigPage> {
                             // Background Color ----------------------------------------------
                             ColorPickerField(
                               label: 'BG',
-                              color: state.config.backgroundColor,
+                              color: state.config.background.color,
                               onChanged: (color) => ledPanelBloc.add(
                                 LedPanelBackgroundColorChanged(color),
                               ),
@@ -247,8 +247,8 @@ class _ConfigPageState extends State<ConfigPage> {
 
                             // Leds Color ----------------------------------------------
                             ColorPickerField(
-                              label: 'LEDS',
-                              color: state.config.ledsColor,
+                              label: 'LEDs',
+                              color: state.config.background.ledsColor,
                               onChanged: (color) => ledPanelBloc.add(
                                 LedPanelLedsColorChanged(color),
                               ),

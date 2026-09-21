@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:led_panel/data/led_panel_config_model.dart';
-import 'package:led_panel/data/led_panel_list_repository.dart';
+import 'package:led_panel/data/models/led_panel/led_panel_config_model.dart';
+import 'package:led_panel/data/repositories/led_panel_list_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPrefsLedPanelListRepository implements LedPanelListRepository {

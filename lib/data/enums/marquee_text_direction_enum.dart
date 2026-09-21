@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 /// Direction in which the content of a [LedPanel] moves.
-enum LedPanelDirectionEnum { toLeft, toRight }
+enum MarqueeTextDirectionEnum { toLeft, toRight }
 
-extension LedPanelDirectionExtension on LedPanelDirectionEnum {
+extension MarqueeTextDirectionExtension on MarqueeTextDirectionEnum {
   /// Icon associated with the movement direction.
   IconData get icon {
     switch (this) {
@@ -15,7 +15,7 @@ extension LedPanelDirectionExtension on LedPanelDirectionEnum {
   }
 
   /// Human-readable name shown in the interface.
-  String get name {
+  String get label {
     switch (this) {
       case .toLeft:
         return 'Left';
