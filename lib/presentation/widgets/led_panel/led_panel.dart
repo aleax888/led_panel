@@ -55,7 +55,6 @@ class _LedPanelState extends State<LedPanel> {
               MarqueeText(
                 textConfig: widget.config.text,
                 config: widget.config.animation as MarqueeConfigModel,
-                panelHeight: _panelHeight,
                 panelWidth: _panelWidth,
               )
             else if (widget.config.animation.type == .none)

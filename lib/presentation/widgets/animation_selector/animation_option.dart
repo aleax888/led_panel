@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:led_panel/data/enums/animation_type_enum.dart';
 import 'package:led_panel/extensions/context_extension.dart';
 
 import 'package:led_panel/theme/constants/app_sizes.dart';
-import 'package:led_panel/theme/constants/app_typography.dart';
 
-/// Displays a selectable font family option.
-class FontFamilyOption extends StatelessWidget {
-  final String fontFamily;
+/// Displays a selectable animation option.
+class AnimationOption extends StatelessWidget {
+  final AnimationTypeEnum animationType;
   final bool selected;
   final VoidCallback? onTap;
 
-  const FontFamilyOption({
+  const AnimationOption({
     super.key,
-    required this.fontFamily,
+    required this.animationType,
     this.selected = false,
     this.onTap,
   });
@@ -22,7 +22,7 @@ class FontFamilyOption extends StatelessWidget {
     return Semantics(
       button: true,
       selected: selected,
-      label: fontFamily,
+      label: animationType.label,
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(AppSizes.avatarLg),
@@ -39,14 +39,13 @@ class FontFamilyOption extends StatelessWidget {
                   : AppSizes.borderWidthThin,
             ),
           ),
-          alignment: .center,
-          // Short text to show the font aspect ----------------------------------------------
-          child: Text(
-            'Aa',
-            style: TextStyle(
-              fontFamily: fontFamily,
-              fontSize: AppTypography.sizeHeadlineSm,
-              fontWeight: AppTypography.semiBold,
+          clipBehavior: .antiAlias,
+          child: Image.asset(
+            animationType.asset,
+            fit: .cover,
+            errorBuilder: (_, _, _) => Icon(
+              Icons.animation,
+              size: AppSizes.iconMd,
               color: context.colors.onSurface,
             ),
           ),

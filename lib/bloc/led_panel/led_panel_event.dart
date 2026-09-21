@@ -12,6 +12,7 @@ final class LedPanelConfigSelected extends LedPanelEvent {
   const LedPanelConfigSelected(this.config);
 }
 
+// Text ----------------------------------------------
 final class LedPanelTextChanged extends LedPanelEvent {
   final String text;
   const LedPanelTextChanged(this.text);
@@ -48,6 +49,12 @@ final class LedPanelGlowRadiusChanged extends LedPanelEvent {
   const LedPanelGlowRadiusChanged(this.glowRadius);
 }
 
+// Animation ----------------------------------------------
+final class LedPanelAnimationTypeChanged extends LedPanelEvent {
+  final AnimationTypeEnum type;
+  const LedPanelAnimationTypeChanged(this.type);
+}
+
 final class LedPanelSpeedChanged extends LedPanelEvent {
   final double speed;
   const LedPanelSpeedChanged(this.speed);
@@ -58,6 +65,7 @@ final class LedPanelDirectionChanged extends LedPanelEvent {
   const LedPanelDirectionChanged(this.direction);
 }
 
+// Background ----------------------------------------------
 final class LedPanelBackgroundColorChanged extends LedPanelEvent {
   final Color color;
   const LedPanelBackgroundColorChanged(this.color);

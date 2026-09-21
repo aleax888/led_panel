@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:led_panel/data/enums/animation_type_enum.dart';
+import 'package:led_panel/data/models/animations/marquee_config_model.dart';
 import 'package:led_panel/data/models/led_panel/led_panel_config_model.dart';
 import 'package:led_panel/data/enums/marquee_text_direction_enum.dart';
 
@@ -19,6 +21,7 @@ class LedPanelBloc extends Bloc<LedPanelEvent, LedPanelState> {
     on<LedPanelLetterSpacingChanged>(_onLetterSpacingChanged);
     on<LedPanelWordSpacingChanged>(_onWordSpacingChanged);
     on<LedPanelGlowRadiusChanged>(_onGlowRadiusChanged);
+    on<LedPanelAnimationTypeChanged>(_onAnimationTypeChanged);
     on<LedPanelSpeedChanged>(_onSpeedChanged);
     on<LedPanelDirectionChanged>(_onDirectionChanged);
     on<LedPanelBackgroundColorChanged>(_onBackgroundColorChanged);
@@ -128,32 +131,47 @@ class LedPanelBloc extends Bloc<LedPanelEvent, LedPanelState> {
     );
   }
 
+  void _onAnimationTypeChanged(
+    LedPanelAnimationTypeChanged event,
+    Emitter<LedPanelState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        config: state.config.copyWith(animation: event.type.defaultConfig),
+      ),
+    );
+  }
+
   void _onSpeedChanged(
     LedPanelSpeedChanged event,
     Emitter<LedPanelState> emit,
   ) {
-    // emit(
-    //   state.copyWith(
-    //     config: state.config.copyWith(
-    //       animation: state.config.animation.copyWith(speed: event.speed),
-    //     ),
-    //   ),
-    // );
+    if (state.config.animation is! MarqueeConfigModel) return;
+    emit(
+      state.copyWith(
+        config: state.config.copyWith(
+          animation: (state.config.animation as MarqueeConfigModel).copyWith(
+            speed: event.speed,
+          ),
+        ),
+      ),
+    );
   }
 
   void _onDirectionChanged(
     LedPanelDirectionChanged event,
     Emitter<LedPanelState> emit,
   ) {
-    // emit(
-    //   state.copyWith(
-    //     config: state.config.copyWith(
-    //       animation: state.config.animation.copyWith(
-    //         direction: event.direction,
-    //       ),
-    //     ),
-    //   ),
-    // );
+    if (state.config.animation is! MarqueeConfigModel) return;
+    emit(
+      state.copyWith(
+        config: state.config.copyWith(
+          animation: (state.config.animation as MarqueeConfigModel).copyWith(
+            direction: event.direction,
+          ),
+        ),
+      ),
+    );
   }
 
   void _onBackgroundColorChanged(

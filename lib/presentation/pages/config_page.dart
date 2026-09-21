@@ -4,10 +4,13 @@ import 'package:flutter/services.dart';
 import 'package:led_panel/bloc/led_panel/led_panel_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:led_panel/bloc/led_panel_list/led_panel_list_bloc.dart';
+import 'package:led_panel/data/enums/animation_type_enum.dart';
+import 'package:led_panel/data/models/animations/marquee_config_model.dart';
 import 'package:led_panel/data/models/led_panel/led_panel_config_model.dart';
 
 import 'package:led_panel/extensions/context_extension.dart';
 import 'package:led_panel/presentation/pages/display_page.dart';
+import 'package:led_panel/presentation/widgets/animation_selector/animation_selector.dart';
 import 'package:led_panel/presentation/widgets/color_picker/color_picker_field.dart';
 import 'package:led_panel/presentation/widgets/direction_selector/direction_selector.dart';
 import 'package:led_panel/presentation/widgets/font_family_selector/font_family_selector.dart';
@@ -109,7 +112,7 @@ class _ConfigPageState extends State<ConfigPage> {
                   child: Padding(
                     padding: AppSpacing.screenPadding,
                     child: MultiTabsView(
-                      tabNames: ['Text', 'Effect', 'BG'],
+                      tabNames: ['Text', 'Anim', 'BG'],
                       tabViews: [
                         SeparatedListTab(
                           children: [
@@ -211,27 +214,19 @@ class _ConfigPageState extends State<ConfigPage> {
                         ),
                         SeparatedListTab(
                           children: [
-                            // Direction ----------------------------------------------
-                            // DirectionSelector(
-                            //   selectedDirection: state.config.direction,
-                            //   onChanged: (direction) => ledPanelBloc.add(
-                            //     LedPanelDirectionChanged(direction),
-                            //   ),
-                            // ),
+                            // Animation Type ----------------------------------------------
+                            AnimationSelector(
+                              selectedAnimation: state.config.animation.type,
+                              onChanged: (animationType) => ledPanelBloc.add(
+                                LedPanelAnimationTypeChanged(animationType),
+                              ),
+                            ),
 
-                            // // Speed ----------------------------------------------
-                            // NumericValueSelector(
-                            //   label: 'SPEED',
-                            //   unit: 'px/s',
-                            //   value: state.config.speed.round(),
-                            //   minValue: 20,
-                            //   maxValue: 500,
-                            //   incrementStep: 5,
-                            //   decrementStep: 5,
-                            //   onChanged: (value) => ledPanelBloc.add(
-                            //     LedPanelSpeedChanged(value.toDouble()),
-                            //   ),
-                            // ),
+                            // Animation Config ----------------------------------------------
+                            ..._buildAnimationConfig(
+                              state.config.animation.type,
+                              ledPanelBloc,
+                            ),
                           ],
                         ),
                         SeparatedListTab(
@@ -286,5 +281,41 @@ class _ConfigPageState extends State<ConfigPage> {
             : null,
       ),
     );
+  }
+
+  List<Widget> _buildAnimationConfig(
+    final AnimationTypeEnum animationType,
+    final LedPanelBloc ledPanelBloc,
+  ) {
+    switch (animationType) {
+      case .none:
+        return [];
+      case .marquee:
+        return [
+          // Direction ----------------------------------------------
+          DirectionSelector(
+            selectedDirection:
+                (ledPanelBloc.state.config.animation as MarqueeConfigModel)
+                    .direction,
+            onChanged: (direction) =>
+                ledPanelBloc.add(LedPanelDirectionChanged(direction)),
+          ),
+
+          // Speed ----------------------------------------------
+          NumericValueSelector(
+            label: 'SPEED',
+            unit: 'px/s',
+            value: (ledPanelBloc.state.config.animation as MarqueeConfigModel)
+                .speed
+                .round(),
+            minValue: 20,
+            maxValue: 500,
+            incrementStep: 5,
+            decrementStep: 5,
+            onChanged: (value) =>
+                ledPanelBloc.add(LedPanelSpeedChanged(value.toDouble())),
+          ),
+        ];
+    }
   }
 }
