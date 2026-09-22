@@ -47,7 +47,10 @@ class _LedPanelState extends State<LedPanel> {
           children: [
             // Dot pattern ----------------------------------------------
             RepaintBoundary(
-              child: DotPattern(color: widget.config.background.ledsColor),
+              child: DotPattern(
+                color: widget.config.background.ledsColor,
+                shape: widget.config.background.ledsShape,
+              ),
             ),
 
             // Effect ----------------------------------------------

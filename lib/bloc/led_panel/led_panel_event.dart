@@ -71,6 +71,11 @@ final class LedPanelBackgroundColorChanged extends LedPanelEvent {
   const LedPanelBackgroundColorChanged(this.color);
 }
 
+final class LedPanelLedsShapeChanged extends LedPanelEvent {
+  final DotShapeEnum shape;
+  const LedPanelLedsShapeChanged(this.shape);
+}
+
 final class LedPanelLedsColorChanged extends LedPanelEvent {
   final Color color;
   const LedPanelLedsColorChanged(this.color);

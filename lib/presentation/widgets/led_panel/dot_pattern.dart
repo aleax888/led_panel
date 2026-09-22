@@ -1,8 +1,7 @@
 import 'dart:math';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
-
-enum DotShape { circle, square, diamond, star, cross, heart }
+import 'package:led_panel/data/enums/dot_shape_enum.dart';
 
 /// Displays a repeating pattern of shapes as background, rendered via a
 /// cached tile + ImageShader so the paint cost is O(1) regardless of
@@ -18,14 +17,14 @@ class DotPattern extends StatefulWidget {
   final double tilePadding;
 
   final Color color;
-  final DotShape shape;
+  final DotShapeEnum shape;
 
   const DotPattern({
     super.key,
     this.tileSize = 15,
     this.tilePadding = 2,
     this.color = const Color(0xFFD9D9D9),
-    this.shape = DotShape.circle,
+    this.shape = DotShapeEnum.circle,
   });
 
   @override
@@ -97,16 +96,16 @@ class _DotPatternState extends State<DotPattern> {
     oldTile?.dispose();
   }
 
-  Path _pathFor(DotShape shape, Offset c, double r) {
+  Path _pathFor(DotShapeEnum shape, Offset c, double r) {
     switch (shape) {
-      case DotShape.circle:
+      case DotShapeEnum.circle:
         return Path()..addOval(Rect.fromCircle(center: c, radius: r));
 
-      case DotShape.square:
+      case DotShapeEnum.square:
         return Path()
           ..addRect(Rect.fromCenter(center: c, width: r * 2, height: r * 2));
 
-      case DotShape.diamond:
+      case DotShapeEnum.diamond:
         return Path()
           ..moveTo(c.dx, c.dy - r)
           ..lineTo(c.dx + r, c.dy)
@@ -114,7 +113,7 @@ class _DotPatternState extends State<DotPattern> {
           ..lineTo(c.dx - r, c.dy)
           ..close();
 
-      case DotShape.cross:
+      case DotShapeEnum.cross:
         final thickness = r * 0.6;
         return Path()
           ..addRect(Rect.fromCenter(center: c, width: r * 2, height: thickness))
@@ -122,10 +121,10 @@ class _DotPatternState extends State<DotPattern> {
             Rect.fromCenter(center: c, width: thickness, height: r * 2),
           );
 
-      case DotShape.star:
+      case DotShapeEnum.star:
         return _starPath(c, r);
 
-      case DotShape.heart:
+      case DotShapeEnum.heart:
         return _heartPath(c, r);
     }
   }

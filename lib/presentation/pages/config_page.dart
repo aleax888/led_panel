@@ -18,6 +18,7 @@ import 'package:led_panel/presentation/widgets/led_panel/led_panel.dart';
 import 'package:led_panel/presentation/widgets/multi_tabs/multi_tabs_view.dart';
 import 'package:led_panel/presentation/widgets/multi_tabs/separated_list_tab.dart';
 import 'package:led_panel/presentation/widgets/numeric_value_selector/numeric_value_selector.dart';
+import 'package:led_panel/presentation/widgets/shape_selector/shape_selector.dart';
 import 'package:led_panel/theme/constants/app_radius.dart';
 import 'package:led_panel/theme/constants/app_spacing.dart';
 
@@ -74,7 +75,9 @@ class _ConfigPageState extends State<ConfigPage> {
         final double proportion = fixedPanelWidth / context.screenSize.height;
 
         return Scaffold(
-          appBar: AppBar(title: const Text('Customization')),
+          appBar: AppBar(
+            title: Text('CUSTOMIZATION', style: context.textTheme.labelLarge),
+          ),
           body: SafeArea(
             child: Column(
               spacing: AppSpacing.md,
@@ -246,6 +249,14 @@ class _ConfigPageState extends State<ConfigPage> {
                               color: state.config.background.ledsColor,
                               onChanged: (color) => ledPanelBloc.add(
                                 LedPanelLedsColorChanged(color),
+                              ),
+                            ),
+                            
+                            // Leds Shape ----------------------------------------------
+                            ShapeSelector(
+                              selectedShape: state.config.background.ledsShape,
+                              onChanged: (shape) => ledPanelBloc.add(
+                                LedPanelLedsShapeChanged(shape),
                               ),
                             ),
                           ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:led_panel/data/enums/animation_type_enum.dart';
+import 'package:led_panel/data/enums/dot_shape_enum.dart';
 import 'package:led_panel/data/models/animations/marquee_config_model.dart';
 import 'package:led_panel/data/models/led_panel/led_panel_config_model.dart';
 import 'package:led_panel/data/enums/marquee_text_direction_enum.dart';
@@ -25,6 +26,7 @@ class LedPanelBloc extends Bloc<LedPanelEvent, LedPanelState> {
     on<LedPanelSpeedChanged>(_onSpeedChanged);
     on<LedPanelDirectionChanged>(_onDirectionChanged);
     on<LedPanelBackgroundColorChanged>(_onBackgroundColorChanged);
+    on<LedPanelLedsShapeChanged>(_onLedsShapeChanged);
     on<LedPanelLedsColorChanged>(_onLedsColorChanged);
   }
 
@@ -182,6 +184,19 @@ class LedPanelBloc extends Bloc<LedPanelEvent, LedPanelState> {
       state.copyWith(
         config: state.config.copyWith(
           background: state.config.background.copyWith(color: event.color),
+        ),
+      ),
+    );
+  }
+
+  void _onLedsShapeChanged(
+    LedPanelLedsShapeChanged event,
+    Emitter<LedPanelState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        config: state.config.copyWith(
+          background: state.config.background.copyWith(ledsShape: event.shape),
         ),
       ),
     );
