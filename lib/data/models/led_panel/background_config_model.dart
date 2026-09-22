@@ -16,6 +16,10 @@ class BackgroundConfigModel {
     );
   }
 
+  BackgroundConfigModel copyWithProportion(double proportion) {
+    return copyWith();
+  }
+
   factory BackgroundConfigModel.fromJson(Map<String, dynamic> json) {
     return BackgroundConfigModel(
       color: json['color'] != null ? Color(json['color'] as int) : Colors.black,

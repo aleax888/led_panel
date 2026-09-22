@@ -56,7 +56,11 @@ class LedPanelConfigModel {
   }
 
   LedPanelConfigModel copyWithProportion(double proportion) {
-    return copyWith(text: text.copyWithProportion(proportion));
+    return copyWith(
+      text: text.copyWithProportion(proportion),
+      animation: animation.copyWithProportion(proportion),
+      background: background.copyWithProportion(proportion),
+    );
   }
 
   factory LedPanelConfigModel.fromJson(Map<String, dynamic> json) {
