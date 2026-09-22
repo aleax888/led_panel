@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:led_panel/bloc/theme/theme_cubit.dart';
 import 'package:led_panel/extensions/context_extension.dart';
+import 'package:led_panel/presentation/widgets/app_version.dart';
 import 'package:led_panel/presentation/widgets/side_menu/side_menu_option.dart';
 import 'package:led_panel/presentation/widgets/side_menu/side_menu_switch_option.dart';
 import 'package:led_panel/theme/constants/app_radius.dart';
@@ -28,10 +29,11 @@ class SideMenu extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.all(AppSpacing.md),
-                child: Row(
+                child: Column(
+                  crossAxisAlignment: .start,
                   children: [
                     Text('LED PANEL', style: context.textTheme.displayLarge),
-                    Text('v', style: context.textTheme.labelLarge),
+                    AppVersion(),
                   ],
                 ),
               ),
@@ -48,7 +50,7 @@ class SideMenu extends StatelessWidget {
               ),
               SideMenuOption(
                 icon: Icons.share_outlined,
-                label: 'SHARE',
+                label: 'SHARE APP',
                 onTap: () {},
               ),
               SideMenuSwitchOption(
