@@ -35,7 +35,7 @@ class AppTabBarTheme {
       labelStyle: TextStyle(
         fontFamily: AppTypography.fontRoboto,
         fontSize: AppTypography.sizeBodyMd,
-        fontWeight: AppTypography.semiBold,
+        fontWeight: AppTypography.bold,
       ),
       unselectedLabelStyle: TextStyle(
         fontFamily: AppTypography.fontRoboto,

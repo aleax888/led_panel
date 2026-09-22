@@ -33,11 +33,9 @@ class MultiTabsBar extends StatelessWidget {
         controller: controller,
         onTap: onTap,
         isScrollable: tabNames.length > 3,
-        labelPadding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.md,
-          vertical: AppSpacing.xs,
-        ),
+        labelPadding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
         splashBorderRadius: AppRadius.borderRadiusMd,
+        indicatorPadding: const EdgeInsets.all(-3),
         tabs: tabNames
             .map(
               (name) =>
