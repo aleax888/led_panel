@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
-import 'package:led_panel/data/repositories/led_panel_list_repository.dart';
-import 'package:led_panel/data/repositories/shared_preferences_led_panel_list_repository.dart';
+import 'package:led_panel/data/repositories/led_panel_list/led_panel_list_repository.dart';
+import 'package:led_panel/data/repositories/led_panel_list/shared_preferences_led_panel_list_repository.dart';
 import 'package:led_panel/data/models/led_panel/led_panel_config_model.dart';
 
 part 'led_panel_list_event.dart';

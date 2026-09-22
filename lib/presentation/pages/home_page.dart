@@ -6,6 +6,7 @@ import 'package:led_panel/presentation/pages/config_page.dart';
 import 'package:led_panel/presentation/widgets/multi_tabs/multi_tabs_view.dart';
 import 'package:led_panel/presentation/widgets/multi_tabs/scrollable_tab.dart';
 import 'package:led_panel/presentation/widgets/saved_config_item/saved_config_item.dart';
+import 'package:led_panel/presentation/widgets/side_menu/side_menu.dart';
 import 'package:led_panel/theme/constants/app_sizes.dart';
 import 'package:led_panel/theme/constants/app_spacing.dart';
 
@@ -30,6 +31,7 @@ class _HomePageState extends State<HomePage> {
     return BlocBuilder<LedPanelListBloc, LedPanelListState>(
       builder: (context, state) {
         return Scaffold(
+          drawer: SideMenu(),
           appBar: AppBar(title: Text('HOME', style: context.textTheme.labelLarge)),
           body: SafeArea(
             child: state.isLoading

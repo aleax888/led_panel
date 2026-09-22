@@ -1,4 +1,4 @@
-import 'package:led_panel/data/models/animations/animation_config_model.dart';
+import 'package:led_panel/data/models/led_panel/animation_config_model.dart';
 import 'package:led_panel/data/models/animations/marquee_config_model.dart';
 import 'package:led_panel/data/models/animations/none_config_model.dart';
 
