@@ -8,7 +8,7 @@ import 'package:led_panel/data/enums/animation_type_enum.dart';
 import 'package:led_panel/data/models/animations/marquee_config_model.dart';
 import 'package:led_panel/data/models/led_panel/led_panel_config_model.dart';
 
-import 'package:led_panel/extensions/context_extension.dart';
+import 'package:led_panel/utils/extensions/context_extension.dart';
 import 'package:led_panel/presentation/pages/display_page.dart';
 import 'package:led_panel/presentation/widgets/animation_selector/animation_selector.dart';
 import 'package:led_panel/presentation/widgets/color_picker/color_picker_field.dart';
@@ -21,6 +21,7 @@ import 'package:led_panel/presentation/widgets/numeric_value_selector/numeric_va
 import 'package:led_panel/presentation/widgets/shape_selector/shape_selector.dart';
 import 'package:led_panel/theme/constants/app_radius.dart';
 import 'package:led_panel/theme/constants/app_spacing.dart';
+import 'package:led_panel/utils/toast_handler.dart';
 
 /// Configuration page.
 class ConfigPage extends StatefulWidget {
@@ -77,6 +78,14 @@ class _ConfigPageState extends State<ConfigPage> {
         return Scaffold(
           appBar: AppBar(
             title: Text('CUSTOMIZATION', style: context.textTheme.labelLarge),
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.share_outlined),
+                onPressed: () => ToastHandler.showInfo(
+                  'Sharing functionality is not implemented yet.',
+                ),
+              ),
+            ],
           ),
           body: SafeArea(
             child: Column(
@@ -251,7 +260,7 @@ class _ConfigPageState extends State<ConfigPage> {
                                 LedPanelLedsColorChanged(color),
                               ),
                             ),
-                            
+
                             // Leds Shape ----------------------------------------------
                             ShapeSelector(
                               selectedShape: state.config.background.ledsShape,

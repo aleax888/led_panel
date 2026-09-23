@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:led_panel/bloc/led_panel_list/led_panel_list_bloc.dart';
 import 'package:led_panel/bloc/led_panel/led_panel_bloc.dart';
 import 'package:led_panel/bloc/theme/theme_cubit.dart';
+import 'package:led_panel/utils/global_context.dart';
 
 void main() {
   intl_local_data.initializeDateFormatting();
@@ -29,11 +30,17 @@ class LedPanelApp extends StatelessWidget {
         builder: (context, state) {
           return MaterialApp(
             title: 'LED Panel',
+            navigatorKey: GlobalContext.navigatorKey,
             theme: AppTheme.light,
             darkTheme: AppTheme.dark,
             themeMode: state.themeMode,
             debugShowCheckedModeBanner: kDebugMode,
-            home: const HomePage(),
+            home: Builder(
+              builder: (context) {
+                GlobalContext.globalContext = context;
+                return const HomePage();
+              },
+            ),
           );
         },
       ),

@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:led_panel/bloc/led_panel/led_panel_bloc.dart';
 import 'package:led_panel/bloc/led_panel_list/led_panel_list_bloc.dart';
 import 'package:led_panel/data/models/led_panel/led_panel_config_model.dart';
-import 'package:led_panel/extensions/context_extension.dart';
+import 'package:led_panel/utils/extensions/context_extension.dart';
 import 'package:led_panel/presentation/pages/config_page.dart';
 import 'package:led_panel/presentation/pages/display_page.dart';
 import 'package:led_panel/presentation/widgets/led_panel/led_panel.dart';

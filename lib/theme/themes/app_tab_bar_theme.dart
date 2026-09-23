@@ -27,7 +27,7 @@ class AppTabBarTheme {
     return TabBarThemeData(
       indicator: BoxDecoration(
         color: indicatorColor,
-        borderRadius: AppRadius.borderRadiusMd,
+        borderRadius: AppRadius.borderRadiusLg,
       ),
       dividerColor: Colors.transparent,
       labelColor: labelColor,
@@ -42,7 +42,7 @@ class AppTabBarTheme {
         fontSize: AppTypography.sizeBodyMd,
         fontWeight: AppTypography.medium,
       ),
-      indicatorSize: TabBarIndicatorSize.tab,
+      indicatorSize: .tab,
     );
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:led_panel/extensions/context_extension.dart';
+import 'package:led_panel/utils/extensions/context_extension.dart';
 import 'package:led_panel/data/enums/marquee_text_direction_enum.dart';
 import 'package:led_panel/theme/constants/app_radius.dart';
 import 'package:led_panel/theme/constants/app_sizes.dart';

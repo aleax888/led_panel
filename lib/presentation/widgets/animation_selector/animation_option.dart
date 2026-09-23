@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:led_panel/data/enums/animation_type_enum.dart';
-import 'package:led_panel/extensions/context_extension.dart';
+import 'package:led_panel/utils/extensions/context_extension.dart';
 
 import 'package:led_panel/theme/constants/app_sizes.dart';
 

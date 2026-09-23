@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:led_panel/extensions/context_extension.dart';
+import 'package:led_panel/utils/extensions/context_extension.dart';
 import 'package:led_panel/presentation/widgets/color_picker/color_option.dart';
 import 'package:led_panel/presentation/widgets/color_picker/color_picker_dialog.dart';
 import 'package:led_panel/presentation/widgets/color_picker/color_preview.dart';

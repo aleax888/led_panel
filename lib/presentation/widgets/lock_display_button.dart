@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:led_panel/extensions/context_extension.dart';
+import 'package:led_panel/utils/extensions/context_extension.dart';
 
 /// Displays an animated button for locking or unlocking the display.
 class LockDisplayButton extends StatelessWidget {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:led_panel/extensions/context_extension.dart';
+import 'package:led_panel/utils/extensions/context_extension.dart';
 
 import 'package:led_panel/theme/constants/app_radius.dart';
 import 'package:led_panel/theme/constants/app_sizes.dart';
@@ -34,7 +34,7 @@ class MultiTabsBar extends StatelessWidget {
         onTap: onTap,
         isScrollable: tabNames.length > 3,
         labelPadding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
-        splashBorderRadius: AppRadius.borderRadiusMd,
+        splashBorderRadius: AppRadius.borderRadiusLg,
         indicatorPadding: const EdgeInsets.all(-3),
         tabs: tabNames
             .map(

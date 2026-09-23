@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:led_panel/bloc/theme/theme_cubit.dart';
-import 'package:led_panel/extensions/context_extension.dart';
+import 'package:led_panel/utils/extensions/context_extension.dart';
 import 'package:led_panel/presentation/widgets/app_version.dart';
 import 'package:led_panel/presentation/widgets/side_menu/side_menu_option.dart';
 import 'package:led_panel/presentation/widgets/side_menu/side_menu_switch_option.dart';
 import 'package:led_panel/theme/constants/app_radius.dart';
 import 'package:led_panel/theme/constants/app_spacing.dart';
+import 'package:led_panel/utils/toast_handler.dart';
 
 /// Side menu.
 class SideMenu extends StatelessWidget {
@@ -41,17 +42,23 @@ class SideMenu extends StatelessWidget {
               SideMenuOption(
                 icon: Icons.language_outlined,
                 label: 'LANGUAGE',
-                onTap: () {},
+                onTap: () => ToastHandler.showInfo(
+                  'Language selection is not implemented yet.',
+                ),
               ),
               SideMenuOption(
                 icon: Icons.delete_outline,
                 label: 'TRASH',
-                onTap: () {},
+                onTap: () => ToastHandler.showInfo(
+                  'Trash functionality is not implemented yet.',
+                ),
               ),
               SideMenuOption(
                 icon: Icons.share_outlined,
                 label: 'SHARE APP',
-                onTap: () {},
+                onTap: () => ToastHandler.showInfo(
+                  'Sharing functionality is not implemented yet.',
+                ),
               ),
               SideMenuSwitchOption(
                 value: context.theme.brightness == Brightness.dark,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:led_panel/data/models/animations/marquee_config_model.dart';
 import 'package:led_panel/data/models/led_panel/led_panel_config_model.dart';
-import 'package:led_panel/extensions/context_extension.dart';
+import 'package:led_panel/utils/extensions/context_extension.dart';
 import 'package:led_panel/presentation/widgets/led_panel/dot_pattern.dart';
 import 'package:led_panel/presentation/widgets/led_panel/marquee_text.dart';
 import 'package:led_panel/presentation/widgets/led_panel/text.dart';
