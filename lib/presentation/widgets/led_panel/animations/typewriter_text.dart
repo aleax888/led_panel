@@ -64,15 +64,15 @@ class _TypewriterTextState extends State<TypewriterText>
 
   @override
   Widget build(BuildContext context) {
-    final String message = _characters.take(_visibleCharacterCount).join();
-
     return OverflowBox(
       minWidth: 0,
       maxWidth: double.infinity,
       minHeight: 0,
       maxHeight: double.infinity,
       child: StyledText(
-        textConfig: widget.textConfig.copyWith(message: message),
+        textConfig: widget.textConfig.copyWith(
+          message: _characters.take(_visibleCharacterCount).join(),
+        ),
       ),
     );
   }
