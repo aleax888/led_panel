@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:led_panel/data/models/animations/crawl_config_model.dart';
 import 'package:led_panel/data/models/animations/marquee_config_model.dart';
+import 'package:led_panel/data/models/animations/scramble_config_model.dart';
 import 'package:led_panel/data/models/animations/typewriter_config_model.dart';
+import 'package:led_panel/data/models/animations/wave_config_model.dart';
 import 'package:led_panel/data/models/led_panel/led_panel_config_model.dart';
+import 'package:led_panel/presentation/widgets/led_panel/animations/crawl_text.dart';
+import 'package:led_panel/presentation/widgets/led_panel/animations/scramble_text.dart';
 import 'package:led_panel/utils/extensions/context_extension.dart';
 import 'package:led_panel/presentation/widgets/led_panel/dot_pattern.dart';
 import 'package:led_panel/presentation/widgets/led_panel/animations/marquee_text.dart';
 import 'package:led_panel/presentation/widgets/led_panel/animations/styled_text.dart';
 import 'package:led_panel/presentation/widgets/led_panel/animations/typewriter_text.dart';
+import 'package:led_panel/presentation/widgets/led_panel/animations/wave_text.dart';
 
 /// Displays an animated scrolling LED text panel.
 class LedPanel extends StatefulWidget {
@@ -67,14 +73,24 @@ class _LedPanelState extends State<LedPanel> {
             else if (widget.config.animation.type == .typewriter)
               TypewriterText(
                 textConfig: widget.config.text,
-                animationConfig: widget.config.animation as TypewriterConfigModel,
+                animationConfig:
+                    widget.config.animation as TypewriterConfigModel,
               )
             else if (widget.config.animation.type == .wave)
-              StyledText(textConfig: widget.config.text)
+              WaveText(
+                textConfig: widget.config.text,
+                animationConfig: widget.config.animation as WaveConfigModel,
+              )
             else if (widget.config.animation.type == .scramble)
-              StyledText(textConfig: widget.config.text)
+              ScrambleText(
+                textConfig: widget.config.text,
+                animationConfig: widget.config.animation as ScrambleConfigModel,
+              )
             else if (widget.config.animation.type == .crawl)
-              StyledText(textConfig: widget.config.text),
+              CrawlText(
+                textConfig: widget.config.text,
+                animationConfig: widget.config.animation as CrawlConfigModel,
+              ),
           ],
         ),
       ),
