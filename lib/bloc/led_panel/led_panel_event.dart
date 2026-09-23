@@ -55,6 +55,7 @@ final class LedPanelAnimationTypeChanged extends LedPanelEvent {
   const LedPanelAnimationTypeChanged(this.type);
 }
 
+// * Marquee ----------------------------------------------
 final class LedPanelSpeedChanged extends LedPanelEvent {
   final double speed;
   const LedPanelSpeedChanged(this.speed);
@@ -64,6 +65,26 @@ final class LedPanelDirectionChanged extends LedPanelEvent {
   final MarqueeTextDirectionEnum direction;
   const LedPanelDirectionChanged(this.direction);
 }
+
+// * Typewriter ----------------------------------------------
+final class LedPanelCharacterDurationChanged extends LedPanelEvent {
+  final int characterDuration;
+  const LedPanelCharacterDurationChanged(this.characterDuration);
+}
+
+final class LedPanelCharacterDurationNoiseChanged extends LedPanelEvent {
+  final int characterDurationNoise;
+  const LedPanelCharacterDurationNoiseChanged(this.characterDurationNoise);
+}
+
+final class LedPanelCompletionPauseChanged extends LedPanelEvent {
+  final int completionPause;
+  const LedPanelCompletionPauseChanged(this.completionPause);
+}
+
+// * Wave ----------------------------------------------
+// * Scramble ----------------------------------------------
+// * Crawl ----------------------------------------------
 
 // Background ----------------------------------------------
 final class LedPanelBackgroundColorChanged extends LedPanelEvent {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:led_panel/data/enums/animation_type_enum.dart';
 import 'package:led_panel/data/enums/dot_shape_enum.dart';
 import 'package:led_panel/data/models/animations/marquee_config_model.dart';
+import 'package:led_panel/data/models/animations/typewriter_config_model.dart';
 import 'package:led_panel/data/models/led_panel/led_panel_config_model.dart';
 import 'package:led_panel/data/enums/marquee_text_direction_enum.dart';
 
@@ -15,6 +16,7 @@ class LedPanelBloc extends Bloc<LedPanelEvent, LedPanelState> {
   LedPanelBloc() : super(const LedPanelState()) {
     on<LedPanelUnselected>(_onUnselected);
     on<LedPanelConfigSelected>(_onConfigSelected);
+    // Text ----------------------------------------------
     on<LedPanelTextChanged>(_onTextChanged);
     on<LedPanelTextColorChanged>(_onTextColorChanged);
     on<LedPanelFontSizeChanged>(_onFontSizeChanged);
@@ -22,9 +24,19 @@ class LedPanelBloc extends Bloc<LedPanelEvent, LedPanelState> {
     on<LedPanelLetterSpacingChanged>(_onLetterSpacingChanged);
     on<LedPanelWordSpacingChanged>(_onWordSpacingChanged);
     on<LedPanelGlowRadiusChanged>(_onGlowRadiusChanged);
+    // Animation ----------------------------------------------
     on<LedPanelAnimationTypeChanged>(_onAnimationTypeChanged);
+    // * Marquee ----------------------------------------------
     on<LedPanelSpeedChanged>(_onSpeedChanged);
     on<LedPanelDirectionChanged>(_onDirectionChanged);
+    // * Typewriter ----------------------------------------------
+    on<LedPanelCharacterDurationChanged>(_onCharacterDurationChanged);
+    on<LedPanelCharacterDurationNoiseChanged>(_onCharacterDurationNoiseChanged);
+    on<LedPanelCompletionPauseChanged>(_onCompletionPauseChanged);
+    // * Wave ----------------------------------------------
+    // * Scramble ----------------------------------------------
+    // * Crawl ----------------------------------------------
+    // Background ----------------------------------------------
     on<LedPanelBackgroundColorChanged>(_onBackgroundColorChanged);
     on<LedPanelLedsShapeChanged>(_onLedsShapeChanged);
     on<LedPanelLedsColorChanged>(_onLedsColorChanged);
@@ -43,6 +55,7 @@ class LedPanelBloc extends Bloc<LedPanelEvent, LedPanelState> {
         : emit(state.copyWith(config: event.config));
   }
 
+  // Text ----------------------------------------------
   void _onTextChanged(LedPanelTextChanged event, Emitter<LedPanelState> emit) {
     emit(
       state.copyWith(
@@ -133,6 +146,7 @@ class LedPanelBloc extends Bloc<LedPanelEvent, LedPanelState> {
     );
   }
 
+  // Animation ----------------------------------------------
   void _onAnimationTypeChanged(
     LedPanelAnimationTypeChanged event,
     Emitter<LedPanelState> emit,
@@ -144,6 +158,7 @@ class LedPanelBloc extends Bloc<LedPanelEvent, LedPanelState> {
     );
   }
 
+  // * Marquee ----------------------------------------------
   void _onSpeedChanged(
     LedPanelSpeedChanged event,
     Emitter<LedPanelState> emit,
@@ -176,6 +191,61 @@ class LedPanelBloc extends Bloc<LedPanelEvent, LedPanelState> {
     );
   }
 
+  // * Typewriter ----------------------------------------------
+  void _onCharacterDurationChanged(
+    LedPanelCharacterDurationChanged event,
+    Emitter<LedPanelState> emit,
+  ) {
+    if (state.config.animation is! TypewriterConfigModel) return;
+    emit(
+      state.copyWith(
+        config: state.config.copyWith(
+          animation: (state.config.animation as TypewriterConfigModel).copyWith(
+            characterDuration: Duration(milliseconds: event.characterDuration),
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _onCharacterDurationNoiseChanged(
+    LedPanelCharacterDurationNoiseChanged event,
+    Emitter<LedPanelState> emit,
+  ) {
+    if (state.config.animation is! TypewriterConfigModel) return;
+    emit(
+      state.copyWith(
+        config: state.config.copyWith(
+          animation: (state.config.animation as TypewriterConfigModel).copyWith(
+            characterDurationNoise: Duration(
+              milliseconds: event.characterDurationNoise,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _onCompletionPauseChanged(
+    LedPanelCompletionPauseChanged event,
+    Emitter<LedPanelState> emit,
+  ) {
+    if (state.config.animation is! TypewriterConfigModel) return;
+    emit(
+      state.copyWith(
+        config: state.config.copyWith(
+          animation: (state.config.animation as TypewriterConfigModel).copyWith(
+            completionPause: Duration(milliseconds: event.completionPause),
+          ),
+        ),
+      ),
+    );
+  }
+
+  // * Wave ----------------------------------------------
+  // * Scramble ----------------------------------------------
+  // * Crawl ----------------------------------------------
+  // Background ----------------------------------------------
   void _onBackgroundColorChanged(
     LedPanelBackgroundColorChanged event,
     Emitter<LedPanelState> emit,

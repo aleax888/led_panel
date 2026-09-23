@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:led_panel/bloc/led_panel_list/led_panel_list_bloc.dart';
 import 'package:led_panel/data/enums/animation_type_enum.dart';
 import 'package:led_panel/data/models/animations/marquee_config_model.dart';
+import 'package:led_panel/data/models/animations/typewriter_config_model.dart';
 import 'package:led_panel/data/models/led_panel/led_panel_config_model.dart';
 
 import 'package:led_panel/utils/extensions/context_extension.dart';
@@ -336,6 +337,67 @@ class _ConfigPageState extends State<ConfigPage> {
                 ledPanelBloc.add(LedPanelSpeedChanged(value.toDouble())),
           ),
         ];
+      case .typewriter:
+        return [
+          // Character Duration ----------------------------------------------
+          NumericValueSelector(
+            label: 'CHARACTER DURATION',
+            unit: 'ms',
+            value:
+                (ledPanelBloc.state.config.animation as TypewriterConfigModel)
+                    .characterDuration
+                    .inMilliseconds
+                    .round(),
+            minValue: 20,
+            maxValue: 500,
+            incrementStep: 5,
+            decrementStep: 5,
+            onChanged: (value) => ledPanelBloc.add(
+              LedPanelCharacterDurationChanged(value.toInt()),
+            ),
+          ),
+
+          // Character Duration Noise ----------------------------------------------
+          NumericValueSelector(
+            label: 'CHARACTER DURATION NOISE',
+            unit: 'ms',
+            value:
+                (ledPanelBloc.state.config.animation as TypewriterConfigModel)
+                    .characterDurationNoise
+                    .inMilliseconds
+                    .round(),
+            minValue: 0,
+            maxValue: 1000,
+            incrementStep: 10,
+            decrementStep: 10,
+            onChanged: (value) => ledPanelBloc.add(
+              LedPanelCharacterDurationNoiseChanged(value.toInt()),
+            ),
+          ),
+
+          // Completion Pause ----------------------------------------------
+          NumericValueSelector(
+            label: 'COMPLETION PAUSE',
+            unit: 'ms',
+            value:
+                (ledPanelBloc.state.config.animation as TypewriterConfigModel)
+                    .completionPause
+                    .inMilliseconds
+                    .round(),
+            minValue: 0,
+            maxValue: 5000,
+            incrementStep: 50,
+            decrementStep: 50,
+            onChanged: (value) =>
+                ledPanelBloc.add(LedPanelCompletionPauseChanged(value.toInt())),
+          ),
+        ];
+      case .wave:
+        return [];
+      case .scramble:
+        return [];
+      case .crawl:
+        return [];
     }
   }
 }

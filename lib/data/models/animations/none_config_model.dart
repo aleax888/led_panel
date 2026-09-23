@@ -1,23 +1,23 @@
 import 'package:led_panel/data/enums/animation_type_enum.dart';
 import 'package:led_panel/data/models/led_panel/animation_config_model.dart';
 
-class NoneAnimationModel extends AnimationConfigModel {
+class NoneConfigModel extends AnimationConfigModel {
   @override
   final AnimationTypeEnum type = AnimationTypeEnum.none;
-  const NoneAnimationModel();
+  const NoneConfigModel();
 
   @override
-  NoneAnimationModel copyWith() {
-    return NoneAnimationModel();
+  NoneConfigModel copyWith() {
+    return NoneConfigModel();
   }
 
   @override
-  NoneAnimationModel copyWithProportion(double proportion) {
-    return copyWith();
+  NoneConfigModel copyWithProportion(double proportion) {
+    return this;
   }
 
-  factory NoneAnimationModel.fromJson(Map<String, dynamic> json) {
-    return NoneAnimationModel();
+  factory NoneConfigModel.fromJson(Map<String, dynamic> json) {
+    return NoneConfigModel();
   }
 
   @override

@@ -4,18 +4,18 @@ import 'package:led_panel/data/enums/marquee_text_direction_enum.dart';
 import 'package:led_panel/data/models/animations/marquee_config_model.dart';
 import 'package:led_panel/data/models/led_panel/text_config_model.dart';
 import 'package:led_panel/presentation/widgets/led_panel/auxiliary_spacer.dart';
-import 'package:led_panel/presentation/widgets/led_panel/text.dart';
+import 'package:led_panel/presentation/widgets/led_panel/animations/styled_text.dart';
 
 /// Displays an animated scrolling LED text panel.
 class MarqueeText extends StatefulWidget {
   final TextConfigModel textConfig;
-  final MarqueeConfigModel config;
+  final MarqueeConfigModel animationConfig;
   final double panelWidth;
 
   const MarqueeText({
     super.key,
     required this.textConfig,
-    required this.config,
+    required this.animationConfig,
     required this.panelWidth,
   });
 
@@ -65,7 +65,7 @@ class _MarqueeTextState extends State<MarqueeText>
       _scheduleMaxOffsetUpdate();
     }
 
-    if (oldWidget.config.direction != widget.config.direction) {
+    if (oldWidget.animationConfig.direction != widget.animationConfig.direction) {
       _offset.value = _maxOffset - _offset.value;
     }
   }
@@ -85,13 +85,13 @@ class _MarqueeTextState extends State<MarqueeText>
       maxWidth: double.infinity,
       minHeight: 0,
       maxHeight: double.infinity,
-      alignment: widget.config.direction.alignment,
+      alignment: widget.animationConfig.direction.alignment,
       child: ValueListenableBuilder<double>(
         valueListenable: _offset,
         builder: (context, offset, child) {
           // print('Offset: ${offset.toString().padRight(30)}, MaxOffset: $_maxOffset');
           return Transform.translate(
-            offset: Offset(offset * widget.config.direction.multiplier, 0),
+            offset: Offset(offset * widget.animationConfig.direction.multiplier, 0),
             child: child,
           );
         },
@@ -133,10 +133,10 @@ class _MarqueeTextState extends State<MarqueeText>
         Duration.microsecondsPerSecond;
     _lastElapsed = elapsed;
 
-    if (_maxOffset <= 0 || widget.config.speed <= 0) return;
+    if (_maxOffset <= 0 || widget.animationConfig.speed <= 0) return;
 
     final double nextOffset =
-        _offset.value + widget.config.speed * deltaSeconds;
+        _offset.value + widget.animationConfig.speed * deltaSeconds;
 
     _offset.value = nextOffset >= _maxOffset
         ? nextOffset % _maxOffset
