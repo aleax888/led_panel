@@ -1,39 +1,13 @@
-enum DotShapeEnum { circle, square, diamond, star, cross, heart }
+enum DotShapeEnum {
+  circle(label: 'Circle', asset: ''),
+  square(label: 'Square', asset: ''),
+  diamond(label: 'Diamond', asset: ''),
+  star(label: 'Star', asset: ''),
+  cross(label: 'Cross', asset: ''),
+  heart(label: 'Heart', asset: '');
 
-extension DotShapeEnumExtension on DotShapeEnum {
-  /// Human-readable name shown in the interface.
-  String get label {
-    switch (this) {
-      case .circle:
-        return 'Circle';
-      case .square:
-        return 'Square';
-      case .diamond:
-        return 'Diamond';
-      case .star:
-        return 'Star';
-      case .cross:
-        return 'Cross';
-      case .heart:
-        return 'Heart';
-    }
-  }
+  const DotShapeEnum({required this.label, required this.asset});
 
-  /// Path to the corresponding animation asset.
-  String get asset {
-    switch (this) {
-      case .circle:
-        return '';
-      case .square:
-        return '';
-      case .diamond:
-        return '';
-      case .star:
-        return '';
-      case .cross:
-        return '';
-      case .heart:
-        return '';
-    }
-  }
+  final String label;
+  final String asset;
 }
