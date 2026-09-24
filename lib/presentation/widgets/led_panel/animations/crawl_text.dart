@@ -37,9 +37,6 @@ class _CrawlTextState extends State<CrawlText>
   /// Total scrollable height.
   double _maxOffset = 0.0;
 
-  /// Fixed height
-  double get spacerHeight => widget.panelHeight * 1.5;
-
   @override
   void initState() {
     super.initState();
@@ -99,7 +96,10 @@ class _CrawlTextState extends State<CrawlText>
             alignment: widget.animationConfig.direction.alignment,
             transform: Matrix4.identity()
               ..setEntry(3, 2, widget.animationConfig.perspective)
-              ..rotateX(widget.animationConfig.tilt)
+              ..rotateX(
+                widget.animationConfig.tilt *
+                    -widget.animationConfig.direction.multiplier,
+              )
               ..translateByDouble(
                 0.0,
                 offset * widget.animationConfig.direction.multiplier,
@@ -114,13 +114,13 @@ class _CrawlTextState extends State<CrawlText>
           crossAxisAlignment: .center,
           children: [
             // Spacer (animation logic) ----------------------------------------------
-            HeightSpacer(space: spacerHeight),
+            HeightSpacer(space: widget.panelHeight),
 
             // Led text ----------------------------------------------
             StyledText(textConfig: widget.textConfig, maxLines: null),
 
             // Spacer (animation logic) ----------------------------------------------
-            HeightSpacer(space: spacerHeight),
+            HeightSpacer(space: widget.panelHeight),
           ],
         ),
       ),
@@ -135,7 +135,7 @@ class _CrawlTextState extends State<CrawlText>
       final renderBox =
           _contentKey.currentContext?.findRenderObject() as RenderBox?;
       if (renderBox == null || !renderBox.hasSize) return;
-      final double rawMax = renderBox.size.height - spacerHeight;
+      final double rawMax = renderBox.size.height - widget.panelHeight;
       _maxOffset = rawMax > 0 ? rawMax : 0;
     });
   }

@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:led_panel/data/enums/animation_type_enum.dart';
 import 'package:led_panel/data/enums/crawl_direction_enum.dart';
 import 'package:led_panel/data/models/led_panel/animation_config_model.dart';
@@ -34,10 +36,22 @@ class CrawlConfigModel extends AnimationConfigModel {
 
   @override
   CrawlConfigModel copyWithProportion(double proportion) {
-    return copyWith(
-      // perspective: perspective * proportion,
-      speed: speed * proportion,
-    );
+    return copyWith(speed: speed * proportion);
+  }
+
+  CrawlConfigModel copyWithPreservedDepth({required double tilt}) {
+    const minTilt = 0.001;
+
+    if (tilt.abs() < minTilt) {
+      return copyWith(tilt: tilt);
+    }
+
+    final oldSin = math.sin(this.tilt).abs();
+    final newSin = math.sin(tilt).abs();
+
+    final newPerspective = perspective * oldSin / newSin;
+
+    return copyWith(tilt: tilt, perspective: newPerspective);
   }
 
   factory CrawlConfigModel.fromJson(Map<String, dynamic> json) {
