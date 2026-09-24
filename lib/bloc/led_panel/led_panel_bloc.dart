@@ -3,6 +3,7 @@ import 'package:led_panel/data/enums/animation_type_enum.dart';
 import 'package:led_panel/data/enums/dot_shape_enum.dart';
 import 'package:led_panel/data/models/animations/marquee_config_model.dart';
 import 'package:led_panel/data/models/animations/typewriter_config_model.dart';
+import 'package:led_panel/data/models/animations/wave_config_model.dart';
 import 'package:led_panel/data/models/led_panel/led_panel_config_model.dart';
 import 'package:led_panel/data/enums/marquee_direction_enum.dart';
 
@@ -34,6 +35,9 @@ class LedPanelBloc extends Bloc<LedPanelEvent, LedPanelState> {
     on<LedPanelCharacterDurationNoiseChanged>(_onCharacterDurationNoiseChanged);
     on<LedPanelCompletionPauseChanged>(_onCompletionPauseChanged);
     // * Wave ----------------------------------------------
+    on<LedPanelAmplitudeChanged>(_onAmplitudeChanged);
+    on<LedPanelFrequencyChanged>(_onFrequencyChanged);
+    on<LedPanelPhaseStepChanged>(_onPhaseStepChanged);
     // * Scramble ----------------------------------------------
     // * Crawl ----------------------------------------------
     // Background ----------------------------------------------
@@ -243,6 +247,54 @@ class LedPanelBloc extends Bloc<LedPanelEvent, LedPanelState> {
   }
 
   // * Wave ----------------------------------------------
+  void _onAmplitudeChanged(
+    LedPanelAmplitudeChanged event,
+    Emitter<LedPanelState> emit,
+  ) {
+    if (state.config.animation is! WaveConfigModel) return;
+    emit(
+      state.copyWith(
+        config: state.config.copyWith(
+          animation: (state.config.animation as WaveConfigModel).copyWith(
+            amplitude: event.amplitude,
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _onFrequencyChanged(
+    LedPanelFrequencyChanged event,
+    Emitter<LedPanelState> emit,
+  ) {
+    if (state.config.animation is! WaveConfigModel) return;
+    emit(
+      state.copyWith(
+        config: state.config.copyWith(
+          animation: (state.config.animation as WaveConfigModel).copyWith(
+            frequency: event.frequency,
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _onPhaseStepChanged(
+    LedPanelPhaseStepChanged event,
+    Emitter<LedPanelState> emit,
+  ) {
+    if (state.config.animation is! WaveConfigModel) return;
+    emit(
+      state.copyWith(
+        config: state.config.copyWith(
+          animation: (state.config.animation as WaveConfigModel).copyWith(
+            phaseStep: event.phaseStep,
+          ),
+        ),
+      ),
+    );
+  }
+
   // * Scramble ----------------------------------------------
   // * Crawl ----------------------------------------------
   // Background ----------------------------------------------

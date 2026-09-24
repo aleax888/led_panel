@@ -83,6 +83,20 @@ final class LedPanelCompletionPauseChanged extends LedPanelEvent {
 }
 
 // * Wave ----------------------------------------------
+final class LedPanelAmplitudeChanged extends LedPanelEvent {
+  final double amplitude;
+  const LedPanelAmplitudeChanged(this.amplitude);
+}
+
+final class LedPanelFrequencyChanged extends LedPanelEvent {
+  final double frequency;
+  const LedPanelFrequencyChanged(this.frequency);
+}
+
+final class LedPanelPhaseStepChanged extends LedPanelEvent {
+  final double phaseStep;
+  const LedPanelPhaseStepChanged(this.phaseStep);
+}
 // * Scramble ----------------------------------------------
 // * Crawl ----------------------------------------------
 

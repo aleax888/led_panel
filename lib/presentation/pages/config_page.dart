@@ -7,6 +7,7 @@ import 'package:led_panel/bloc/led_panel_list/led_panel_list_bloc.dart';
 import 'package:led_panel/data/enums/animation_type_enum.dart';
 import 'package:led_panel/data/models/animations/marquee_config_model.dart';
 import 'package:led_panel/data/models/animations/typewriter_config_model.dart';
+import 'package:led_panel/data/models/animations/wave_config_model.dart';
 import 'package:led_panel/data/models/led_panel/led_panel_config_model.dart';
 
 import 'package:led_panel/utils/extensions/context_extension.dart';
@@ -393,7 +394,52 @@ class _ConfigPageState extends State<ConfigPage> {
           ),
         ];
       case .wave:
-        return [];
+        return [
+          // Amplitude ----------------------------------------------
+          NumericValueSelector(
+            label: 'AMPLITUDE',
+            unit: 'XD',
+            value: (ledPanelBloc.state.config.animation as WaveConfigModel)
+                .amplitude
+                .round(),
+            minValue: 0,
+            maxValue: 50,
+            incrementStep: 5,
+            decrementStep: 5,
+            onChanged: (value) =>
+                ledPanelBloc.add(LedPanelAmplitudeChanged(value.toDouble())),
+          ),
+          
+          // Frequency ----------------------------------------------
+          NumericValueSelector(
+            label: 'FREQUENCY',
+            unit: 'XD',
+            value: (ledPanelBloc.state.config.animation as WaveConfigModel)
+                .frequency
+                .round(),
+            minValue: 0,
+            maxValue: 20,
+            incrementStep: 5,
+            decrementStep: 5,
+            onChanged: (value) =>
+                ledPanelBloc.add(LedPanelFrequencyChanged(value.toDouble())),
+          ),
+          
+          // Phase Step ----------------------------------------------
+          NumericValueSelector(
+            label: 'PHASE STEP',
+            unit: 'XD',
+            value: (ledPanelBloc.state.config.animation as WaveConfigModel)
+                .phaseStep
+                .round(),
+            minValue: 0,
+            maxValue: 20,
+            incrementStep: 5,
+            decrementStep: 5,
+            onChanged: (value) =>
+                ledPanelBloc.add(LedPanelPhaseStepChanged(value.toDouble())),
+          ),
+        ];
       case .scramble:
         return [];
       case .crawl:
