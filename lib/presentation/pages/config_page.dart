@@ -17,6 +17,7 @@ import 'package:led_panel/data/models/animations/marquee_config_model.dart';
 import 'package:led_panel/data/models/animations/scramble_config_model.dart';
 import 'package:led_panel/data/models/animations/typewriter_config_model.dart';
 import 'package:led_panel/data/models/animations/wave_config_model.dart';
+import 'package:led_panel/data/models/led_panel/animation_config_model.dart';
 import 'package:led_panel/data/models/led_panel/led_panel_config_model.dart';
 
 import 'package:led_panel/utils/extensions/context_extension.dart';
@@ -240,9 +241,42 @@ class _ConfigPageState extends State<ConfigPage> {
                             // Animation Type ----------------------------------------------
                             AnimationSelector(
                               selectedAnimation: state.config.animation.type,
-                              onChanged: (animationType) => ledPanelBloc.add(
-                                LedPanelAnimationTypeChanged(animationType),
-                              ),
+                              onChanged: (animationType) {
+                                late final AnimationConfigModel newConfig;
+                                switch (animationType) {
+                                  case .none:
+                                    newConfig = animationType.defaultConfig;
+                                  case .marquee:
+                                    newConfig = context
+                                        .read<MarqueeCubit>()
+                                        .state
+                                        .config;
+                                  case .typewriter:
+                                    newConfig = context
+                                        .read<TypewritterCubit>()
+                                        .state
+                                        .config;
+                                  case .wave:
+                                    newConfig = context
+                                        .read<WaveCubit>()
+                                        .state
+                                        .config;
+                                  case .scramble:
+                                    newConfig = context
+                                        .read<ScrambleCubit>()
+                                        .state
+                                        .config;
+                                  case .crawl:
+                                    newConfig = context
+                                        .read<CrawlCubit>()
+                                        .state
+                                        .config;
+                                }
+
+                                ledPanelBloc.add(
+                                  LedPanelAnimationTypeChanged(newConfig),
+                                );
+                              },
                             ),
 
                             // Animation Config ----------------------------------------------
@@ -567,7 +601,7 @@ class _ConfigPageState extends State<ConfigPage> {
 
           // Tilt ----------------------------------------------
           NumericValueSelector(
-            label: 'Tilt',
+            label: 'TILT',
             unit: 'XD',
             value: (ledPanelBloc.state.config.animation as CrawlConfigModel)
                 .tiltDegrees

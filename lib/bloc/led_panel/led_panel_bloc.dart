@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:led_panel/data/enums/animation_type_enum.dart';
 import 'package:led_panel/data/enums/dot_shape_enum.dart';
 import 'package:led_panel/data/models/led_panel/animation_config_model.dart';
 import 'package:led_panel/data/models/led_panel/led_panel_config_model.dart';
@@ -141,9 +140,7 @@ class LedPanelBloc extends Bloc<LedPanelEvent, LedPanelState> {
     Emitter<LedPanelState> emit,
   ) {
     emit(
-      state.copyWith(
-        config: state.config.copyWith(animation: event.type.defaultConfig),
-      ),
+      state.copyWith(config: state.config.copyWith(animation: event.config)),
     );
   }
 

@@ -51,8 +51,8 @@ final class LedPanelGlowRadiusChanged extends LedPanelEvent {
 
 // Animation ----------------------------------------------
 final class LedPanelAnimationTypeChanged extends LedPanelEvent {
-  final AnimationTypeEnum type;
-  const LedPanelAnimationTypeChanged(this.type);
+  final AnimationConfigModel config;
+  const LedPanelAnimationTypeChanged(this.config);
 }
 
 final class LedPanelAnimationConfigChanged extends LedPanelEvent {
