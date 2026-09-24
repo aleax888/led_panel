@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:led_panel/data/enums/marquee_text_direction_enum.dart';
 import 'package:led_panel/data/models/animations/marquee_config_model.dart';
 import 'package:led_panel/data/models/led_panel/text_config_model.dart';
-import 'package:led_panel/presentation/widgets/led_panel/auxiliary_spacer.dart';
+import 'package:led_panel/presentation/widgets/led_panel/width_spacer.dart';
 import 'package:led_panel/presentation/widgets/led_panel/animations/styled_text.dart';
 
 /// Displays an animated scrolling LED text panel.
@@ -65,7 +64,8 @@ class _MarqueeTextState extends State<MarqueeText>
       _scheduleMaxOffsetUpdate();
     }
 
-    if (oldWidget.animationConfig.direction != widget.animationConfig.direction) {
+    if (oldWidget.animationConfig.direction !=
+        widget.animationConfig.direction) {
       _offset.value = _maxOffset - _offset.value;
     }
   }
@@ -89,9 +89,11 @@ class _MarqueeTextState extends State<MarqueeText>
       child: ValueListenableBuilder<double>(
         valueListenable: _offset,
         builder: (context, offset, child) {
-          // print('Offset: ${offset.toString().padRight(30)}, MaxOffset: $_maxOffset');
           return Transform.translate(
-            offset: Offset(offset * widget.animationConfig.direction.multiplier, 0),
+            offset: Offset(
+              offset * widget.animationConfig.direction.multiplier,
+              0,
+            ),
             child: child,
           );
         },
@@ -101,13 +103,13 @@ class _MarqueeTextState extends State<MarqueeText>
           crossAxisAlignment: .center,
           children: [
             // Spacer (animation logic) ----------------------------------------------
-            AuxiliarySpacer(space: widget.panelWidth),
+            WidthSpacer(space: widget.panelWidth),
 
             // Led text ----------------------------------------------
             StyledText(textConfig: widget.textConfig),
 
             // Spacer (animation logic) ----------------------------------------------
-            AuxiliarySpacer(space: widget.panelWidth),
+            WidthSpacer(space: widget.panelWidth),
           ],
         ),
       ),

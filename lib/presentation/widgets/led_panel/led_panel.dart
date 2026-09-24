@@ -90,6 +90,8 @@ class _LedPanelState extends State<LedPanel> {
               CrawlText(
                 textConfig: widget.config.text,
                 animationConfig: widget.config.animation as CrawlConfigModel,
+                panelWidth: _panelWidth,
+                panelHeight: _panelHeight,
               ),
           ],
         ),

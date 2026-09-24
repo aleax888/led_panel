@@ -4,7 +4,7 @@ import 'package:led_panel/data/enums/dot_shape_enum.dart';
 import 'package:led_panel/data/models/animations/marquee_config_model.dart';
 import 'package:led_panel/data/models/animations/typewriter_config_model.dart';
 import 'package:led_panel/data/models/led_panel/led_panel_config_model.dart';
-import 'package:led_panel/data/enums/marquee_text_direction_enum.dart';
+import 'package:led_panel/data/enums/marquee_direction_enum.dart';
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';

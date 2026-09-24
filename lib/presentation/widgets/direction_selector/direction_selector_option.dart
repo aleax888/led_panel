@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:led_panel/utils/extensions/context_extension.dart';
-import 'package:led_panel/data/enums/marquee_text_direction_enum.dart';
+import 'package:led_panel/data/enums/marquee_direction_enum.dart';
 import 'package:led_panel/theme/constants/app_radius.dart';
 import 'package:led_panel/theme/constants/app_sizes.dart';
 import 'package:led_panel/theme/constants/app_spacing.dart';
@@ -8,7 +8,7 @@ import 'package:led_panel/theme/constants/app_typography.dart';
 
 /// Displays a selectable panel animation direction option.
 class DirectionSelectorOption extends StatelessWidget {
-  final MarqueeTextDirectionEnum direction;
+  final MarqueeDirectionEnum direction;
   final bool selected;
   final VoidCallback? onTap;
 

@@ -62,7 +62,7 @@ final class LedPanelSpeedChanged extends LedPanelEvent {
 }
 
 final class LedPanelDirectionChanged extends LedPanelEvent {
-  final MarqueeTextDirectionEnum direction;
+  final MarqueeDirectionEnum direction;
   const LedPanelDirectionChanged(this.direction);
 }
 
