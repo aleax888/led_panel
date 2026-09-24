@@ -10,6 +10,8 @@ import 'package:led_panel/bloc/led_panel/led_panel_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:led_panel/bloc/led_panel_list/led_panel_list_bloc.dart';
 import 'package:led_panel/data/enums/animation_type_enum.dart';
+import 'package:led_panel/data/enums/crawl_direction_enum.dart';
+import 'package:led_panel/data/enums/marquee_direction_enum.dart';
 import 'package:led_panel/data/models/animations/crawl_config_model.dart';
 import 'package:led_panel/data/models/animations/marquee_config_model.dart';
 import 'package:led_panel/data/models/animations/scramble_config_model.dart';
@@ -324,6 +326,7 @@ class _ConfigPageState extends State<ConfigPage> {
         return [
           // Direction ----------------------------------------------
           DirectionSelector(
+            options: MarqueeDirectionEnum.values,
             selectedDirection:
                 (ledPanelBloc.state.config.animation as MarqueeConfigModel)
                     .direction,
@@ -530,17 +533,18 @@ class _ConfigPageState extends State<ConfigPage> {
         final crawlCubit = context.read<CrawlCubit>();
         return [
           // Direction ----------------------------------------------
-          // DirectionSelector(
-          //   selectedDirection:
-          //       (ledPanelBloc.state.config.animation as CrawlConfigModel)
-          //           .direction,
-          //   onChanged: (direction) {
-          //     crawlCubit.onDirectionChanged(direction);
-          //     ledPanelBloc.add(
-          //       LedPanelAnimationConfigChanged(crawlCubit.state.config),
-          //     );
-          //   },
-          // ),
+          DirectionSelector(
+            options: CrawlTextDirectionEnum.values,
+            selectedDirection:
+                (ledPanelBloc.state.config.animation as CrawlConfigModel)
+                    .direction,
+            onChanged: (direction) {
+              crawlCubit.onDirectionChanged(direction);
+              ledPanelBloc.add(
+                LedPanelAnimationConfigChanged(crawlCubit.state.config),
+              );
+            },
+          ),
 
           // Speed ----------------------------------------------
           NumericValueSelector(

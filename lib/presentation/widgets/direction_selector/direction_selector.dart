@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:led_panel/presentation/widgets/direction_selector/direction_selector_option.dart';
 import 'package:led_panel/presentation/widgets/input_label.dart';
-import 'package:led_panel/data/enums/marquee_direction_enum.dart';
 import 'package:led_panel/theme/constants/app_sizes.dart';
 import 'package:led_panel/theme/constants/app_spacing.dart';
 
 /// Displays a horizontal selector for the text scrolling direction.
-class DirectionSelector extends StatelessWidget {
-  final MarqueeDirectionEnum selectedDirection;
-  final ValueChanged<MarqueeDirectionEnum>? onChanged;
+class DirectionSelector<T> extends StatelessWidget {
+  final List options;
+  final T selectedDirection;
+  final ValueChanged<T>? onChanged;
 
   const DirectionSelector({
     super.key,
+    required this.options,
     required this.selectedDirection,
     this.onChanged,
   });
@@ -26,10 +27,11 @@ class DirectionSelector extends StatelessWidget {
           spacing: AppSpacing.md,
           children: [
             // Options ----------------------------------------------
-            ...MarqueeDirectionEnum.values.map(
+            ...options.map(
               (e) => Expanded(
                 child: DirectionSelectorOption(
-                  direction: e,
+                  label: e.label,
+                  icon: e.icon,
                   selected: e == selectedDirection,
                   onTap: () => onChanged?.call(e),
                 ),
