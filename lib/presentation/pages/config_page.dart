@@ -570,10 +570,10 @@ class _ConfigPageState extends State<ConfigPage> {
             label: 'Tilt',
             unit: 'XD',
             value: (ledPanelBloc.state.config.animation as CrawlConfigModel)
-                .tilt
+                .tiltDegrees
                 .round(),
-            minValue: -1,
-            maxValue: 1,
+            minValue: -90,
+            maxValue: 90,
             incrementStep: 5,
             decrementStep: 5,
             onChanged: (tilt) {

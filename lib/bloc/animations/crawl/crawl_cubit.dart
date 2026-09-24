@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:led_panel/data/enums/crawl_direction_enum.dart';
 import 'package:led_panel/data/models/animations/crawl_config_model.dart';
 
@@ -14,8 +16,11 @@ class CrawlCubit extends Cubit<CrawlState> {
   }
 
   void onTiltChanged(double tilt) {
+    final double tiltRad = tilt * (math.pi / 180);
     emit(
-      state.copyWith(config: state.config.copyWithPreservedDepth(tilt: tilt)),
+      state.copyWith(
+        config: state.config.copyWithPreservedDepth(tilt: tiltRad),
+      ),
     );
   }
 

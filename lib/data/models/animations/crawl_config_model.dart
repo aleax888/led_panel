@@ -12,6 +12,8 @@ class CrawlConfigModel extends AnimationConfigModel {
   final double speed;
   final CrawlTextDirectionEnum direction;
 
+  double get tiltDegrees => tilt * (180 / math.pi);
+
   const CrawlConfigModel({
     this.perspective = 0.0014,
     this.tilt = -0.62,
