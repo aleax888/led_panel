@@ -21,11 +21,6 @@ class ScrambleText extends StatefulWidget {
 
 class _ScrambleTextState extends State<ScrambleText>
     with SingleTickerProviderStateMixin {
-  static const Duration _characterDuration = Duration(milliseconds: 80);
-  static const Duration _completionPause = Duration(seconds: 1);
-  static const String _scrambleCharacters =
-      'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#%&*+-=?';
-
   final Random _random = Random();
   late final Ticker _ticker;
   Duration _cycleStart = Duration.zero;
@@ -43,7 +38,16 @@ class _ScrambleTextState extends State<ScrambleText>
   @override
   void didUpdateWidget(covariant ScrambleText oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.textConfig.message != widget.textConfig.message) {
+    final bool animationConfigChanged =
+      oldWidget.textConfig.message != widget.textConfig.message ||
+      oldWidget.animationConfig.characterDuration !=
+        widget.animationConfig.characterDuration ||
+      oldWidget.animationConfig.completionPause !=
+        widget.animationConfig.completionPause ||
+      oldWidget.animationConfig.scrambleCharacters !=
+        widget.animationConfig.scrambleCharacters;
+
+    if (animationConfigChanged) {
       _cycleStart = _elapsed;
       _revealedCharacterCount = 0;
       _prepareMessage();
@@ -83,8 +87,10 @@ class _ScrambleTextState extends State<ScrambleText>
     final int characterCount = _characters.length;
     if (characterCount == 0) return;
 
-    final Duration typingDuration = _characterDuration * characterCount;
-    final Duration cycleDuration = typingDuration + _completionPause;
+    final Duration typingDuration =
+      widget.animationConfig.characterDuration * characterCount;
+    final Duration cycleDuration =
+      typingDuration + widget.animationConfig.completionPause;
     final Duration cycleElapsed = elapsed - _cycleStart;
 
     if (cycleElapsed >= cycleDuration) {
@@ -94,7 +100,8 @@ class _ScrambleTextState extends State<ScrambleText>
     }
 
     final int nextCount =
-        (cycleElapsed.inMicroseconds / _characterDuration.inMicroseconds)
+      (cycleElapsed.inMicroseconds /
+          widget.animationConfig.characterDuration.inMicroseconds)
             .floor()
             .clamp(0, characterCount);
     _updateRevealedCharacterCount(nextCount);
@@ -109,7 +116,9 @@ class _ScrambleTextState extends State<ScrambleText>
     if (character.trim().isEmpty || index < _revealedCharacterCount) {
       return character;
     }
-    return _scrambleCharacters[_random.nextInt(_scrambleCharacters.length)];
+    final String scrambleCharacters = widget.animationConfig.scrambleCharacters;
+    if (scrambleCharacters.isEmpty) return character;
+    return scrambleCharacters[_random.nextInt(scrambleCharacters.length)];
   }
 
   void _updateRevealedCharacterCount(int count) {

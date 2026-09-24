@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:led_panel/data/enums/animation_type_enum.dart';
 import 'package:led_panel/data/enums/dot_shape_enum.dart';
-import 'package:led_panel/data/models/animations/marquee_config_model.dart';
-import 'package:led_panel/data/models/animations/typewriter_config_model.dart';
-import 'package:led_panel/data/models/animations/wave_config_model.dart';
+import 'package:led_panel/data/models/led_panel/animation_config_model.dart';
 import 'package:led_panel/data/models/led_panel/led_panel_config_model.dart';
-import 'package:led_panel/data/enums/marquee_direction_enum.dart';
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
@@ -27,19 +24,7 @@ class LedPanelBloc extends Bloc<LedPanelEvent, LedPanelState> {
     on<LedPanelGlowRadiusChanged>(_onGlowRadiusChanged);
     // Animation ----------------------------------------------
     on<LedPanelAnimationTypeChanged>(_onAnimationTypeChanged);
-    // * Marquee ----------------------------------------------
-    on<LedPanelSpeedChanged>(_onSpeedChanged);
-    on<LedPanelDirectionChanged>(_onDirectionChanged);
-    // * Typewriter ----------------------------------------------
-    on<LedPanelCharacterDurationChanged>(_onCharacterDurationChanged);
-    on<LedPanelCharacterDurationNoiseChanged>(_onCharacterDurationNoiseChanged);
-    on<LedPanelCompletionPauseChanged>(_onCompletionPauseChanged);
-    // * Wave ----------------------------------------------
-    on<LedPanelAmplitudeChanged>(_onAmplitudeChanged);
-    on<LedPanelFrequencyChanged>(_onFrequencyChanged);
-    on<LedPanelPhaseStepChanged>(_onPhaseStepChanged);
-    // * Scramble ----------------------------------------------
-    // * Crawl ----------------------------------------------
+    on<LedPanelAnimationConfigChanged>(_onAnimationConfigChanged);
     // Background ----------------------------------------------
     on<LedPanelBackgroundColorChanged>(_onBackgroundColorChanged);
     on<LedPanelLedsShapeChanged>(_onLedsShapeChanged);
@@ -162,141 +147,15 @@ class LedPanelBloc extends Bloc<LedPanelEvent, LedPanelState> {
     );
   }
 
-  // * Marquee ----------------------------------------------
-  void _onSpeedChanged(
-    LedPanelSpeedChanged event,
+  void _onAnimationConfigChanged(
+    LedPanelAnimationConfigChanged event,
     Emitter<LedPanelState> emit,
   ) {
-    if (state.config.animation is! MarqueeConfigModel) return;
     emit(
-      state.copyWith(
-        config: state.config.copyWith(
-          animation: (state.config.animation as MarqueeConfigModel).copyWith(
-            speed: event.speed,
-          ),
-        ),
-      ),
+      state.copyWith(config: state.config.copyWith(animation: event.config)),
     );
   }
 
-  void _onDirectionChanged(
-    LedPanelDirectionChanged event,
-    Emitter<LedPanelState> emit,
-  ) {
-    if (state.config.animation is! MarqueeConfigModel) return;
-    emit(
-      state.copyWith(
-        config: state.config.copyWith(
-          animation: (state.config.animation as MarqueeConfigModel).copyWith(
-            direction: event.direction,
-          ),
-        ),
-      ),
-    );
-  }
-
-  // * Typewriter ----------------------------------------------
-  void _onCharacterDurationChanged(
-    LedPanelCharacterDurationChanged event,
-    Emitter<LedPanelState> emit,
-  ) {
-    if (state.config.animation is! TypewriterConfigModel) return;
-    emit(
-      state.copyWith(
-        config: state.config.copyWith(
-          animation: (state.config.animation as TypewriterConfigModel).copyWith(
-            characterDuration: Duration(milliseconds: event.characterDuration),
-          ),
-        ),
-      ),
-    );
-  }
-
-  void _onCharacterDurationNoiseChanged(
-    LedPanelCharacterDurationNoiseChanged event,
-    Emitter<LedPanelState> emit,
-  ) {
-    if (state.config.animation is! TypewriterConfigModel) return;
-    emit(
-      state.copyWith(
-        config: state.config.copyWith(
-          animation: (state.config.animation as TypewriterConfigModel).copyWith(
-            characterDurationNoise: Duration(
-              milliseconds: event.characterDurationNoise,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  void _onCompletionPauseChanged(
-    LedPanelCompletionPauseChanged event,
-    Emitter<LedPanelState> emit,
-  ) {
-    if (state.config.animation is! TypewriterConfigModel) return;
-    emit(
-      state.copyWith(
-        config: state.config.copyWith(
-          animation: (state.config.animation as TypewriterConfigModel).copyWith(
-            completionPause: Duration(milliseconds: event.completionPause),
-          ),
-        ),
-      ),
-    );
-  }
-
-  // * Wave ----------------------------------------------
-  void _onAmplitudeChanged(
-    LedPanelAmplitudeChanged event,
-    Emitter<LedPanelState> emit,
-  ) {
-    if (state.config.animation is! WaveConfigModel) return;
-    emit(
-      state.copyWith(
-        config: state.config.copyWith(
-          animation: (state.config.animation as WaveConfigModel).copyWith(
-            amplitude: event.amplitude,
-          ),
-        ),
-      ),
-    );
-  }
-
-  void _onFrequencyChanged(
-    LedPanelFrequencyChanged event,
-    Emitter<LedPanelState> emit,
-  ) {
-    if (state.config.animation is! WaveConfigModel) return;
-    emit(
-      state.copyWith(
-        config: state.config.copyWith(
-          animation: (state.config.animation as WaveConfigModel).copyWith(
-            frequency: event.frequency,
-          ),
-        ),
-      ),
-    );
-  }
-
-  void _onPhaseStepChanged(
-    LedPanelPhaseStepChanged event,
-    Emitter<LedPanelState> emit,
-  ) {
-    if (state.config.animation is! WaveConfigModel) return;
-    emit(
-      state.copyWith(
-        config: state.config.copyWith(
-          animation: (state.config.animation as WaveConfigModel).copyWith(
-            phaseStep: event.phaseStep,
-          ),
-        ),
-      ),
-    );
-  }
-
-  // * Scramble ----------------------------------------------
-  // * Crawl ----------------------------------------------
   // Background ----------------------------------------------
   void _onBackgroundColorChanged(
     LedPanelBackgroundColorChanged event,

@@ -16,7 +16,7 @@ class CrawlConfigModel extends AnimationConfigModel {
     this.perspective = 0.0014,
     this.tilt = -0.62,
     this.speed = 80.0,
-    this.direction = .toBottom,
+    this.direction = .toTop,
   });
 
   @override

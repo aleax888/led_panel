@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:led_panel/bloc/led_panel_list/led_panel_list_bloc.dart';
+import 'package:led_panel/presentation/pages/aux_config_page.dart';
 import 'package:led_panel/utils/extensions/context_extension.dart';
-import 'package:led_panel/presentation/pages/config_page.dart';
 import 'package:led_panel/presentation/widgets/multi_tabs/multi_tabs_view.dart';
 import 'package:led_panel/presentation/widgets/multi_tabs/scrollable_tab.dart';
 import 'package:led_panel/presentation/widgets/saved_config_item/saved_config_item.dart';
@@ -32,7 +32,9 @@ class _HomePageState extends State<HomePage> {
       builder: (context, state) {
         return Scaffold(
           drawer: SideMenu(),
-          appBar: AppBar(title: Text('HOME', style: context.textTheme.labelLarge)),
+          appBar: AppBar(
+            title: Text('HOME', style: context.textTheme.labelLarge),
+          ),
           body: SafeArea(
             child: state.isLoading
                 ? Center(child: CircularProgressIndicator())
@@ -102,7 +104,7 @@ class _HomePageState extends State<HomePage> {
   void _goToConfig() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => ConfigPage()),
+      MaterialPageRoute(builder: (context) => AuxConfigPage()),
     );
   }
 }

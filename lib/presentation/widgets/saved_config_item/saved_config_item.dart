@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:led_panel/bloc/led_panel/led_panel_bloc.dart';
 import 'package:led_panel/bloc/led_panel_list/led_panel_list_bloc.dart';
 import 'package:led_panel/data/models/led_panel/led_panel_config_model.dart';
+import 'package:led_panel/presentation/pages/aux_config_page.dart';
 import 'package:led_panel/utils/extensions/context_extension.dart';
-import 'package:led_panel/presentation/pages/config_page.dart';
 import 'package:led_panel/presentation/pages/display_page.dart';
 import 'package:led_panel/presentation/widgets/led_panel/led_panel.dart';
 import 'package:led_panel/presentation/widgets/saved_config_item/delete_validation_dialog.dart';
@@ -101,7 +101,7 @@ class _SavedConfigItemState extends State<SavedConfigItem> {
   void _onEdit() => Navigator.push(
     context,
     MaterialPageRoute(
-      builder: (context) => ConfigPage(initialConfig: widget.config),
+      builder: (context) => AuxConfigPage(initialConfig: widget.config),
     ),
   );
 
