@@ -1,4 +1,5 @@
 import 'package:led_panel/data/models/animations/wave_config_model.dart';
+import 'package:led_panel/utils/angle_handler.dart';
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
@@ -16,7 +17,13 @@ class WaveCubit extends Cubit<WaveState> {
     emit(state.copyWith(config: state.config.copyWith(frequency: frequency)));
   }
 
-  void onPhaseStepChanged(double phaseStep) {
-    emit(state.copyWith(config: state.config.copyWith(phaseStep: phaseStep)));
+  void onPhaseStepChanged(int phaseStep) {
+    emit(
+      state.copyWith(
+        config: state.config.copyWith(
+          phaseStep: AngleHandler.degreesToRadians(phaseStep),
+        ),
+      ),
+    );
   }
 }

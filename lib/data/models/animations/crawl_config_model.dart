@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:led_panel/data/enums/animation_type_enum.dart';
 import 'package:led_panel/data/enums/crawl_direction_enum.dart';
 import 'package:led_panel/data/models/led_panel/animation_config_model.dart';
+import 'package:led_panel/utils/angle_handler.dart';
 
 class CrawlConfigModel extends AnimationConfigModel {
   @override
@@ -12,7 +13,7 @@ class CrawlConfigModel extends AnimationConfigModel {
   final double speed;
   final CrawlTextDirectionEnum direction;
 
-  double get tiltDegrees => tilt * (180 / math.pi);
+  double get tiltDegrees => AngleHandler.radiansToDegrees(tilt);
 
   const CrawlConfigModel({
     this.perspective = 0.0014,

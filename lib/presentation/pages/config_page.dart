@@ -463,7 +463,7 @@ class _ConfigPageState extends State<ConfigPage> {
           // Amplitude ----------------------------------------------
           NumericValueSelector(
             label: 'AMPLITUDE',
-            unit: 'XD',
+            unit: 'px',
             value: (ledPanelBloc.state.config.animation as WaveConfigModel)
                 .amplitude
                 .round(),
@@ -482,7 +482,7 @@ class _ConfigPageState extends State<ConfigPage> {
           // Frequency ----------------------------------------------
           NumericValueSelector(
             label: 'FREQUENCY',
-            unit: 'XD',
+            unit: 'Hz',
             value: (ledPanelBloc.state.config.animation as WaveConfigModel)
                 .frequency
                 .round(),
@@ -501,16 +501,16 @@ class _ConfigPageState extends State<ConfigPage> {
           // Phase Step ----------------------------------------------
           NumericValueSelector(
             label: 'PHASE STEP',
-            unit: 'XD',
+            unit: '°',
             value: (ledPanelBloc.state.config.animation as WaveConfigModel)
-                .phaseStep
+                .phaseStepDegrees
                 .round(),
             minValue: 0,
-            maxValue: 20,
+            maxValue: 180,
             incrementStep: 5,
             decrementStep: 5,
             onChanged: (phaseStep) {
-              waveCubit.onPhaseStepChanged(phaseStep.toDouble());
+              waveCubit.onPhaseStepChanged(phaseStep);
               ledPanelBloc.add(
                 LedPanelAnimationConfigChanged(waveCubit.state.config),
               );
@@ -602,7 +602,7 @@ class _ConfigPageState extends State<ConfigPage> {
           // Tilt ----------------------------------------------
           NumericValueSelector(
             label: 'TILT',
-            unit: 'XD',
+            unit: '°',
             value: (ledPanelBloc.state.config.animation as CrawlConfigModel)
                 .tiltDegrees
                 .round(),
@@ -611,7 +611,7 @@ class _ConfigPageState extends State<ConfigPage> {
             incrementStep: 5,
             decrementStep: 5,
             onChanged: (tilt) {
-              crawlCubit.onTiltChanged(tilt.toDouble());
+              crawlCubit.onTiltChanged(tilt);
               ledPanelBloc.add(
                 LedPanelAnimationConfigChanged(crawlCubit.state.config),
               );

@@ -1,5 +1,6 @@
 import 'package:led_panel/data/enums/animation_type_enum.dart';
 import 'package:led_panel/data/models/led_panel/animation_config_model.dart';
+import 'package:led_panel/utils/angle_handler.dart';
 
 class WaveConfigModel extends AnimationConfigModel {
   @override
@@ -7,6 +8,7 @@ class WaveConfigModel extends AnimationConfigModel {
   final double amplitude;
   final double frequency;
   final double phaseStep;
+  double get phaseStepDegrees => AngleHandler.radiansToDegrees(phaseStep);
 
   const WaveConfigModel({
     this.amplitude = 18.0,
