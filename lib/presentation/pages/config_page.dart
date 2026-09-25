@@ -1,30 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:led_panel/bloc/animations/crawl/crawl_cubit.dart';
-import 'package:led_panel/bloc/animations/marquee/marquee_cubit.dart';
-import 'package:led_panel/bloc/animations/scramble/scramble_cubit.dart';
-import 'package:led_panel/bloc/animations/typewritter/typewritter_cubit.dart';
-import 'package:led_panel/bloc/animations/wave/wave_cubit.dart';
 
 import 'package:led_panel/bloc/led_panel/led_panel_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:led_panel/bloc/led_panel_list/led_panel_list_bloc.dart';
-import 'package:led_panel/data/enums/animation_type_enum.dart';
-import 'package:led_panel/data/enums/crawl_direction_enum.dart';
-import 'package:led_panel/data/enums/marquee_direction_enum.dart';
-import 'package:led_panel/data/models/animations/crawl_config_model.dart';
-import 'package:led_panel/data/models/animations/marquee_config_model.dart';
-import 'package:led_panel/data/models/animations/scramble_config_model.dart';
-import 'package:led_panel/data/models/animations/typewriter_config_model.dart';
-import 'package:led_panel/data/models/animations/wave_config_model.dart';
-import 'package:led_panel/data/models/led_panel/animation_config_model.dart';
 import 'package:led_panel/data/models/led_panel/led_panel_config_model.dart';
 
 import 'package:led_panel/utils/extensions/context_extension.dart';
 import 'package:led_panel/presentation/pages/display_page.dart';
 import 'package:led_panel/presentation/widgets/animation_selector/animation_selector.dart';
 import 'package:led_panel/presentation/widgets/color_picker/color_picker_field.dart';
-import 'package:led_panel/presentation/widgets/direction_selector/direction_selector.dart';
 import 'package:led_panel/presentation/widgets/font_family_selector/font_family_selector.dart';
 import 'package:led_panel/presentation/widgets/led_panel/led_panel.dart';
 import 'package:led_panel/presentation/widgets/multi_tabs/multi_tabs_view.dart';
@@ -44,7 +29,9 @@ class ConfigPage extends StatefulWidget {
   State<ConfigPage> createState() => _ConfigPageState();
 }
 
-class _ConfigPageState extends State<ConfigPage> {
+class _ConfigPageState extends State<ConfigPage>
+    with SingleTickerProviderStateMixin {
+  late final TabController _tabController = TabController(length: 3, vsync: this);
   final TextEditingController _messageController = TextEditingController();
   final FocusNode _messageFocusNode = FocusNode();
 
@@ -109,11 +96,17 @@ class _ConfigPageState extends State<ConfigPage> {
                   margin: AppSpacing.screenPadding,
                   child: Stack(
                     children: [
-                      LedPanel(
-                        panelWidth: fixedPanelWidth,
-                        panelHeight: fixedPanelHeight,
-                        borderRadius: AppRadius.borderRadiusLg,
-                        config: state.config.copyWithProportion(proportion),
+                      GestureDetector(
+                        onTap: () {
+                          _tabController.animateTo(0);
+                          _messageFocusNode.requestFocus();
+                        },
+                        child: LedPanel(
+                          panelWidth: fixedPanelWidth,
+                          panelHeight: fixedPanelHeight,
+                          borderRadius: AppRadius.borderRadiusLg,
+                          config: state.config.copyWithProportion(proportion),
+                        ),
                       ),
                       // Play Button ----------------------------------------------
                       Positioned(
@@ -136,6 +129,7 @@ class _ConfigPageState extends State<ConfigPage> {
                   child: Padding(
                     padding: AppSpacing.screenPadding,
                     child: MultiTabsView(
+                      controller: _tabController,
                       tabNames: ['Text', 'Anim', 'BG'],
                       tabViews: [
                         SeparatedListTab(
@@ -144,18 +138,14 @@ class _ConfigPageState extends State<ConfigPage> {
                             TextField(
                               controller: _messageController,
                               focusNode: _messageFocusNode,
-                              onChanged: (value) {
-                                ledPanelBloc.add(LedPanelTextChanged(value));
-                              },
-                              onSubmitted: (value) {
-                                _messageFocusNode.unfocus();
-                              },
-                              onEditingComplete: () {
-                                _messageFocusNode.unfocus();
-                              },
-                              onTapOutside: (event) {
-                                _messageFocusNode.unfocus();
-                              },
+                              onChanged: (value) =>
+                                  ledPanelBloc.add(LedPanelTextChanged(value)),
+                              onSubmitted: (value) =>
+                                  FocusScope.of(context).unfocus(),
+                              onEditingComplete: () =>
+                                  FocusScope.of(context).unfocus(),
+                              onTapOutside: (event) =>
+                                  FocusScope.of(context).unfocus(),
                               maxLines: 2,
                               minLines: 1,
                               decoration: InputDecoration(
@@ -241,48 +231,21 @@ class _ConfigPageState extends State<ConfigPage> {
                             // Animation Type ----------------------------------------------
                             AnimationSelector(
                               selectedAnimation: state.config.animation.type,
-                              onChanged: (animationType) {
-                                late final AnimationConfigModel newConfig;
-                                switch (animationType) {
-                                  case .none:
-                                    newConfig = animationType.defaultConfig;
-                                  case .marquee:
-                                    newConfig = context
-                                        .read<MarqueeCubit>()
-                                        .state
-                                        .config;
-                                  case .typewriter:
-                                    newConfig = context
-                                        .read<TypewritterCubit>()
-                                        .state
-                                        .config;
-                                  case .wave:
-                                    newConfig = context
-                                        .read<WaveCubit>()
-                                        .state
-                                        .config;
-                                  case .scramble:
-                                    newConfig = context
-                                        .read<ScrambleCubit>()
-                                        .state
-                                        .config;
-                                  case .crawl:
-                                    newConfig = context
-                                        .read<CrawlCubit>()
-                                        .state
-                                        .config;
-                                }
-
-                                ledPanelBloc.add(
-                                  LedPanelAnimationTypeChanged(newConfig),
-                                );
-                              },
+                              onChanged: (animationType) => ledPanelBloc.add(
+                                LedPanelAnimationTypeChanged(
+                                  animationType.fields.currentConfig(context),
+                                ),
+                              ),
                             ),
 
                             // Animation Config ----------------------------------------------
-                            ..._buildAnimationConfig(
-                              state.config.animation.type,
-                              ledPanelBloc,
+                            ...state.config.animation.type.fields.build(
+                              context,
+                              (config) {
+                                ledPanelBloc.add(
+                                  LedPanelAnimationConfigChanged(config),
+                                );
+                              },
                             ),
                           ],
                         ),
@@ -346,278 +309,5 @@ class _ConfigPageState extends State<ConfigPage> {
             : null,
       ),
     );
-  }
-
-  List<Widget> _buildAnimationConfig(
-    final AnimationTypeEnum animationType,
-    final LedPanelBloc ledPanelBloc,
-  ) {
-    switch (animationType) {
-      case .none:
-        return [];
-      case .marquee:
-        final marqueeCubit = context.read<MarqueeCubit>();
-        return [
-          // Direction ----------------------------------------------
-          DirectionSelector(
-            options: MarqueeDirectionEnum.values,
-            selectedDirection:
-                (ledPanelBloc.state.config.animation as MarqueeConfigModel)
-                    .direction,
-            onChanged: (direction) {
-              marqueeCubit.onDirectionChanged(direction);
-              ledPanelBloc.add(
-                LedPanelAnimationConfigChanged(marqueeCubit.state.config),
-              );
-            },
-          ),
-
-          // Speed ----------------------------------------------
-          NumericValueSelector(
-            label: 'SPEED',
-            unit: 'px/s',
-            value: (ledPanelBloc.state.config.animation as MarqueeConfigModel)
-                .speed
-                .round(),
-            minValue: 20,
-            maxValue: 500,
-            incrementStep: 5,
-            decrementStep: 5,
-            onChanged: (speed) {
-              marqueeCubit.onSpeedChanged(speed.toDouble());
-              ledPanelBloc.add(
-                LedPanelAnimationConfigChanged(marqueeCubit.state.config),
-              );
-            },
-          ),
-        ];
-      case .typewriter:
-        final typewritterCubit = context.read<TypewritterCubit>();
-        return [
-          // Character Duration ----------------------------------------------
-          NumericValueSelector(
-            label: 'CHARACTER DURATION',
-            unit: 'ms',
-            value:
-                (ledPanelBloc.state.config.animation as TypewriterConfigModel)
-                    .characterDuration
-                    .inMilliseconds
-                    .round(),
-            minValue: 20,
-            maxValue: 500,
-            incrementStep: 5,
-            decrementStep: 5,
-            onChanged: (duration) {
-              typewritterCubit.onCharacterDurationChanged(duration);
-              ledPanelBloc.add(
-                LedPanelAnimationConfigChanged(typewritterCubit.state.config),
-              );
-            },
-          ),
-
-          // Character Duration Noise ----------------------------------------------
-          NumericValueSelector(
-            label: 'CHARACTER DURATION NOISE',
-            unit: 'ms',
-            value:
-                (ledPanelBloc.state.config.animation as TypewriterConfigModel)
-                    .characterDurationNoise
-                    .inMilliseconds
-                    .round(),
-            minValue: 0,
-            maxValue: 1000,
-            incrementStep: 10,
-            decrementStep: 10,
-            onChanged: (duration) {
-              typewritterCubit.onCharacterDurationNoiseChanged(duration);
-              ledPanelBloc.add(
-                LedPanelAnimationConfigChanged(typewritterCubit.state.config),
-              );
-            },
-          ),
-
-          // Completion Pause ----------------------------------------------
-          NumericValueSelector(
-            label: 'COMPLETION PAUSE',
-            unit: 'ms',
-            value:
-                (ledPanelBloc.state.config.animation as TypewriterConfigModel)
-                    .completionPause
-                    .inMilliseconds
-                    .round(),
-            minValue: 0,
-            maxValue: 5000,
-            incrementStep: 50,
-            decrementStep: 50,
-            onChanged: (duration) {
-              typewritterCubit.onCompletionPauseChanged(duration);
-              ledPanelBloc.add(
-                LedPanelAnimationConfigChanged(typewritterCubit.state.config),
-              );
-            },
-          ),
-        ];
-      case .wave:
-        final waveCubit = context.read<WaveCubit>();
-        return [
-          // Amplitude ----------------------------------------------
-          NumericValueSelector(
-            label: 'AMPLITUDE',
-            unit: 'px',
-            value: (ledPanelBloc.state.config.animation as WaveConfigModel)
-                .amplitude
-                .round(),
-            minValue: 0,
-            maxValue: 50,
-            incrementStep: 5,
-            decrementStep: 5,
-            onChanged: (amplitude) {
-              waveCubit.onAmplitudeChanged(amplitude.toDouble());
-              ledPanelBloc.add(
-                LedPanelAnimationConfigChanged(waveCubit.state.config),
-              );
-            },
-          ),
-
-          // Frequency ----------------------------------------------
-          NumericValueSelector(
-            label: 'FREQUENCY',
-            unit: 'Hz',
-            value: (ledPanelBloc.state.config.animation as WaveConfigModel)
-                .frequency
-                .round(),
-            minValue: 0,
-            maxValue: 20,
-            incrementStep: 5,
-            decrementStep: 5,
-            onChanged: (frequency) {
-              waveCubit.onFrequencyChanged(frequency.toDouble());
-              ledPanelBloc.add(
-                LedPanelAnimationConfigChanged(waveCubit.state.config),
-              );
-            },
-          ),
-
-          // Phase Step ----------------------------------------------
-          NumericValueSelector(
-            label: 'PHASE STEP',
-            unit: '°',
-            value: (ledPanelBloc.state.config.animation as WaveConfigModel)
-                .phaseStepDegrees
-                .round(),
-            minValue: 0,
-            maxValue: 180,
-            incrementStep: 5,
-            decrementStep: 5,
-            onChanged: (phaseStep) {
-              waveCubit.onPhaseStepChanged(phaseStep);
-              ledPanelBloc.add(
-                LedPanelAnimationConfigChanged(waveCubit.state.config),
-              );
-            },
-          ),
-        ];
-      case .scramble:
-        final scrambleCubit = context.read<ScrambleCubit>();
-        return [
-          // Character Duration ----------------------------------------------
-          NumericValueSelector(
-            label: 'CHARACTER DURATION',
-            unit: 'ms',
-            value: (ledPanelBloc.state.config.animation as ScrambleConfigModel)
-                .characterDuration
-                .inMilliseconds
-                .round(),
-            minValue: 20,
-            maxValue: 500,
-            incrementStep: 5,
-            decrementStep: 5,
-            onChanged: (duration) {
-              scrambleCubit.onCharacterDurationChanged(duration);
-              ledPanelBloc.add(
-                LedPanelAnimationConfigChanged(scrambleCubit.state.config),
-              );
-            },
-          ),
-
-          // Completion Pause ----------------------------------------------
-          NumericValueSelector(
-            label: 'COMPLETION PAUSE',
-            unit: 'ms',
-            value: (ledPanelBloc.state.config.animation as ScrambleConfigModel)
-                .completionPause
-                .inMilliseconds
-                .round(),
-            minValue: 0,
-            maxValue: 5000,
-            incrementStep: 50,
-            decrementStep: 50,
-            onChanged: (duration) {
-              scrambleCubit.onCompletionPauseChanged(duration);
-              ledPanelBloc.add(
-                LedPanelAnimationConfigChanged(scrambleCubit.state.config),
-              );
-            },
-          ),
-
-          // Scramble Characters ----------------------------------------------
-          // TODO
-        ];
-      case .crawl:
-        final crawlCubit = context.read<CrawlCubit>();
-        return [
-          // Direction ----------------------------------------------
-          DirectionSelector(
-            options: CrawlTextDirectionEnum.values,
-            selectedDirection:
-                (ledPanelBloc.state.config.animation as CrawlConfigModel)
-                    .direction,
-            onChanged: (direction) {
-              crawlCubit.onDirectionChanged(direction);
-              ledPanelBloc.add(
-                LedPanelAnimationConfigChanged(crawlCubit.state.config),
-              );
-            },
-          ),
-
-          // Speed ----------------------------------------------
-          NumericValueSelector(
-            label: 'SPEED',
-            unit: 'px/s',
-            value: (ledPanelBloc.state.config.animation as CrawlConfigModel)
-                .speed
-                .round(),
-            minValue: 20,
-            maxValue: 500,
-            incrementStep: 5,
-            decrementStep: 5,
-            onChanged: (speed) {
-              crawlCubit.onSpeedChanged(speed.toDouble());
-              ledPanelBloc.add(
-                LedPanelAnimationConfigChanged(crawlCubit.state.config),
-              );
-            },
-          ),
-
-          // Tilt ----------------------------------------------
-          NumericValueSelector(
-            label: 'TILT',
-            unit: '°',
-            value: (ledPanelBloc.state.config.animation as CrawlConfigModel)
-                .tiltDegrees
-                .round(),
-            minValue: -90,
-            maxValue: 90,
-            incrementStep: 5,
-            decrementStep: 5,
-            onChanged: (tilt) {
-              crawlCubit.onTiltChanged(tilt);
-              ledPanelBloc.add(
-                LedPanelAnimationConfigChanged(crawlCubit.state.config),
-              );
-            },
-          ),
-        ];
-    }
   }
 }
