@@ -2,30 +2,14 @@ import 'dart:math';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:led_panel/data/enums/dot_shape_enum.dart';
+import 'package:led_panel/data/models/led_panel/animation_configs/leds_config_model.dart';
 
 /// Displays a repeating pattern of shapes as background, rendered via a
 /// cached tile + ImageShader so the paint cost is O(1) regardless of
 /// screen size.
 class DotPattern extends StatefulWidget {
-  /// Side length of the repeating tile (the "period" of the pattern).
-  final double tileSize;
-
-  /// Empty margin between the shape and the edge of its tile. Controls the
-  /// visual gap between repeated shapes, and gives room for shapes whose
-  /// silhouette isn't a simple circle (star points, heart lobes, etc.)
-  /// so they don't get clipped at the tile boundary.
-  final double tilePadding;
-
-  final Color color;
-  final DotShapeEnum shape;
-
-  const DotPattern({
-    super.key,
-    this.tileSize = 15,
-    this.tilePadding = 2,
-    this.color = const Color(0xFFD9D9D9),
-    this.shape = DotShapeEnum.circle,
-  });
+  final LedsConfigModel config;
+  const DotPattern({super.key, required this.config});
 
   @override
   State<DotPattern> createState() => _DotPatternState();
@@ -48,10 +32,10 @@ class _DotPatternState extends State<DotPattern> {
   void didUpdateWidget(covariant DotPattern old) {
     super.didUpdateWidget(old);
     final needsRebuild =
-        old.tileSize != widget.tileSize ||
-        old.tilePadding != widget.tilePadding ||
-        old.color != widget.color ||
-        old.shape != widget.shape;
+        old.config.size != widget.config.size ||
+        old.config.padding != widget.config.padding ||
+        old.config.color != widget.config.color ||
+        old.config.shape != widget.config.shape;
     if (needsRebuild) {
       _buildTile(_tileDpr ?? MediaQuery.of(context).devicePixelRatio);
     }
@@ -65,26 +49,20 @@ class _DotPatternState extends State<DotPattern> {
 
   Future<void> _buildTile(double dpr) async {
     _tileDpr = dpr;
-    final step = widget.tileSize;
+    final step = widget.config.size;
     final px = (step * dpr).ceil().clamp(1, 4096);
 
     final center = Offset(px / 2, px / 2);
     // Half-extent of the shape itself, after leaving `tilePadding` of
     // breathing room on each side.
-    final extent = ((widget.tileSize / 2 - widget.tilePadding) * dpr).clamp(
-      0.0,
-      px / 2,
-    );
+    final extent = ((widget.config.size / 2 - widget.config.padding) * dpr)
+        .clamp(0.0, px / 2);
 
     final recorder = ui.PictureRecorder();
     final canvas = Canvas(recorder);
-    final paint = Paint()
-      ..color =
-          (Color.lerp(widget.color, const Color(0xFFD9D9D9), 0.2) ??
-                  widget.color)
-              .withAlpha(50);
+    final paint = Paint()..color = widget.config.color;
 
-    canvas.drawPath(_pathFor(widget.shape, center, extent), paint);
+    canvas.drawPath(_pathFor(widget.config.shape, center, extent), paint);
 
     final oldTile = _tile;
     final image = await recorder.endRecording().toImage(px, px);

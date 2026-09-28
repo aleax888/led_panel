@@ -174,7 +174,7 @@ class LedPanelBloc extends Bloc<LedPanelEvent, LedPanelState> {
     emit(
       state.copyWith(
         config: state.config.copyWith(
-          background: state.config.background.copyWith(ledsShape: event.shape),
+          leds: state.config.leds.copyWith(shape: event.shape),
         ),
       ),
     );
@@ -187,7 +187,7 @@ class LedPanelBloc extends Bloc<LedPanelEvent, LedPanelState> {
     emit(
       state.copyWith(
         config: state.config.copyWith(
-          background: state.config.background.copyWith(ledsColor: event.color),
+          leds: state.config.leds.copyWith(color: event.color),
         ),
       ),
     );

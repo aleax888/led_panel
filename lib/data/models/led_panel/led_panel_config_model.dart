@@ -1,5 +1,6 @@
 import 'package:led_panel/data/enums/animation_type_enum.dart';
 import 'package:led_panel/data/models/led_panel/animation_configs/animation_config_model.dart';
+import 'package:led_panel/data/models/led_panel/animation_configs/leds_config_model.dart';
 import 'package:led_panel/data/models/led_panel/animation_configs/marquee_config_model.dart';
 import 'package:led_panel/data/models/led_panel/background_config_model.dart';
 import 'package:led_panel/data/models/led_panel/text_config_model.dart';
@@ -15,6 +16,8 @@ class LedPanelConfigModel {
   final AnimationConfigModel animation;
   // Background
   final BackgroundConfigModel background;
+  // Leds
+  final LedsConfigModel leds;
 
   const LedPanelConfigModel({
     // Metadata
@@ -27,6 +30,8 @@ class LedPanelConfigModel {
     this.animation = const MarqueeConfigModel(),
     // Background
     this.background = const BackgroundConfigModel(),
+    // Leds
+    this.leds = const LedsConfigModel(),
   });
 
   LedPanelConfigModel copyWith({
@@ -40,6 +45,8 @@ class LedPanelConfigModel {
     AnimationConfigModel? animation,
     // Background
     BackgroundConfigModel? background,
+    // Leds
+    LedsConfigModel? leds,
   }) {
     return LedPanelConfigModel(
       // Metadata
@@ -52,6 +59,8 @@ class LedPanelConfigModel {
       animation: animation ?? this.animation,
       // Background
       background: background ?? this.background,
+      // Leds
+      leds: leds ?? this.leds,
     );
   }
 
@@ -66,9 +75,9 @@ class LedPanelConfigModel {
   factory LedPanelConfigModel.fromJson(Map<String, dynamic> json) {
     final AnimationTypeEnum? animationType = json['animation']?['type'] == null
         ? null
-        : AnimationTypeEnum.values.firstWhere(
-            (e) => e.name == json['animation']?['type'],
-            orElse: () => .marquee,
+        : [...AnimationTypeEnum.values, null].firstWhere(
+            (e) => e?.name == json['animation']?['type'],
+            orElse: () => null,
           );
 
     return LedPanelConfigModel(
@@ -84,6 +93,8 @@ class LedPanelConfigModel {
           : animationType.fromJson(json['animation']),
       // Background
       background: BackgroundConfigModel.fromJson(json['background']),
+      // Leds
+      leds: LedsConfigModel.fromJson(json['leds']),
     );
   }
 
@@ -99,6 +110,8 @@ class LedPanelConfigModel {
       'animation': animation.toJson(),
       // Background
       'background': background.toJson(),
+      // Leds
+      'leds': leds.toJson(),
     };
   }
 }

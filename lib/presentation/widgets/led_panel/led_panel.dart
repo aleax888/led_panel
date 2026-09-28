@@ -43,12 +43,7 @@ class _LedPanelState extends State<LedPanel> {
           clipBehavior: .hardEdge,
           children: [
             // Dot pattern ----------------------------------------------
-            RepaintBoundary(
-              child: DotPattern(
-                color: widget.config.background.ledsColor,
-                shape: widget.config.background.ledsShape,
-              ),
-            ),
+            RepaintBoundary(child: DotPattern(config: widget.config.leds)),
 
             // Animation ----------------------------------------------
             widget.config.animation.type.renderer.build(

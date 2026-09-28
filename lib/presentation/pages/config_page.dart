@@ -31,7 +31,10 @@ class ConfigPage extends StatefulWidget {
 
 class _ConfigPageState extends State<ConfigPage>
     with SingleTickerProviderStateMixin {
-  late final TabController _tabController = TabController(length: 3, vsync: this);
+  late final TabController _tabController = TabController(
+    length: 3,
+    vsync: this,
+  );
   final TextEditingController _messageController = TextEditingController();
   final FocusNode _messageFocusNode = FocusNode();
 
@@ -263,7 +266,7 @@ class _ConfigPageState extends State<ConfigPage>
                             // Leds Color ----------------------------------------------
                             ColorPickerField(
                               label: 'LEDs',
-                              color: state.config.background.ledsColor,
+                              color: state.config.leds.color,
                               onChanged: (color) => ledPanelBloc.add(
                                 LedPanelLedsColorChanged(color),
                               ),
@@ -271,7 +274,7 @@ class _ConfigPageState extends State<ConfigPage>
 
                             // Leds Shape ----------------------------------------------
                             ShapeSelector(
-                              selectedShape: state.config.background.ledsShape,
+                              selectedShape: state.config.leds.shape,
                               onChanged: (shape) => ledPanelBloc.add(
                                 LedPanelLedsShapeChanged(shape),
                               ),
