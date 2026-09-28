@@ -2,24 +2,24 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:led_panel/data/models/animations/typewriter_config_model.dart';
+import 'package:led_panel/data/models/led_panel/animation_configs/typewriter_config_model.dart';
 import 'package:led_panel/data/models/led_panel/text_config_model.dart';
-import 'package:led_panel/presentation/widgets/led_panel/animations/styled_text.dart';
+import 'package:led_panel/presentation/widgets/led_panel/animations/styled_animation.dart';
 
-class TypewriterText extends StatefulWidget {
+class TypewriterAnimation extends StatefulWidget {
   final TextConfigModel textConfig;
   final TypewriterConfigModel animationConfig;
-  const TypewriterText({
+  const TypewriterAnimation({
     super.key,
     required this.textConfig,
     required this.animationConfig,
   });
 
   @override
-  State<TypewriterText> createState() => _TypewriterTextState();
+  State<TypewriterAnimation> createState() => _TypewriterAnimationState();
 }
 
-class _TypewriterTextState extends State<TypewriterText>
+class _TypewriterAnimationState extends State<TypewriterAnimation>
     with SingleTickerProviderStateMixin {
   final Random _random = Random();
   late final Ticker _ticker;
@@ -38,7 +38,7 @@ class _TypewriterTextState extends State<TypewriterText>
   }
 
   @override
-  void didUpdateWidget(covariant TypewriterText oldWidget) {
+  void didUpdateWidget(covariant TypewriterAnimation oldWidget) {
     super.didUpdateWidget(oldWidget);
     final bool animationConfigChanged =
         oldWidget.textConfig.message != widget.textConfig.message ||
@@ -69,7 +69,7 @@ class _TypewriterTextState extends State<TypewriterText>
       maxWidth: double.infinity,
       minHeight: 0,
       maxHeight: double.infinity,
-      child: StyledText(
+      child: StyledAnimation(
         textConfig: widget.textConfig.copyWith(
           message: _characters.take(_visibleCharacterCount).join(),
         ),

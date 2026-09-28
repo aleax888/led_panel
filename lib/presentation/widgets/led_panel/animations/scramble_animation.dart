@@ -2,24 +2,24 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:led_panel/data/models/animations/scramble_config_model.dart';
+import 'package:led_panel/data/models/led_panel/animation_configs/scramble_config_model.dart';
 import 'package:led_panel/data/models/led_panel/text_config_model.dart';
-import 'package:led_panel/presentation/widgets/led_panel/animations/styled_text.dart';
+import 'package:led_panel/presentation/widgets/led_panel/animations/styled_animation.dart';
 
-class ScrambleText extends StatefulWidget {
+class ScrambleAnimation extends StatefulWidget {
   final TextConfigModel textConfig;
   final ScrambleConfigModel animationConfig;
-  const ScrambleText({
+  const ScrambleAnimation({
     super.key,
     required this.textConfig,
     required this.animationConfig,
   });
 
   @override
-  State<ScrambleText> createState() => _ScrambleTextState();
+  State<ScrambleAnimation> createState() => _ScrambleAnimationState();
 }
 
-class _ScrambleTextState extends State<ScrambleText>
+class _ScrambleAnimationState extends State<ScrambleAnimation>
     with SingleTickerProviderStateMixin {
   final Random _random = Random();
   late final Ticker _ticker;
@@ -36,7 +36,7 @@ class _ScrambleTextState extends State<ScrambleText>
   }
 
   @override
-  void didUpdateWidget(covariant ScrambleText oldWidget) {
+  void didUpdateWidget(covariant ScrambleAnimation oldWidget) {
     super.didUpdateWidget(oldWidget);
     final bool animationConfigChanged =
       oldWidget.textConfig.message != widget.textConfig.message ||
@@ -72,7 +72,7 @@ class _ScrambleTextState extends State<ScrambleText>
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           for (var index = 0; index < _characters.length; index++)
-            StyledText(
+            StyledAnimation(
               textConfig: widget.textConfig.copyWith(
                 message: _characterFor(index),
               ),

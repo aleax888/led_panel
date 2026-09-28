@@ -1,4 +1,4 @@
-import 'package:led_panel/data/models/animations/scramble_config_model.dart';
+import 'package:led_panel/data/models/led_panel/animation_configs/scramble_config_model.dart';
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';

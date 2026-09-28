@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:led_panel/data/models/led_panel/text_config_model.dart';
 
 /// A widget that displays styled text.
-class StyledText extends StatelessWidget {
+class StyledAnimation extends StatelessWidget {
   final TextConfigModel textConfig;
   final int? maxLines;
 
-  const StyledText({super.key, required this.textConfig, this.maxLines = 1});
+  const StyledAnimation({super.key, required this.textConfig, this.maxLines = 1});
 
   @override
   Widget build(BuildContext context) {

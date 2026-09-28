@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:led_panel/data/models/animations/crawl_config_model.dart';
+import 'package:led_panel/data/models/led_panel/animation_configs/crawl_config_model.dart';
 import 'package:led_panel/data/models/led_panel/text_config_model.dart';
-import 'package:led_panel/presentation/widgets/led_panel/animations/styled_text.dart';
+import 'package:led_panel/presentation/widgets/led_panel/animations/styled_animation.dart';
 import 'package:led_panel/presentation/widgets/led_panel/height_spacer.dart';
 
-class CrawlText extends StatefulWidget {
+class CrawlAnimation extends StatefulWidget {
   final TextConfigModel textConfig;
   final CrawlConfigModel animationConfig;
   final double panelWidth;
   final double panelHeight;
 
-  const CrawlText({
+  const CrawlAnimation({
     super.key,
     required this.textConfig,
     required this.animationConfig,
@@ -20,10 +20,10 @@ class CrawlText extends StatefulWidget {
   });
 
   @override
-  State<CrawlText> createState() => _CrawlTextState();
+  State<CrawlAnimation> createState() => _CrawlAnimationState();
 }
 
-class _CrawlTextState extends State<CrawlText>
+class _CrawlAnimationState extends State<CrawlAnimation>
     with SingleTickerProviderStateMixin {
   /// Key for reading the calculated height of the content column.
   final GlobalKey _contentKey = GlobalKey();
@@ -52,7 +52,7 @@ class _CrawlTextState extends State<CrawlText>
   }
 
   @override
-  void didUpdateWidget(covariant CrawlText oldWidget) {
+  void didUpdateWidget(covariant CrawlAnimation oldWidget) {
     super.didUpdateWidget(oldWidget);
     final bool layoutMayHaveChanged =
         oldWidget.textConfig.message != widget.textConfig.message ||
@@ -117,7 +117,7 @@ class _CrawlTextState extends State<CrawlText>
             HeightSpacer(space: widget.panelHeight),
 
             // Led text ----------------------------------------------
-            StyledText(textConfig: widget.textConfig, maxLines: null),
+            StyledAnimation(textConfig: widget.textConfig, maxLines: null),
 
             // Spacer (animation logic) ----------------------------------------------
             HeightSpacer(space: widget.panelHeight),

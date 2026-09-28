@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:led_panel/bloc/animations/scramble/scramble_cubit.dart';
-import 'package:led_panel/data/models/led_panel/animation_config_model.dart';
+import 'package:led_panel/data/models/led_panel/animation_configs/animation_config_model.dart';
 import 'package:led_panel/presentation/widgets/input_label.dart';
-import 'package:led_panel/presentation/widgets/led_panel/animation_filds/animation_fields.dart';
+import 'package:led_panel/presentation/widgets/led_panel/animation_fields/animation_fields.dart';
 import 'package:led_panel/presentation/widgets/numeric_value_selector/numeric_value_selector.dart';
 
 class ScrambleFields extends AnimationFields {

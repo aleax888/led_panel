@@ -2,7 +2,7 @@ import 'dart:math' as math;
 
 import 'package:led_panel/data/enums/animation_type_enum.dart';
 import 'package:led_panel/data/enums/crawl_direction_enum.dart';
-import 'package:led_panel/data/models/led_panel/animation_config_model.dart';
+import 'package:led_panel/data/models/led_panel/animation_configs/animation_config_model.dart';
 import 'package:led_panel/utils/angle_handler.dart';
 
 class CrawlConfigModel extends AnimationConfigModel {

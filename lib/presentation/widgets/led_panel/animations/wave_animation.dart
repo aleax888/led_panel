@@ -2,24 +2,24 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:led_panel/data/models/animations/wave_config_model.dart';
+import 'package:led_panel/data/models/led_panel/animation_configs/wave_config_model.dart';
 import 'package:led_panel/data/models/led_panel/text_config_model.dart';
-import 'package:led_panel/presentation/widgets/led_panel/animations/styled_text.dart';
+import 'package:led_panel/presentation/widgets/led_panel/animations/styled_animation.dart';
 
-class WaveText extends StatefulWidget {
+class WaveAnimation extends StatefulWidget {
   final TextConfigModel textConfig;
   final WaveConfigModel animationConfig;
-  const WaveText({
+  const WaveAnimation({
     super.key,
     required this.textConfig,
     required this.animationConfig,
   });
 
   @override
-  State<WaveText> createState() => _WaveTextState();
+  State<WaveAnimation> createState() => _WaveAnimationState();
 }
 
-class _WaveTextState extends State<WaveText>
+class _WaveAnimationState extends State<WaveAnimation>
     with SingleTickerProviderStateMixin {
   late final Ticker _ticker;
   double _elapsed = 0.0;
@@ -61,7 +61,7 @@ class _WaveTextState extends State<WaveText>
                     ) *
                     widget.animationConfig.amplitude,
               ),
-              child: StyledText(
+              child: StyledAnimation(
                 textConfig: widget.textConfig.copyWith(message: character),
               ),
             ),

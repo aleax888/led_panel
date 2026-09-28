@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:led_panel/data/models/animations/marquee_config_model.dart';
+import 'package:led_panel/data/models/led_panel/animation_configs/marquee_config_model.dart';
 import 'package:led_panel/data/models/led_panel/text_config_model.dart';
 import 'package:led_panel/presentation/widgets/led_panel/width_spacer.dart';
-import 'package:led_panel/presentation/widgets/led_panel/animations/styled_text.dart';
+import 'package:led_panel/presentation/widgets/led_panel/animations/styled_animation.dart';
 
 /// Displays an animated scrolling LED text panel.
-class MarqueeText extends StatefulWidget {
+class MarqueeAnimation extends StatefulWidget {
   final TextConfigModel textConfig;
   final MarqueeConfigModel animationConfig;
   final double panelWidth;
 
-  const MarqueeText({
+  const MarqueeAnimation({
     super.key,
     required this.textConfig,
     required this.animationConfig,
@@ -19,10 +19,10 @@ class MarqueeText extends StatefulWidget {
   });
 
   @override
-  State<MarqueeText> createState() => _MarqueeTextState();
+  State<MarqueeAnimation> createState() => _MarqueeAnimationState();
 }
 
-class _MarqueeTextState extends State<MarqueeText>
+class _MarqueeAnimationState extends State<MarqueeAnimation>
     with SingleTickerProviderStateMixin {
   /// Key for reading the calculated width of the content row.
   final GlobalKey _contentKey = GlobalKey();
@@ -52,7 +52,7 @@ class _MarqueeTextState extends State<MarqueeText>
   }
 
   @override
-  void didUpdateWidget(covariant MarqueeText oldWidget) {
+  void didUpdateWidget(covariant MarqueeAnimation oldWidget) {
     super.didUpdateWidget(oldWidget);
     final bool layoutMayHaveChanged =
         oldWidget.textConfig.message != widget.textConfig.message ||
@@ -106,7 +106,7 @@ class _MarqueeTextState extends State<MarqueeText>
             WidthSpacer(space: widget.panelWidth),
 
             // Led text ----------------------------------------------
-            StyledText(textConfig: widget.textConfig),
+            StyledAnimation(textConfig: widget.textConfig),
 
             // Spacer (animation logic) ----------------------------------------------
             WidthSpacer(space: widget.panelWidth),

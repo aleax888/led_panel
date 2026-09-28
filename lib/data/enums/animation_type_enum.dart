@@ -1,17 +1,24 @@
-import 'package:led_panel/data/models/animations/crawl_config_model.dart';
-import 'package:led_panel/data/models/animations/scramble_config_model.dart';
-import 'package:led_panel/data/models/animations/typewriter_config_model.dart';
-import 'package:led_panel/data/models/animations/wave_config_model.dart';
-import 'package:led_panel/data/models/led_panel/animation_config_model.dart';
-import 'package:led_panel/data/models/animations/marquee_config_model.dart';
-import 'package:led_panel/data/models/animations/none_config_model.dart';
-import 'package:led_panel/presentation/widgets/led_panel/animation_filds/animation_fields.dart';
-import 'package:led_panel/presentation/widgets/led_panel/animation_filds/crawl_fields.dart';
-import 'package:led_panel/presentation/widgets/led_panel/animation_filds/marquee_fields.dart';
-import 'package:led_panel/presentation/widgets/led_panel/animation_filds/scramble_fields.dart';
-import 'package:led_panel/presentation/widgets/led_panel/animation_filds/typewriter_fields.dart';
-import 'package:led_panel/presentation/widgets/led_panel/animation_filds/wave_fields.dart';
-import 'package:led_panel/presentation/widgets/led_panel/animation_filds/none_fields.dart';
+import 'package:led_panel/data/models/led_panel/animation_configs/crawl_config_model.dart';
+import 'package:led_panel/data/models/led_panel/animation_configs/scramble_config_model.dart';
+import 'package:led_panel/data/models/led_panel/animation_configs/typewriter_config_model.dart';
+import 'package:led_panel/data/models/led_panel/animation_configs/wave_config_model.dart';
+import 'package:led_panel/data/models/led_panel/animation_configs/animation_config_model.dart';
+import 'package:led_panel/data/models/led_panel/animation_configs/marquee_config_model.dart';
+import 'package:led_panel/data/models/led_panel/animation_configs/none_config_model.dart';
+import 'package:led_panel/presentation/widgets/led_panel/animation_fields/animation_fields.dart';
+import 'package:led_panel/presentation/widgets/led_panel/animation_fields/crawl_fields.dart';
+import 'package:led_panel/presentation/widgets/led_panel/animation_fields/marquee_fields.dart';
+import 'package:led_panel/presentation/widgets/led_panel/animation_fields/scramble_fields.dart';
+import 'package:led_panel/presentation/widgets/led_panel/animation_fields/typewriter_fields.dart';
+import 'package:led_panel/presentation/widgets/led_panel/animation_fields/wave_fields.dart';
+import 'package:led_panel/presentation/widgets/led_panel/animation_fields/none_fields.dart';
+import 'package:led_panel/presentation/widgets/led_panel/animation_renderers/animation_renderer.dart';
+import 'package:led_panel/presentation/widgets/led_panel/animation_renderers/crawl_renderer.dart';
+import 'package:led_panel/presentation/widgets/led_panel/animation_renderers/marquee_renderer.dart';
+import 'package:led_panel/presentation/widgets/led_panel/animation_renderers/none_renderer.dart';
+import 'package:led_panel/presentation/widgets/led_panel/animation_renderers/scramble_renderer.dart';
+import 'package:led_panel/presentation/widgets/led_panel/animation_renderers/typewritter_renderer.dart';
+import 'package:led_panel/presentation/widgets/led_panel/animation_renderers/wave_renderer.dart';
 
 enum AnimationTypeEnum {
   // No animation, static text
@@ -21,6 +28,7 @@ enum AnimationTypeEnum {
     fromJson: NoneConfigModel.fromJson,
     defaultConfigFactory: NoneConfigModel.new,
     fields: NoneFields(),
+    renderer: NoneRenderer(),
   ),
   // Scrolling text from one side to the other
   marquee(
@@ -29,6 +37,7 @@ enum AnimationTypeEnum {
     fromJson: MarqueeConfigModel.fromJson,
     defaultConfigFactory: MarqueeConfigModel.new,
     fields: MarqueeFields(),
+    renderer: MarqueeRenderer(),
   ),
   // Text appears one character at a time
   typewriter(
@@ -37,6 +46,7 @@ enum AnimationTypeEnum {
     fromJson: TypewriterConfigModel.fromJson,
     defaultConfigFactory: TypewriterConfigModel.new,
     fields: TypewriterFields(),
+    renderer: TypewriterRenderer(),
   ),
   // Text appears in a wave-like motion
   wave(
@@ -45,6 +55,7 @@ enum AnimationTypeEnum {
     fromJson: WaveConfigModel.fromJson,
     defaultConfigFactory: WaveConfigModel.new,
     fields: WaveFields(),
+    renderer: WaveRenderer(),
   ),
   // Text appears in a scrambled manner before revealing the final message
   scramble(
@@ -53,6 +64,7 @@ enum AnimationTypeEnum {
     fromJson: ScrambleConfigModel.fromJson,
     defaultConfigFactory: ScrambleConfigModel.new,
     fields: ScrambleFields(),
+    renderer: ScrambleRenderer(),
   ),
   // Text appears to crawl across the screen (STAR WARS style)
   crawl(
@@ -61,6 +73,7 @@ enum AnimationTypeEnum {
     fromJson: CrawlConfigModel.fromJson,
     defaultConfigFactory: CrawlConfigModel.new,
     fields: CrawlFields(),
+    renderer: CrawlRenderer(),
   );
 
   const AnimationTypeEnum({
@@ -69,6 +82,7 @@ enum AnimationTypeEnum {
     required this.fromJson,
     required this.defaultConfigFactory,
     required this.fields,
+    required this.renderer,
   });
 
   final String label;
@@ -76,6 +90,7 @@ enum AnimationTypeEnum {
   final Function fromJson;
   final AnimationConfigModel Function() defaultConfigFactory;
   final AnimationFields fields;
+  final AnimationRenderer renderer;
 
   AnimationConfigModel get defaultConfig => defaultConfigFactory();
 }
