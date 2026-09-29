@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:led_panel/bloc/animations/crawl/crawl_cubit.dart';
+import 'package:led_panel/bloc/configs/animations/crawl/crawl_cubit.dart';
 import 'package:led_panel/data/enums/crawl_direction_enum.dart';
 import 'package:led_panel/data/models/led_panel/animation_configs/animation_config_model.dart';
 import 'package:led_panel/presentation/widgets/direction_selector/direction_selector.dart';
-import 'package:led_panel/presentation/widgets/led_panel/animation_fields/animation_fields.dart';
+import 'package:led_panel/presentation/widgets/fields/animation_fields/animation_fields.dart';
 import 'package:led_panel/presentation/widgets/numeric_value_selector/numeric_value_selector.dart';
 
 class CrawlFields extends AnimationFields {
@@ -16,16 +16,16 @@ class CrawlFields extends AnimationFields {
     void Function(AnimationConfigModel) sync,
   ) {
     final crawlCubit = context.watch<CrawlCubit>();
+    crawlCubit.stream.listen((state) {
+      sync(state.config);
+    });
     final config = crawlCubit.state.config;
 
     return [
       DirectionSelector(
         options: CrawlTextDirectionEnum.values,
         selectedDirection: config.direction,
-        onChanged: (direction) {
-          crawlCubit.onDirectionChanged(direction);
-          sync(config);
-        },
+        onChanged: (direction) => crawlCubit.onDirectionChanged(direction),
       ),
       NumericValueSelector(
         label: 'SPEED',
@@ -35,10 +35,7 @@ class CrawlFields extends AnimationFields {
         maxValue: 500,
         incrementStep: 5,
         decrementStep: 5,
-        onChanged: (speed) {
-          crawlCubit.onSpeedChanged(speed.toDouble());
-          sync(config);
-        },
+        onChanged: (speed) => crawlCubit.onSpeedChanged(speed.toDouble()),
       ),
       NumericValueSelector(
         label: 'TILT',
@@ -48,10 +45,7 @@ class CrawlFields extends AnimationFields {
         maxValue: 90,
         incrementStep: 5,
         decrementStep: 5,
-        onChanged: (tilt) {
-          crawlCubit.onTiltChanged(tilt);
-          sync(config);
-        },
+        onChanged: (tilt) => crawlCubit.onTiltChanged(tilt),
       ),
     ];
   }

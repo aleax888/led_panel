@@ -6,7 +6,8 @@ import 'package:meta/meta.dart';
 part 'typewritter_state.dart';
 
 class TypewritterCubit extends Cubit<TypewritterState> {
-  TypewritterCubit() : super(TypewritterState());
+  TypewritterCubit({final TypewriterConfigModel? config})
+    : super(TypewritterState(config: config));
 
   void onCharacterDurationChanged(int characterDuration) {
     emit(

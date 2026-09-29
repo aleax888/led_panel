@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import 'package:led_panel/bloc/led_panel/led_panel_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:led_panel/bloc/led_panel_list/led_panel_list_bloc.dart';
 import 'package:led_panel/data/models/led_panel/led_panel_config_model.dart';
+import 'package:led_panel/presentation/widgets/fields/background_fields.dart';
+import 'package:led_panel/presentation/widgets/fields/leds_fields.dart';
+import 'package:led_panel/presentation/widgets/fields/text_fields.dart';
 
 import 'package:led_panel/utils/extensions/context_extension.dart';
 import 'package:led_panel/presentation/pages/display_page.dart';
 import 'package:led_panel/presentation/widgets/animation_selector/animation_selector.dart';
-import 'package:led_panel/presentation/widgets/color_picker/color_picker_field.dart';
-import 'package:led_panel/presentation/widgets/font_family_selector/font_family_selector.dart';
 import 'package:led_panel/presentation/widgets/led_panel/led_panel.dart';
 import 'package:led_panel/presentation/widgets/multi_tabs/multi_tabs_view.dart';
 import 'package:led_panel/presentation/widgets/multi_tabs/separated_list_tab.dart';
-import 'package:led_panel/presentation/widgets/numeric_value_selector/numeric_value_selector.dart';
-import 'package:led_panel/presentation/widgets/shape_selector/shape_selector.dart';
 import 'package:led_panel/theme/constants/app_radius.dart';
 import 'package:led_panel/theme/constants/app_spacing.dart';
 import 'package:led_panel/utils/toast_handler.dart';
@@ -35,19 +33,16 @@ class _ConfigPageState extends State<ConfigPage>
     length: 3,
     vsync: this,
   );
-  final TextEditingController _messageController = TextEditingController();
   final FocusNode _messageFocusNode = FocusNode();
+  final TextFields _textFields = TextFields();
+  final BackgroundFields _backgroundFields = BackgroundFields();
+  final LedsFields _ledsFields = LedsFields();
 
   @override
   void initState() {
     super.initState();
     final LedPanelBloc ledPanelBloc = context.read<LedPanelBloc>();
     ledPanelBloc.add(LedPanelConfigSelected(widget.initialConfig));
-    _messageController.text = ledPanelBloc.state.config.text.message;
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
   }
 
   @override
@@ -59,238 +54,149 @@ class _ConfigPageState extends State<ConfigPage>
 
   @override
   void dispose() {
-    _messageController.dispose();
     _messageFocusNode.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LedPanelBloc, LedPanelState>(
-      builder: (context, state) {
-        final LedPanelBloc ledPanelBloc = context.read<LedPanelBloc>();
-        final double fixedPanelWidth =
-            context.screenSize.width - AppSpacing.screenPadding.horizontal;
-        final double fixedPanelHeight =
-            ((context.screenSize.width - AppSpacing.screenPadding.horizontal) *
-                context.screenSize.width) /
-            context.screenSize.height;
-        final double proportion = fixedPanelWidth / context.screenSize.height;
-
-        return Scaffold(
-          appBar: AppBar(
-            title: Text('CUSTOMIZATION', style: context.textTheme.labelLarge),
-            actions: [
-              IconButton(
-                icon: const Icon(Icons.share_outlined),
-                onPressed: () => ToastHandler.showInfo(
-                  'Sharing functionality is not implemented yet.',
-                ),
-              ),
-            ],
+    final LedPanelBloc ledPanelBloc = context.read<LedPanelBloc>();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('CUSTOMIZATION', style: context.textTheme.labelLarge),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.share_outlined),
+            onPressed: () => ToastHandler.showInfo(
+              'Sharing functionality is not implemented yet.',
+            ),
           ),
-          body: SafeArea(
-            child: Column(
-              spacing: AppSpacing.md,
-              children: [
-                SizedBox(),
-                // Led Panel Preview ----------------------------------------------
-                Container(
-                  margin: AppSpacing.screenPadding,
-                  child: Stack(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          _tabController.animateTo(0);
-                          _messageFocusNode.requestFocus();
-                        },
-                        child: LedPanel(
+        ],
+      ),
+      body: SafeArea(
+        child: Column(
+          spacing: AppSpacing.md,
+          children: [
+            // Led Panel Preview ----------------------------------------------
+            Container(
+              margin: AppSpacing.screenPadding,
+              child: Stack(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      _tabController.animateTo(0);
+                      _messageFocusNode.requestFocus();
+                    },
+                    child: BlocBuilder<LedPanelBloc, LedPanelState>(
+                      builder: (context, state) {
+                        final double fixedPanelWidth =
+                            context.screenSize.width -
+                            AppSpacing.screenPadding.horizontal;
+                        final double fixedPanelHeight =
+                            ((context.screenSize.width -
+                                    AppSpacing.screenPadding.horizontal) *
+                                context.screenSize.width) /
+                            context.screenSize.height;
+                        final double proportion =
+                            fixedPanelWidth / context.screenSize.height;
+                        return LedPanel(
                           panelWidth: fixedPanelWidth,
                           panelHeight: fixedPanelHeight,
                           borderRadius: AppRadius.borderRadiusLg,
                           config: state.config.copyWithProportion(proportion),
-                        ),
-                      ),
-                      // Play Button ----------------------------------------------
-                      Positioned(
-                        right: AppSpacing.xs,
-                        top: AppSpacing.xs,
-                        child: IconButton(
-                          onPressed: _navigateToDisplay,
-                          icon: Icon(
-                            Icons.open_in_full_rounded,
-                            color: context.colors.onPrimary,
-                          ),
-                        ),
-                      ),
-                    ],
+                        );
+                      },
+                    ),
                   ),
-                ),
+                  // Play Button ----------------------------------------------
+                  Positioned(
+                    right: AppSpacing.xs,
+                    top: AppSpacing.xs,
+                    child: IconButton(
+                      onPressed: _navigateToDisplay,
+                      icon: Icon(
+                        Icons.open_in_full_rounded,
+                        color: context.colors.onPrimary,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
 
-                // Configuration Controls ----------------------------------------------
-                Expanded(
-                  child: Padding(
-                    padding: AppSpacing.screenPadding,
-                    child: MultiTabsView(
-                      controller: _tabController,
-                      tabNames: ['Text', 'Anim', 'BG'],
-                      tabViews: [
-                        SeparatedListTab(
-                          children: [
-                            // Message ----------------------------------------------
-                            TextField(
-                              controller: _messageController,
-                              focusNode: _messageFocusNode,
-                              onChanged: (value) =>
-                                  ledPanelBloc.add(LedPanelTextChanged(value)),
-                              onSubmitted: (value) =>
-                                  FocusScope.of(context).unfocus(),
-                              onEditingComplete: () =>
-                                  FocusScope.of(context).unfocus(),
-                              onTapOutside: (event) =>
-                                  FocusScope.of(context).unfocus(),
-                              maxLines: 2,
-                              minLines: 1,
-                              decoration: InputDecoration(
-                                hintText: 'Type your message...',
-                              ),
-                            ),
-
-                            // Color ----------------------------------------------
-                            ColorPickerField(
-                              color: state.config.text.color,
-                              onChanged: (color) => ledPanelBloc.add(
-                                LedPanelTextColorChanged(color),
-                              ),
-                            ),
-
-                            // Font Family ----------------------------------------------
-                            FontFamilySelector(
-                              selectedFontFamily: state.config.text.fontFamily,
-                              onChanged: (fontFamily) => ledPanelBloc.add(
-                                LedPanelFontFamilyChanged(fontFamily),
-                              ),
-                            ),
-
-                            // Font Size ----------------------------------------------
-                            NumericValueSelector(
-                              label: 'SIZE',
-                              unit: 'pt',
-                              value: state.config.text.fontSize.round(),
-                              minValue: 100,
-                              maxValue: 300,
-                              incrementStep: 2,
-                              decrementStep: 2,
-                              onChanged: (value) => ledPanelBloc.add(
-                                LedPanelFontSizeChanged(value.toDouble()),
-                              ),
-                            ),
-
-                            // Glow Radius ----------------------------------------------
-                            NumericValueSelector(
-                              label: 'GLOW',
-                              unit: 'pt',
-                              value: state.config.text.glowRadius.round(),
-                              minValue: 0,
-                              maxValue: 50,
-                              incrementStep: 1,
-                              decrementStep: 1,
-                              onChanged: (value) => ledPanelBloc.add(
-                                LedPanelGlowRadiusChanged(value.toDouble()),
-                              ),
-                            ),
-
-                            // Letter Spacing ----------------------------------------------
-                            NumericValueSelector(
-                              label: 'LETTER SPACING',
-                              unit: 'pt',
-                              value: state.config.text.letterSpacing.round(),
-                              minValue: -10,
-                              maxValue: 50,
-                              incrementStep: 1,
-                              decrementStep: 1,
-                              onChanged: (value) => ledPanelBloc.add(
-                                LedPanelLetterSpacingChanged(value.toDouble()),
-                              ),
-                            ),
-
-                            // Word Spacing ----------------------------------------------
-                            NumericValueSelector(
-                              label: 'WORD SPACING',
-                              unit: 'pt',
-                              value: state.config.text.wordSpacing.round(),
-                              minValue: -10,
-                              maxValue: 50,
-                              incrementStep: 1,
-                              decrementStep: 1,
-                              onChanged: (value) => ledPanelBloc.add(
-                                LedPanelWordSpacingChanged(value.toDouble()),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SeparatedListTab(
-                          children: [
-                            // Animation Type ----------------------------------------------
-                            AnimationSelector(
-                              selectedAnimation: state.config.animation.type,
-                              onChanged: (animationType) => ledPanelBloc.add(
-                                LedPanelAnimationTypeChanged(
-                                  animationType.fields.currentConfig(context),
-                                ),
-                              ),
-                            ),
-
-                            // Animation Config ----------------------------------------------
-                            ...state.config.animation.type.fields.build(
-                              context,
-                              (config) {
-                                ledPanelBloc.add(
-                                  LedPanelAnimationConfigChanged(config),
-                                );
-                              },
-                            ),
-                          ],
-                        ),
-                        SeparatedListTab(
-                          children: [
-                            // Background Color ----------------------------------------------
-                            ColorPickerField(
-                              label: 'BG',
-                              color: state.config.background.color,
-                              onChanged: (color) => ledPanelBloc.add(
-                                LedPanelBackgroundColorChanged(color),
-                              ),
-                            ),
-
-                            // Leds Color ----------------------------------------------
-                            ColorPickerField(
-                              label: 'LEDs',
-                              color: state.config.leds.color,
-                              onChanged: (color) => ledPanelBloc.add(
-                                LedPanelLedsColorChanged(color),
-                              ),
-                            ),
-
-                            // Leds Shape ----------------------------------------------
-                            ShapeSelector(
-                              selectedShape: state.config.leds.shape,
-                              onChanged: (shape) => ledPanelBloc.add(
-                                LedPanelLedsShapeChanged(shape),
-                              ),
-                            ),
-                          ],
+            // Configuration Controls ----------------------------------------------
+            Expanded(
+              child: Padding(
+                padding: AppSpacing.screenPadding,
+                child: MultiTabsView(
+                  controller: _tabController,
+                  tabNames: ['Text', 'Anim', 'BG'],
+                  tabViews: [
+                    SeparatedListTab(
+                      children: [
+                        // Text Config ----------------------------------------------
+                        ..._textFields.build(
+                          context,
+                          _messageFocusNode,
+                          (config) => ledPanelBloc.add(
+                            LedPanelTextConfigChanged(config),
+                          ),
                         ),
                       ],
                     ),
-                  ),
+                    SeparatedListTab(
+                      children: [
+                        // Animation Type ----------------------------------------------
+                        AnimationSelector(
+                          selectedAnimation: context
+                              .watch<LedPanelBloc>()
+                              .state
+                              .config
+                              .animation
+                              .type,
+                          onChanged: (animationType) => ledPanelBloc.add(
+                            LedPanelAnimationTypeChanged(
+                              animationType.fields.currentConfig(context),
+                            ),
+                          ),
+                        ),
+
+                        // Animation Config ----------------------------------------------
+                        ...ledPanelBloc.state.config.animation.type.fields
+                            .build(
+                              context,
+                              (config) => ledPanelBloc.add(
+                                LedPanelAnimationConfigChanged(config),
+                              ),
+                            ),
+                      ],
+                    ),
+                    SeparatedListTab(
+                      children: [
+                        // Background Config ----------------------------------------------
+                        ..._backgroundFields.build(
+                          context,
+                          (config) => ledPanelBloc.add(
+                            LedPanelBackgroundConfigChanged(config),
+                          ),
+                        ),
+
+                        // Leds Config ----------------------------------------------
+                        ..._ledsFields.build(
+                          context,
+                          (config) => ledPanelBloc.add(
+                            LedPanelLedsConfigChanged(config),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-                SizedBox(),
-              ],
+              ),
             ),
-          ),
-        );
-      },
+          ],
+        ),
+      ),
     );
   }
 

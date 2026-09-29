@@ -6,7 +6,7 @@ import 'package:meta/meta.dart';
 part 'scramble_state.dart';
 
 class ScrambleCubit extends Cubit<ScrambleState> {
-  ScrambleCubit() : super(ScrambleState());
+  ScrambleCubit({final ScrambleConfigModel? config}) : super(ScrambleState(config: config));
 
   void onCharacterDurationChanged(int characterDuration) {
     emit(

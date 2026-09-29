@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:led_panel/data/enums/dot_shape_enum.dart';
 import 'package:led_panel/data/models/led_panel/animation_configs/animation_config_model.dart';
+import 'package:led_panel/data/models/led_panel/animation_configs/leds_config_model.dart';
+import 'package:led_panel/data/models/led_panel/background_config_model.dart';
 import 'package:led_panel/data/models/led_panel/led_panel_config_model.dart';
+import 'package:led_panel/data/models/led_panel/text_config_model.dart';
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
@@ -14,20 +16,14 @@ class LedPanelBloc extends Bloc<LedPanelEvent, LedPanelState> {
     on<LedPanelUnselected>(_onUnselected);
     on<LedPanelConfigSelected>(_onConfigSelected);
     // Text ----------------------------------------------
-    on<LedPanelTextChanged>(_onTextChanged);
-    on<LedPanelTextColorChanged>(_onTextColorChanged);
-    on<LedPanelFontSizeChanged>(_onFontSizeChanged);
-    on<LedPanelFontFamilyChanged>(_onFontFamilyChanged);
-    on<LedPanelLetterSpacingChanged>(_onLetterSpacingChanged);
-    on<LedPanelWordSpacingChanged>(_onWordSpacingChanged);
-    on<LedPanelGlowRadiusChanged>(_onGlowRadiusChanged);
+    on<LedPanelTextConfigChanged>(_onTextConfigChanged);
     // Animation ----------------------------------------------
     on<LedPanelAnimationTypeChanged>(_onAnimationTypeChanged);
     on<LedPanelAnimationConfigChanged>(_onAnimationConfigChanged);
     // Background ----------------------------------------------
-    on<LedPanelBackgroundColorChanged>(_onBackgroundColorChanged);
-    on<LedPanelLedsShapeChanged>(_onLedsShapeChanged);
-    on<LedPanelLedsColorChanged>(_onLedsColorChanged);
+    on<LedPanelBackgroundConfigChanged>(_onBackgroundConfigChanged);
+    // Leds ----------------------------------------------
+    on<LedPanelLedsConfigChanged>(_onLedsConfigChanged);
   }
 
   void _onUnselected(LedPanelUnselected event, Emitter<LedPanelState> emit) {
@@ -44,94 +40,11 @@ class LedPanelBloc extends Bloc<LedPanelEvent, LedPanelState> {
   }
 
   // Text ----------------------------------------------
-  void _onTextChanged(LedPanelTextChanged event, Emitter<LedPanelState> emit) {
-    emit(
-      state.copyWith(
-        config: state.config.copyWith(
-          text: state.config.text.copyWith(
-            message: event.text.replaceAll('\n', ' '),
-          ),
-        ),
-      ),
-    );
-  }
-
-  void _onTextColorChanged(
-    LedPanelTextColorChanged event,
+  void _onTextConfigChanged(
+    LedPanelTextConfigChanged event,
     Emitter<LedPanelState> emit,
   ) {
-    emit(
-      state.copyWith(
-        config: state.config.copyWith(
-          text: state.config.text.copyWith(color: event.color),
-        ),
-      ),
-    );
-  }
-
-  void _onFontSizeChanged(
-    LedPanelFontSizeChanged event,
-    Emitter<LedPanelState> emit,
-  ) {
-    emit(
-      state.copyWith(
-        config: state.config.copyWith(
-          text: state.config.text.copyWith(fontSize: event.fontSize),
-        ),
-      ),
-    );
-  }
-
-  void _onFontFamilyChanged(
-    LedPanelFontFamilyChanged event,
-    Emitter<LedPanelState> emit,
-  ) {
-    emit(
-      state.copyWith(
-        config: state.config.copyWith(
-          text: state.config.text.copyWith(fontFamily: event.fontFamily),
-        ),
-      ),
-    );
-  }
-
-  void _onLetterSpacingChanged(
-    LedPanelLetterSpacingChanged event,
-    Emitter<LedPanelState> emit,
-  ) {
-    emit(
-      state.copyWith(
-        config: state.config.copyWith(
-          text: state.config.text.copyWith(letterSpacing: event.letterSpacing),
-        ),
-      ),
-    );
-  }
-
-  void _onWordSpacingChanged(
-    LedPanelWordSpacingChanged event,
-    Emitter<LedPanelState> emit,
-  ) {
-    emit(
-      state.copyWith(
-        config: state.config.copyWith(
-          text: state.config.text.copyWith(wordSpacing: event.wordSpacing),
-        ),
-      ),
-    );
-  }
-
-  void _onGlowRadiusChanged(
-    LedPanelGlowRadiusChanged event,
-    Emitter<LedPanelState> emit,
-  ) {
-    emit(
-      state.copyWith(
-        config: state.config.copyWith(
-          text: state.config.text.copyWith(glowRadius: event.glowRadius),
-        ),
-      ),
-    );
+    emit(state.copyWith(config: state.config.copyWith(text: event.config)));
   }
 
   // Animation ----------------------------------------------
@@ -154,42 +67,20 @@ class LedPanelBloc extends Bloc<LedPanelEvent, LedPanelState> {
   }
 
   // Background ----------------------------------------------
-  void _onBackgroundColorChanged(
-    LedPanelBackgroundColorChanged event,
+  void _onBackgroundConfigChanged(
+    LedPanelBackgroundConfigChanged event,
     Emitter<LedPanelState> emit,
   ) {
     emit(
-      state.copyWith(
-        config: state.config.copyWith(
-          background: state.config.background.copyWith(color: event.color),
-        ),
-      ),
+      state.copyWith(config: state.config.copyWith(background: event.config)),
     );
   }
 
-  void _onLedsShapeChanged(
-    LedPanelLedsShapeChanged event,
+  // Leds ----------------------------------------------
+  void _onLedsConfigChanged(
+    LedPanelLedsConfigChanged event,
     Emitter<LedPanelState> emit,
   ) {
-    emit(
-      state.copyWith(
-        config: state.config.copyWith(
-          leds: state.config.leds.copyWith(shape: event.shape),
-        ),
-      ),
-    );
-  }
-
-  void _onLedsColorChanged(
-    LedPanelLedsColorChanged event,
-    Emitter<LedPanelState> emit,
-  ) {
-    emit(
-      state.copyWith(
-        config: state.config.copyWith(
-          leds: state.config.leds.copyWith(color: event.color),
-        ),
-      ),
-    );
+    emit(state.copyWith(config: state.config.copyWith(leds: event.config)));
   }
 }

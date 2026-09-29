@@ -13,40 +13,9 @@ final class LedPanelConfigSelected extends LedPanelEvent {
 }
 
 // Text ----------------------------------------------
-final class LedPanelTextChanged extends LedPanelEvent {
-  final String text;
-  const LedPanelTextChanged(this.text);
-}
-
-final class LedPanelTextColorChanged extends LedPanelEvent {
-  final Color color;
-
-  const LedPanelTextColorChanged(this.color);
-}
-
-final class LedPanelFontSizeChanged extends LedPanelEvent {
-  final double fontSize;
-  const LedPanelFontSizeChanged(this.fontSize);
-}
-
-final class LedPanelFontFamilyChanged extends LedPanelEvent {
-  final String fontFamily;
-  const LedPanelFontFamilyChanged(this.fontFamily);
-}
-
-final class LedPanelLetterSpacingChanged extends LedPanelEvent {
-  final double letterSpacing;
-  const LedPanelLetterSpacingChanged(this.letterSpacing);
-}
-
-final class LedPanelWordSpacingChanged extends LedPanelEvent {
-  final double wordSpacing;
-  const LedPanelWordSpacingChanged(this.wordSpacing);
-}
-
-final class LedPanelGlowRadiusChanged extends LedPanelEvent {
-  final double glowRadius;
-  const LedPanelGlowRadiusChanged(this.glowRadius);
+final class LedPanelTextConfigChanged extends LedPanelEvent {
+  final TextConfigModel config;
+  const LedPanelTextConfigChanged(this.config);
 }
 
 // Animation ----------------------------------------------
@@ -61,17 +30,13 @@ final class LedPanelAnimationConfigChanged extends LedPanelEvent {
 }
 
 // Background ----------------------------------------------
-final class LedPanelBackgroundColorChanged extends LedPanelEvent {
-  final Color color;
-  const LedPanelBackgroundColorChanged(this.color);
+final class LedPanelBackgroundConfigChanged extends LedPanelEvent {
+  final BackgroundConfigModel config;
+  const LedPanelBackgroundConfigChanged(this.config);
 }
 
-final class LedPanelLedsShapeChanged extends LedPanelEvent {
-  final DotShapeEnum shape;
-  const LedPanelLedsShapeChanged(this.shape);
-}
-
-final class LedPanelLedsColorChanged extends LedPanelEvent {
-  final Color color;
-  const LedPanelLedsColorChanged(this.color);
+// Leds ----------------------------------------------
+final class LedPanelLedsConfigChanged extends LedPanelEvent {
+  final LedsConfigModel config;
+  const LedPanelLedsConfigChanged(this.config);
 }

@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:led_panel/bloc/animations/wave/wave_cubit.dart';
+import 'package:led_panel/bloc/configs/animations/wave/wave_cubit.dart';
 import 'package:led_panel/data/models/led_panel/animation_configs/animation_config_model.dart';
-import 'package:led_panel/presentation/widgets/led_panel/animation_fields/animation_fields.dart';
+import 'package:led_panel/presentation/widgets/fields/animation_fields/animation_fields.dart';
 import 'package:led_panel/presentation/widgets/numeric_value_selector/numeric_value_selector.dart';
 
 class WaveFields extends AnimationFields {
   const WaveFields();
 
   @override
-  List<Widget> build(BuildContext context, void Function(AnimationConfigModel) sync) {
+  List<Widget> build(
+    BuildContext context,
+    void Function(AnimationConfigModel) sync,
+  ) {
     final waveCubit = context.watch<WaveCubit>();
+    waveCubit.stream.listen((state) {
+      sync(state.config);
+    });
     final config = waveCubit.state.config;
 
     return [
@@ -22,10 +28,8 @@ class WaveFields extends AnimationFields {
         maxValue: 50,
         incrementStep: 5,
         decrementStep: 5,
-        onChanged: (amplitude) {
-          waveCubit.onAmplitudeChanged(amplitude.toDouble());
-          sync(config);
-        },
+        onChanged: (amplitude) =>
+            waveCubit.onAmplitudeChanged(amplitude.toDouble()),
       ),
       NumericValueSelector(
         label: 'FREQUENCY',
@@ -35,10 +39,8 @@ class WaveFields extends AnimationFields {
         maxValue: 20,
         incrementStep: 5,
         decrementStep: 5,
-        onChanged: (frequency) {
-          waveCubit.onFrequencyChanged(frequency.toDouble());
-          sync(config);
-        },
+        onChanged: (frequency) =>
+            waveCubit.onFrequencyChanged(frequency.toDouble()),
       ),
       NumericValueSelector(
         label: 'PHASE STEP',
@@ -48,10 +50,7 @@ class WaveFields extends AnimationFields {
         maxValue: 180,
         incrementStep: 5,
         decrementStep: 5,
-        onChanged: (phaseStep) {
-          waveCubit.onPhaseStepChanged(phaseStep);
-          sync(config);
-        },
+        onChanged: (phaseStep) => waveCubit.onPhaseStepChanged(phaseStep),
       ),
     ];
   }

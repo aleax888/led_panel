@@ -7,7 +7,7 @@ import 'package:meta/meta.dart';
 part 'marquee_state.dart';
 
 class MarqueeCubit extends Cubit<MarqueeState> {
-  MarqueeCubit() : super(MarqueeState());
+  MarqueeCubit({final MarqueeConfigModel? config}) : super(MarqueeState(config: config));
 
   void onSpeedChanged(double speed) {
     emit(state.copyWith(config: state.config.copyWith(speed: speed)));

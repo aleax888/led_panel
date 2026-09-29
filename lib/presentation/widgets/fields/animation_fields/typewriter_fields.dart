@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:led_panel/bloc/animations/typewritter/typewritter_cubit.dart';
+import 'package:led_panel/bloc/configs/animations/typewritter/typewritter_cubit.dart';
 import 'package:led_panel/data/models/led_panel/animation_configs/animation_config_model.dart';
-import 'package:led_panel/presentation/widgets/led_panel/animation_fields/animation_fields.dart';
+import 'package:led_panel/presentation/widgets/fields/animation_fields/animation_fields.dart';
 import 'package:led_panel/presentation/widgets/numeric_value_selector/numeric_value_selector.dart';
 
 class TypewriterFields extends AnimationFields {
   const TypewriterFields();
 
   @override
-  List<Widget> build(BuildContext context, void Function(AnimationConfigModel) sync) {
+  List<Widget> build(
+    BuildContext context,
+    void Function(AnimationConfigModel) sync,
+  ) {
     final typewritterCubit = context.watch<TypewritterCubit>();
+    typewritterCubit.stream.listen((state) {
+      sync(state.config);
+    });
     final config = typewritterCubit.state.config;
 
     return [
@@ -22,10 +28,8 @@ class TypewriterFields extends AnimationFields {
         maxValue: 500,
         incrementStep: 5,
         decrementStep: 5,
-        onChanged: (duration) {
-          typewritterCubit.onCharacterDurationChanged(duration);
-          sync(config);
-        },
+        onChanged: (duration) =>
+            typewritterCubit.onCharacterDurationChanged(duration),
       ),
       NumericValueSelector(
         label: 'CHARACTER DURATION NOISE',
@@ -35,10 +39,8 @@ class TypewriterFields extends AnimationFields {
         maxValue: 1000,
         incrementStep: 10,
         decrementStep: 10,
-        onChanged: (duration) {
-          typewritterCubit.onCharacterDurationNoiseChanged(duration);
-          sync(config);
-        },
+        onChanged: (duration) =>
+            typewritterCubit.onCharacterDurationNoiseChanged(duration),
       ),
       NumericValueSelector(
         label: 'COMPLETION PAUSE',
@@ -48,10 +50,8 @@ class TypewriterFields extends AnimationFields {
         maxValue: 5000,
         incrementStep: 50,
         decrementStep: 50,
-        onChanged: (duration) {
-          typewritterCubit.onCompletionPauseChanged(duration);
-          sync(config);
-        },
+        onChanged: (duration) =>
+            typewritterCubit.onCompletionPauseChanged(duration),
       ),
     ];
   }

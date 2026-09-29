@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 part 'crawl_state.dart';
 
 class CrawlCubit extends Cubit<CrawlState> {
-  CrawlCubit() : super(CrawlState());
+  CrawlCubit({final CrawlConfigModel? config}) : super(CrawlState(config: config));
 
   void onSpeedChanged(double speed) {
     emit(state.copyWith(config: state.config.copyWith(speed: speed)));

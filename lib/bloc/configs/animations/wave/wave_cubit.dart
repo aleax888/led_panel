@@ -7,7 +7,7 @@ import 'package:meta/meta.dart';
 part 'wave_state.dart';
 
 class WaveCubit extends Cubit<WaveState> {
-  WaveCubit() : super(WaveState());
+  WaveCubit({final WaveConfigModel? config}) : super(WaveState(config: config));
 
   void onAmplitudeChanged(double amplitude) {
     emit(state.copyWith(config: state.config.copyWith(amplitude: amplitude)));
