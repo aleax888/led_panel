@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:led_panel/data/models/led_panel/animation_configs/animation_config_model.dart';
 import 'package:led_panel/data/models/led_panel/animation_configs/leds_config_model.dart';
-import 'package:led_panel/data/models/led_panel/background_config_model.dart';
+import 'package:led_panel/data/models/led_panel/background_configs/background_config_model.dart';
 import 'package:led_panel/data/models/led_panel/led_panel_config_model.dart';
 import 'package:led_panel/data/models/led_panel/text_config_model.dart';
 
@@ -21,6 +21,7 @@ class LedPanelBloc extends Bloc<LedPanelEvent, LedPanelState> {
     on<LedPanelAnimationTypeChanged>(_onAnimationTypeChanged);
     on<LedPanelAnimationConfigChanged>(_onAnimationConfigChanged);
     // Background ----------------------------------------------
+    on<LedPanelBackgroundTypeChanged>(_onBackgroundTypeChanged);
     on<LedPanelBackgroundConfigChanged>(_onBackgroundConfigChanged);
     // Leds ----------------------------------------------
     on<LedPanelLedsConfigChanged>(_onLedsConfigChanged);
@@ -67,6 +68,15 @@ class LedPanelBloc extends Bloc<LedPanelEvent, LedPanelState> {
   }
 
   // Background ----------------------------------------------
+  void _onBackgroundTypeChanged(
+    LedPanelBackgroundTypeChanged event,
+    Emitter<LedPanelState> emit,
+  ) {
+    emit(
+      state.copyWith(config: state.config.copyWith(background: event.config)),
+    );
+  }
+
   void _onBackgroundConfigChanged(
     LedPanelBackgroundConfigChanged event,
     Emitter<LedPanelState> emit,

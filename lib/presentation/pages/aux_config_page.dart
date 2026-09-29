@@ -5,7 +5,9 @@ import 'package:led_panel/bloc/configs/animations/marquee/marquee_cubit.dart';
 import 'package:led_panel/bloc/configs/animations/scramble/scramble_cubit.dart';
 import 'package:led_panel/bloc/configs/animations/typewritter/typewritter_cubit.dart';
 import 'package:led_panel/bloc/configs/animations/wave/wave_cubit.dart';
-import 'package:led_panel/bloc/configs/background/background_cubit.dart';
+import 'package:led_panel/bloc/configs/backgrounds/image/image_cubit.dart';
+import 'package:led_panel/bloc/configs/backgrounds/linear_gradient/linear_gradient_cubit.dart';
+import 'package:led_panel/bloc/configs/backgrounds/solid_color/solid_color_cubit.dart';
 import 'package:led_panel/bloc/configs/leds/leds_cubit.dart';
 import 'package:led_panel/bloc/configs/text/text_cubit.dart';
 import 'package:led_panel/data/models/led_panel/animation_configs/crawl_config_model.dart';
@@ -13,6 +15,9 @@ import 'package:led_panel/data/models/led_panel/animation_configs/marquee_config
 import 'package:led_panel/data/models/led_panel/animation_configs/scramble_config_model.dart';
 import 'package:led_panel/data/models/led_panel/animation_configs/typewriter_config_model.dart';
 import 'package:led_panel/data/models/led_panel/animation_configs/wave_config_model.dart';
+import 'package:led_panel/data/models/led_panel/background_configs/image_config_model.dart';
+import 'package:led_panel/data/models/led_panel/background_configs/linear_gradient_config_model.dart';
+import 'package:led_panel/data/models/led_panel/background_configs/solid_color_config_model.dart';
 import 'package:led_panel/data/models/led_panel/led_panel_config_model.dart';
 import 'package:led_panel/presentation/pages/config_page.dart';
 
@@ -65,9 +70,26 @@ class AuxConfigPage extends StatelessWidget {
           ),
         ),
         // Background
-        BlocProvider<BackgroundCubit>(
-          create: (context) =>
-              BackgroundCubit(config: initialConfig?.background),
+        BlocProvider<SolidColorCubit>(
+          create: (context) => SolidColorCubit(
+            config: initialConfig?.background is SolidColorConfigModel
+                ? initialConfig?.background as SolidColorConfigModel
+                : null,
+          ),
+        ),
+        BlocProvider<LinearGradientCubit>(
+          create: (context) => LinearGradientCubit(
+            config: initialConfig?.background is LinearGradientConfigModel
+                ? initialConfig?.background as LinearGradientConfigModel
+                : null,
+          ),
+        ),
+        BlocProvider<ImageCubit>(
+          create: (context) => ImageCubit(
+            config: initialConfig?.background is ImageConfigModel
+                ? initialConfig?.background as ImageConfigModel
+                : null,
+          ),
         ),
         // Leds
         BlocProvider<LedsCubit>(

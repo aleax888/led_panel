@@ -4,13 +4,13 @@ import 'package:led_panel/bloc/led_panel/led_panel_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:led_panel/bloc/led_panel_list/led_panel_list_bloc.dart';
 import 'package:led_panel/data/models/led_panel/led_panel_config_model.dart';
-import 'package:led_panel/presentation/widgets/fields/background_fields.dart';
 import 'package:led_panel/presentation/widgets/fields/leds_fields.dart';
 import 'package:led_panel/presentation/widgets/fields/text_fields.dart';
 
 import 'package:led_panel/utils/extensions/context_extension.dart';
 import 'package:led_panel/presentation/pages/display_page.dart';
 import 'package:led_panel/presentation/widgets/animation_selector/animation_selector.dart';
+import 'package:led_panel/presentation/widgets/background_selector.dart/background_selector.dart';
 import 'package:led_panel/presentation/widgets/led_panel/led_panel.dart';
 import 'package:led_panel/presentation/widgets/multi_tabs/multi_tabs_view.dart';
 import 'package:led_panel/presentation/widgets/multi_tabs/separated_list_tab.dart';
@@ -31,14 +31,12 @@ class ConfigPage extends StatefulWidget {
 class _ConfigPageState extends State<ConfigPage>
     with SingleTickerProviderStateMixin {
   late final TabController _tabController = TabController(
-    length: 3,
+    length: 4,
     vsync: this,
   );
   final FocusNode _messageFocusNode = FocusNode();
   final TextFields _textFields = TextFields();
-  final BackgroundFields _backgroundFields = BackgroundFields();
   final LedsFields _ledsFields = LedsFields();
-  
 
   @override
   void initState() {
@@ -129,7 +127,7 @@ class _ConfigPageState extends State<ConfigPage>
                 padding: AppSpacing.screenPadding,
                 child: MultiTabsView(
                   controller: _tabController,
-                  tabNames: ['Text', 'Anim', 'BG'],
+                  tabNames: ['TEXT', 'ANIM', 'BG', 'LEDs'],
                   tabViews: [
                     SeparatedListTab(
                       children: [
@@ -172,14 +170,33 @@ class _ConfigPageState extends State<ConfigPage>
                     ),
                     SeparatedListTab(
                       children: [
-                        // Background Config ----------------------------------------------
-                        ..._backgroundFields.build(
-                          context,
-                          (config) => ledPanelBloc.add(
-                            LedPanelBackgroundConfigChanged(config),
+                        // Background Type ----------------------------------------------
+                        BackgroundSelector(
+                          selectedBackground: context
+                              .watch<LedPanelBloc>()
+                              .state
+                              .config
+                              .background
+                              .type,
+                          onChanged: (backgroundType) => ledPanelBloc.add(
+                            LedPanelBackgroundTypeChanged(
+                              backgroundType.fields.currentConfig(context),
+                            ),
                           ),
                         ),
 
+                        // Background Config ----------------------------------------------
+                        ...ledPanelBloc.state.config.background.type.fields
+                            .build(
+                              context,
+                              (config) => ledPanelBloc.add(
+                                LedPanelBackgroundConfigChanged(config),
+                              ),
+                            ),
+                      ],
+                    ),
+                    SeparatedListTab(
+                      children: [
                         // Leds Config ----------------------------------------------
                         ..._ledsFields.build(
                           context,

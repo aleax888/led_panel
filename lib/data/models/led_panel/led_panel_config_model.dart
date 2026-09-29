@@ -1,8 +1,10 @@
 import 'package:led_panel/data/enums/animation_type_enum.dart';
+import 'package:led_panel/data/enums/background_type_enum.dart';
 import 'package:led_panel/data/models/led_panel/animation_configs/animation_config_model.dart';
 import 'package:led_panel/data/models/led_panel/animation_configs/leds_config_model.dart';
 import 'package:led_panel/data/models/led_panel/animation_configs/marquee_config_model.dart';
-import 'package:led_panel/data/models/led_panel/background_config_model.dart';
+import 'package:led_panel/data/models/led_panel/background_configs/background_config_model.dart';
+import 'package:led_panel/data/models/led_panel/background_configs/solid_color_config_model.dart';
 import 'package:led_panel/data/models/led_panel/text_config_model.dart';
 
 class LedPanelConfigModel {
@@ -29,7 +31,7 @@ class LedPanelConfigModel {
     // Animation
     this.animation = const MarqueeConfigModel(),
     // Background
-    this.background = const BackgroundConfigModel(),
+    this.background = const SolidColorConfigModel(),
     // Leds
     this.leds = const LedsConfigModel(),
   });
@@ -68,7 +70,6 @@ class LedPanelConfigModel {
     return copyWith(
       text: text.copyWithProportion(proportion),
       animation: animation.copyWithProportion(proportion),
-      background: background.copyWithProportion(proportion),
     );
   }
 
@@ -77,6 +78,13 @@ class LedPanelConfigModel {
         ? null
         : [...AnimationTypeEnum.values, null].firstWhere(
             (e) => e?.name == json['animation']?['type'],
+            orElse: () => null,
+          );
+    final BackgroundTypeEnum? backgroundType =
+        json['background']?['type'] == null
+        ? null
+        : [...BackgroundTypeEnum.values, null].firstWhere(
+            (e) => e?.name == json['background']?['type'],
             orElse: () => null,
           );
 
@@ -92,7 +100,9 @@ class LedPanelConfigModel {
           ? const MarqueeConfigModel()
           : animationType.fromJson(json['animation']),
       // Background
-      background: BackgroundConfigModel.fromJson(json['background']),
+      background: backgroundType == null
+          ? const SolidColorConfigModel()
+          : backgroundType.fromJson(json['background']),
       // Leds
       leds: LedsConfigModel.fromJson(json['leds']),
     );

@@ -35,14 +35,21 @@ class _LedPanelState extends State<LedPanel> {
         width: _panelWidth,
         height: _panelHeight,
         decoration: BoxDecoration(
-          color: widget.config.background.color,
+          // color: widget.config.background.color,
           borderRadius: widget.borderRadius,
         ),
         child: Stack(
           alignment: .center,
           clipBehavior: .hardEdge,
           children: [
-            // Dot pattern ----------------------------------------------
+            // Background ----------------------------------------------
+            Positioned.fill(
+              child: widget.config.background.type.renderer.build(
+                widget.config.background,
+              ),
+            ),
+
+            // Leds ----------------------------------------------
             RepaintBoundary(child: DotPattern(config: widget.config.leds)),
 
             // Animation ----------------------------------------------

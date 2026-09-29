@@ -30,6 +30,11 @@ final class LedPanelAnimationConfigChanged extends LedPanelEvent {
 }
 
 // Background ----------------------------------------------
+final class LedPanelBackgroundTypeChanged extends LedPanelEvent {
+  final BackgroundConfigModel config;
+  const LedPanelBackgroundTypeChanged(this.config);
+}
+
 final class LedPanelBackgroundConfigChanged extends LedPanelEvent {
   final BackgroundConfigModel config;
   const LedPanelBackgroundConfigChanged(this.config);
