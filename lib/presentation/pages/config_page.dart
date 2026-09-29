@@ -16,6 +16,7 @@ import 'package:led_panel/presentation/widgets/multi_tabs/multi_tabs_view.dart';
 import 'package:led_panel/presentation/widgets/multi_tabs/separated_list_tab.dart';
 import 'package:led_panel/theme/constants/app_radius.dart';
 import 'package:led_panel/theme/constants/app_spacing.dart';
+import 'package:led_panel/utils/panel_size_handler.dart';
 import 'package:led_panel/utils/toast_handler.dart';
 
 /// Configuration page.
@@ -37,6 +38,7 @@ class _ConfigPageState extends State<ConfigPage>
   final TextFields _textFields = TextFields();
   final BackgroundFields _backgroundFields = BackgroundFields();
   final LedsFields _ledsFields = LedsFields();
+  
 
   @override
   void initState() {
@@ -89,21 +91,18 @@ class _ConfigPageState extends State<ConfigPage>
                     },
                     child: BlocBuilder<LedPanelBloc, LedPanelState>(
                       builder: (context, state) {
-                        final double fixedPanelWidth =
-                            context.screenSize.width -
-                            AppSpacing.screenPadding.horizontal;
-                        final double fixedPanelHeight =
-                            ((context.screenSize.width -
-                                    AppSpacing.screenPadding.horizontal) *
-                                context.screenSize.width) /
-                            context.screenSize.height;
-                        final double proportion =
-                            fixedPanelWidth / context.screenSize.height;
+                        final fixedDimensions =
+                            PanelSizehandler.getFixedDimensions(
+                              context,
+                              AppSpacing.screenPadding,
+                            );
                         return LedPanel(
-                          panelWidth: fixedPanelWidth,
-                          panelHeight: fixedPanelHeight,
+                          panelWidth: fixedDimensions.width,
+                          panelHeight: fixedDimensions.height,
                           borderRadius: AppRadius.borderRadiusLg,
-                          config: state.config.copyWithProportion(proportion),
+                          config: state.config.copyWithProportion(
+                            fixedDimensions.proportion,
+                          ),
                         );
                       },
                     ),

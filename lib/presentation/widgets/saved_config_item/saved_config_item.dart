@@ -13,6 +13,7 @@ import 'package:led_panel/theme/constants/app_radius.dart';
 import 'package:led_panel/theme/constants/app_sizes.dart';
 import 'package:led_panel/theme/constants/app_spacing.dart';
 import 'package:led_panel/utils/app_date_formater.dart';
+import 'package:led_panel/utils/panel_size_handler.dart';
 
 /// Displays a saved LED panel configuration with actions and a preview.
 class SavedConfigItem extends StatefulWidget {
@@ -26,18 +27,13 @@ class SavedConfigItem extends StatefulWidget {
 class _SavedConfigItemState extends State<SavedConfigItem> {
   @override
   Widget build(BuildContext context) {
-    final double fixedRelation = 2;
-    final double fixedPanelWidth =
-        (context.screenSize.width - AppSpacing.screenPadding.horizontal) /
-        fixedRelation;
-    final double fixedPanelHeight =
-        (((context.screenSize.width - AppSpacing.screenPadding.horizontal) *
-                context.screenSize.width) /
-            context.screenSize.height) /
-        fixedRelation;
-    final double proportion = fixedPanelWidth / context.screenSize.height;
+    final fixedDimensions = PanelSizehandler.getFixedDimensions(
+      context,
+      AppSpacing.screenPadding,
+      2.5,
+    );
     return Container(
-      padding: AppSpacing.cardPadding.copyWith(top: 0.0),
+      padding: AppSpacing.cardPadding.copyWith(bottom: 0.0),
       decoration: BoxDecoration(
         color: context.colors.surface,
         border: Border.all(
@@ -49,47 +45,56 @@ class _SavedConfigItemState extends State<SavedConfigItem> {
       child: Column(
         crossAxisAlignment: .start,
         children: [
+          LayoutBuilder(
+            builder: (context, constraints) => Row(
+              children: [
+                // Config Preview ----------------------------------------------
+                InkWell(
+                  onTap: _onLaunch,
+                  child: LedPanel(
+                    config: widget.config.copyWithProportion(
+                      fixedDimensions.proportion,
+                    ),
+                    panelWidth: constraints.maxWidth,
+                    panelHeight: fixedDimensions.height,
+                    borderRadius: AppRadius.borderRadiusMd,
+                  ),
+                ),
+              ],
+            ),
+          ),
           Row(
             mainAxisAlignment: .spaceBetween,
             children: [
               // Date ----------------------------------------------
-              Text(AppDateFormater.long(widget.config.createdAt)),
-
-              // Fav button ----------------------------------------------
-              FavoriteButton(
-                isFavorite: widget.config.favorite,
-                onChanged: _onFavorite,
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: .spaceBetween,
-            crossAxisAlignment: .end,
-            children: [
-              // Config Preview ----------------------------------------------
-              InkWell(
-                onTap: _onLaunch,
-                child: LedPanel(
-                  config: widget.config.copyWithProportion(proportion),
-                  panelWidth: fixedPanelWidth,
-                  panelHeight: fixedPanelHeight,
-                  borderRadius: AppRadius.borderRadiusLg,
-                ),
-              ),
               Expanded(
-                child: Row(
-                  mainAxisAlignment: .end,
-                  children: [
-                    // Delete ----------------------------------------------
-                    IconButton(onPressed: _onDelete, icon: Icon(Icons.delete)),
+                child: Text(AppDateFormater.long(widget.config.createdAt)),
+              ),
 
-                    // Edit ----------------------------------------------
-                    IconButton(
-                      onPressed: _onEdit,
-                      icon: Icon(Icons.edit_square),
+              Row(
+                children: [
+                  // Delete ----------------------------------------------
+                  IconButton(onPressed: _onDelete, icon: Icon(Icons.delete)),
+
+                  // Edit ----------------------------------------------
+                  IconButton(onPressed: _onEdit, icon: Icon(Icons.edit_square)),
+
+                  SizedBox(
+                    height: AppSizes.avatarSm,
+                    child: VerticalDivider(
+                      radius: AppRadius.borderRadiusLg,
+                      indent: AppSpacing.sm,
+                      endIndent: AppSpacing.sm,
+                      color: context.colors.onSurfaceVariant,
                     ),
-                  ],
-                ),
+                  ),
+
+                  // Fav button ----------------------------------------------
+                  FavoriteButton(
+                    isFavorite: widget.config.favorite,
+                    onChanged: _onFavorite,
+                  ),
+                ],
               ),
             ],
           ),
