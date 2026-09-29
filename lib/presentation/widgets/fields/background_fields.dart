@@ -18,7 +18,7 @@ class BackgroundFields {
     final config = backgroundCubit.state.config;
 
     return [
-      // Background Color ----------------------------------------------
+      // Color ----------------------------------------------
       ColorPickerField(
         label: 'BG',
         color: config.color,

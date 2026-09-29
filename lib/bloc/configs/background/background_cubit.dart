@@ -14,4 +14,8 @@ class BackgroundCubit extends Cubit<BackgroundState> {
   void onColorChanged(Color color) {
     emit(state.copyWith(config: state.config.copyWith(color: color)));
   }
+
+  void onImageChanged(String path) {
+    emit(state.copyWith(config: state.config.copyWith(imageUrl: path)));
+  }
 }

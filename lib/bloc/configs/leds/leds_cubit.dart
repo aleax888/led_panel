@@ -18,4 +18,12 @@ class LedsCubit extends Cubit<LedsState> {
   void onShapeChanged(DotShapeEnum shape) {
     emit(state.copyWith(config: state.config.copyWith(shape: shape)));
   }
+
+  void onSizeChanged(double size) {
+    emit(state.copyWith(config: state.config.copyWith(size: size)));
+  }
+
+  void onPaddingChanged(double padding) {
+    emit(state.copyWith(config: state.config.copyWith(padding: padding)));
+  }
 }
