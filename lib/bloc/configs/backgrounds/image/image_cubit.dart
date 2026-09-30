@@ -9,7 +9,7 @@ class ImageCubit extends Cubit<ImageState> {
   ImageCubit({final ImageConfigModel? config})
     : super(ImageState(config: config));
 
-  void onSpeedChanged(String url) {
+  void onUrlChanged(String url) {
     emit(state.copyWith(config: state.config.copyWith(url: url)));
   }
 }

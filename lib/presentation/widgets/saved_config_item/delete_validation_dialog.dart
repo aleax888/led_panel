@@ -10,12 +10,9 @@ class DeleteValidationDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(
-        'Delete configuration',
-        style: context.textTheme.titleMedium,
-      ),
+      title: Text('Delete configuration', style: context.textTheme.titleMedium),
       content: Text(
-        'Are you sure you want to delete this saved configuration? This action cannot be undone.',
+        'Are you sure you want to delete this? This action cannot be undone.',
         style: context.textTheme.bodyMedium,
       ),
       actionsPadding: const EdgeInsets.symmetric(
@@ -25,19 +22,14 @@ class DeleteValidationDialog extends StatelessWidget {
       actions: [
         // Cancel ----------------------------------------------
         TextButton(
-          onPressed: () => Navigator.of(context).pop(false),
-          child: Text(
-            'Cancel',
-            style: context.textTheme.labelLarge,
-          ),
+          onPressed: () => Navigator.pop(context, false),
+          child: Text('Cancel', style: context.textTheme.labelLarge),
         ),
 
         // Delete ----------------------------------------------
         ElevatedButton(
-          onPressed: () => Navigator.of(context).pop(true),
-          style: ElevatedButton.styleFrom(
-            backgroundColor: AppColors.error,
-          ),
+          onPressed: () => Navigator.pop(context, true),
+          style: ElevatedButton.styleFrom(backgroundColor: AppColors.error),
           child: Text(
             'Delete',
             style: context.textTheme.labelLarge?.copyWith(

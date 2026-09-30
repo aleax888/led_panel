@@ -34,10 +34,7 @@ class _LedPanelState extends State<LedPanel> {
       child: Container(
         width: _panelWidth,
         height: _panelHeight,
-        decoration: BoxDecoration(
-          // color: widget.config.background.color,
-          borderRadius: widget.borderRadius,
-        ),
+        decoration: BoxDecoration(borderRadius: widget.borderRadius),
         child: Stack(
           alignment: .center,
           clipBehavior: .hardEdge,
