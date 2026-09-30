@@ -9,6 +9,14 @@ class LinearGradientBackground extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(decoration: BoxDecoration(gradient: config.gradient));
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: config.colors,
+          stops: config.stops,
+          transform: GradientRotation(config.tilt),
+        ),
+      ),
+    );
   }
 }

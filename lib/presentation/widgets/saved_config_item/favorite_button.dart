@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:led_panel/theme/constants/app_durations.dart';
 
 /// Displays a button for toggling a configuration's favorite status.
 class FavoriteButton extends StatefulWidget {
@@ -12,7 +13,7 @@ class FavoriteButton extends StatefulWidget {
     required this.isFavorite,
     required this.onChanged,
     this.pulseScale = 2,
-    this.duration = const Duration(milliseconds: 200),
+    this.duration = AppDurations.slow,
   });
 
   @override

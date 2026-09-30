@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:led_panel/presentation/widgets/animated_widget_list/fade_animation.dart';
+import 'package:led_panel/theme/constants/app_durations.dart';
 
 /// Displays a list of widgets with fade animations when items are added or removed.
 class AnimatedWidgetList extends StatefulWidget {
@@ -12,7 +13,7 @@ class AnimatedWidgetList extends StatefulWidget {
     super.key,
     required this.children,
     this.itemPadding,
-    this.duration = const Duration(milliseconds: 150),
+    this.duration = AppDurations.fast,
   });
 
   @override

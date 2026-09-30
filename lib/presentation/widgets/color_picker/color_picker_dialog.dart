@@ -20,7 +20,7 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Select LED color', style: context.textTheme.titleMedium),
+      title: Text('Select color', style: context.textTheme.titleMedium),
       content: SingleChildScrollView(
         // Main color selection control ----------------------------------------------
         child: ColorPicker(

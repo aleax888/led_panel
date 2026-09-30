@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:led_panel/theme/constants/app_durations.dart';
 
 /// Animates a child by changing its opacity and scale.
 class FadeScaleAnimator extends StatefulWidget {
@@ -9,7 +10,7 @@ class FadeScaleAnimator extends StatefulWidget {
   const FadeScaleAnimator({
     super.key,
     required this.child,
-    this.duration = const Duration(milliseconds: 300),
+    this.duration = AppDurations.slow,
     this.curve = Curves.easeInOut,
   });
 
