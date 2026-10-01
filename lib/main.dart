@@ -1,6 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:led_panel/bloc/locale/locale_cubit.dart';
+import 'package:led_panel/data/enums/locale_enum.dart';
+import 'l10n/app_localizations.dart';
 import 'package:intl/date_symbol_data_local.dart' as intl_local_data;
 
 import 'package:led_panel/theme/app_theme.dart';
@@ -21,9 +25,14 @@ void main() async {
   runApp(const LedPanelApp());
 }
 
-class LedPanelApp extends StatelessWidget {
+class LedPanelApp extends StatefulWidget {
   const LedPanelApp({super.key});
 
+  @override
+  State<LedPanelApp> createState() => _LedPanelAppState();
+}
+
+class _LedPanelAppState extends State<LedPanelApp> {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -31,22 +40,35 @@ class LedPanelApp extends StatelessWidget {
         BlocProvider<LedPanelBloc>(create: (context) => LedPanelBloc()),
         BlocProvider<LedPanelListBloc>(create: (context) => LedPanelListBloc()),
         BlocProvider<ThemeCubit>(create: (context) => ThemeCubit()),
+        BlocProvider<LocaleCubit>(create: (context) => LocaleCubit()),
       ],
       child: BlocBuilder<ThemeCubit, ThemeState>(
-        builder: (context, state) {
-          return MaterialApp(
-            title: 'LED Panel',
-            navigatorKey: GlobalContext.navigatorKey,
-            theme: AppTheme.light,
-            darkTheme: AppTheme.dark,
-            themeMode: state.themeMode,
-            debugShowCheckedModeBanner: kDebugMode,
-            home: Builder(
-              builder: (context) {
-                GlobalContext.globalContext = context;
-                return const HomePage();
-              },
-            ),
+        builder: (context, themeState) {
+          return BlocBuilder<LocaleCubit, LocaleState>(
+            builder: (context, state) {
+              return MaterialApp(
+                title: 'LED Panel',
+                locale: state.locale.locale,
+                supportedLocales: LocaleEnum.values.map((e) => e.locale),
+                localizationsDelegates: const [
+                  AppLocalizations.delegate,
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                  GlobalCupertinoLocalizations.delegate,
+                ],
+                theme: AppTheme.light,
+                darkTheme: AppTheme.dark,
+                themeMode: themeState.themeMode,
+                navigatorKey: GlobalContext.navigatorKey,
+                debugShowCheckedModeBanner: kDebugMode,
+                home: Builder(
+                  builder: (context) {
+                    GlobalContext.globalContext = context;
+                    return const HomePage();
+                  },
+                ),
+              );
+            },
           );
         },
       ),

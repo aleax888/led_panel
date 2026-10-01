@@ -14,6 +14,7 @@ class InputLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: .start,
+      mainAxisSize: MainAxisSize.min,
       spacing: AppSpacing.sm,
       children: [
         Text(label, style: context.textTheme.labelLarge),

@@ -29,13 +29,13 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
       actions: [
         // Cancel button ----------------------------------------------
         TextButton(
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () => Navigator.pop(context),
           child: Text('Cancel'),
         ),
 
         // Done button ----------------------------------------------
         ElevatedButton(
-          onPressed: () => Navigator.of(context).pop(_pickedColor),
+          onPressed: () => Navigator.pop(context, _pickedColor),
           child: Text('Done'),
         ),
       ],

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:led_panel/bloc/theme/theme_cubit.dart';
+import 'package:led_panel/presentation/widgets/locale_selector/locale_selection_dialog.dart';
 import 'package:led_panel/utils/extensions/context_extension.dart';
 import 'package:led_panel/presentation/widgets/app_version.dart';
 import 'package:led_panel/presentation/widgets/side_menu/side_menu_option.dart';
@@ -43,8 +44,9 @@ class SideMenu extends StatelessWidget {
               SideMenuOption(
                 icon: Icons.language_outlined,
                 label: 'LANGUAGE',
-                onTap: () => ToastHandler.showInfo(
-                  'Language selection is not implemented yet.',
+                onTap: () async => await showDialog<Color>(
+                  context: context,
+                  builder: (_) => LocaleSelectionDialog(),
                 ),
               ),
               SideMenuOption(

@@ -45,6 +45,8 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       SizedBox(),
 
+                      Text(context.locale.hello),
+
                       // New config ----------------------------------------------
                       Container(
                         width: .infinity,
@@ -52,7 +54,12 @@ class _HomePageState extends State<HomePage> {
                         padding: AppSpacing.screenPadding,
                         child: ElevatedButton(
                           onPressed: () => _goToConfig(),
-                          child: Text('+ NEW', style: context.textTheme.headlineLarge?.copyWith(color: context.colors.onPrimary)),
+                          child: Text(
+                            '+ NEW',
+                            style: context.textTheme.headlineLarge?.copyWith(
+                              color: context.colors.onPrimary,
+                            ),
+                          ),
                         ),
                       ),
 
@@ -63,31 +70,31 @@ class _HomePageState extends State<HomePage> {
                           child: MultiTabsView(
                             tabNames: ['RECENTS', 'FAVORITES'],
                             tabViews: [
-                            // Recents ----------------------------------------------
-                            ScrollableTab(
-                              children: state.configList
-                                  .where((e) => !e.favorite)
-                                  .map(
-                                    (e) => SavedConfigItem(
-                                      key: ValueKey(e.id),
-                                      config: e,
-                                    ),
-                                  )
-                                  .toList(),
-                            ),
-                      
-                            // Favorities ----------------------------------------------
-                            ScrollableTab(
-                              children: state.configList
-                                  .where((e) => e.favorite)
-                                  .map(
-                                    (e) => SavedConfigItem(
-                                      key: ValueKey(e.id),
-                                      config: e,
-                                    ),
-                                  )
-                                  .toList(),
-                            ),
+                              // Recents ----------------------------------------------
+                              ScrollableTab(
+                                children: state.configList
+                                    .where((e) => !e.favorite)
+                                    .map(
+                                      (e) => SavedConfigItem(
+                                        key: ValueKey(e.id),
+                                        config: e,
+                                      ),
+                                    )
+                                    .toList(),
+                              ),
+
+                              // Favorities ----------------------------------------------
+                              ScrollableTab(
+                                children: state.configList
+                                    .where((e) => e.favorite)
+                                    .map(
+                                      (e) => SavedConfigItem(
+                                        key: ValueKey(e.id),
+                                        config: e,
+                                      ),
+                                    )
+                                    .toList(),
+                              ),
                             ],
                           ),
                         ),
