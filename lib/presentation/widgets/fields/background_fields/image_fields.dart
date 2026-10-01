@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:led_panel/bloc/configs/backgrounds/image/image_cubit.dart';
 import 'package:led_panel/data/models/led_panel/background_configs/background_config_model.dart';
 import 'package:led_panel/presentation/widgets/fields/background_fields/background_fields.dart';
-import 'package:led_panel/theme/constants/app_colors.dart';
 import 'package:led_panel/theme/constants/app_sizes.dart';
 import 'package:led_panel/theme/constants/app_spacing.dart';
 import 'package:led_panel/utils/extensions/context_extension.dart';
@@ -126,7 +125,7 @@ class _GetUrlDialog extends StatelessWidget {
           child: Text(
             'Done',
             style: context.textTheme.labelLarge?.copyWith(
-              color: AppColors.white,
+              color: context.colors.onPrimary,
             ),
           ),
         ),

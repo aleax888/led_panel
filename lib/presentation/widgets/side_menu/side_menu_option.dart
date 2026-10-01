@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:led_panel/theme/constants/app_radius.dart';
 import 'package:led_panel/theme/constants/app_sizes.dart';
 import 'package:led_panel/theme/constants/app_spacing.dart';
+import 'package:led_panel/utils/extensions/context_extension.dart';
 
 /// Side menu option.
 class SideMenuOption extends StatelessWidget {
@@ -29,8 +30,8 @@ class SideMenuOption extends StatelessWidget {
       ),
       contentPadding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
       minLeadingWidth: AppSizes.iconMd,
-      leading: Icon(icon, size: AppSizes.iconMd),
-      title: Text(label, style: Theme.of(context).textTheme.labelLarge),
+      leading: Icon(icon),
+      title: Text(label, style: context.textTheme.labelLarge),
     );
   }
 }

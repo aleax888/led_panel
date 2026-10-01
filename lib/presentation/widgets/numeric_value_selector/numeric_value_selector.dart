@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:led_panel/presentation/widgets/input_label.dart';
 import 'package:led_panel/presentation/widgets/numeric_value_selector/step_button.dart';
 import 'package:led_panel/theme/constants/app_spacing.dart';
+import 'package:led_panel/utils/extensions/context_extension.dart';
 
 /// Provides synchronized slider, step button, and text field value controls.
 class NumericValueSelector extends StatefulWidget {
@@ -87,7 +88,7 @@ class _NumericValueSelectorState extends State<NumericValueSelector> {
                 textAlign: .end,
                 decoration: InputDecoration(
                   isDense: true,
-                  suffix: widget.unit != null ? Text(' ${widget.unit}') : null,
+                  suffix: widget.unit != null ? Text(' ${widget.unit}', style: context.textTheme.labelMedium) : null,
                 ),
                 style: Theme.of(context).textTheme.titleMedium,
               ),

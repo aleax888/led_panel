@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:led_panel/utils/extensions/context_extension.dart';
 import 'package:led_panel/theme/constants/app_colors.dart';
-import 'package:led_panel/theme/constants/app_spacing.dart';
 
 /// Displays a dialog for confirming deletion of a saved configuration.
 class DeleteValidationDialog extends StatelessWidget {
@@ -10,14 +9,10 @@ class DeleteValidationDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Delete configuration', style: context.textTheme.titleMedium),
+      title: Text('Delete configuration', style: context.textTheme.titleLarge),
       content: Text(
-        'Are you sure you want to delete this? This action cannot be undone.',
+        'Are you sure you want to delete this?\nThis action cannot be undone.',
         style: context.textTheme.bodyMedium,
-      ),
-      actionsPadding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.md,
-        vertical: AppSpacing.sm,
       ),
       actions: [
         // Cancel ----------------------------------------------
@@ -30,12 +25,7 @@ class DeleteValidationDialog extends StatelessWidget {
         ElevatedButton(
           onPressed: () => Navigator.pop(context, true),
           style: ElevatedButton.styleFrom(backgroundColor: AppColors.error),
-          child: Text(
-            'Delete',
-            style: context.textTheme.labelLarge?.copyWith(
-              color: AppColors.white,
-            ),
-          ),
+          child: Text('Delete'),
         ),
       ],
     );

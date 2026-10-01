@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:led_panel/presentation/widgets/numeric_value_selector/numeric_value_selector.dart';
+import 'package:led_panel/utils/extensions/context_extension.dart';
 
 class StopPositionDialog extends StatefulWidget {
   const StopPositionDialog({super.key});
@@ -14,7 +15,7 @@ class _StopPositionDialogState extends State<StopPositionDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Stop position'),
+      title: Text('Stop position', style: context.textTheme.titleLarge),
       content: NumericValueSelector(
         label: 'Position',
         unit: '%',

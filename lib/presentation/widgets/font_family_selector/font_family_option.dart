@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:led_panel/utils/extensions/context_extension.dart';
 
 import 'package:led_panel/theme/constants/app_sizes.dart';
-import 'package:led_panel/theme/constants/app_typography.dart';
 
 /// Displays a selectable font family option.
 class FontFamilyOption extends StatelessWidget {
@@ -43,11 +42,8 @@ class FontFamilyOption extends StatelessWidget {
           // Short text to show the font aspect ----------------------------------------------
           child: Text(
             'Aa',
-            style: TextStyle(
+            style: context.textTheme.headlineLarge?.copyWith(
               fontFamily: fontFamily,
-              fontSize: AppTypography.sizeHeadlineSm,
-              fontWeight: AppTypography.semiBold,
-              color: context.colors.onSurface,
             ),
           ),
         ),

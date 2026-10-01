@@ -3,7 +3,6 @@ import 'package:led_panel/utils/extensions/context_extension.dart';
 import 'package:led_panel/theme/constants/app_radius.dart';
 import 'package:led_panel/theme/constants/app_sizes.dart';
 import 'package:led_panel/theme/constants/app_spacing.dart';
-import 'package:led_panel/theme/constants/app_typography.dart';
 
 /// Displays a selectable panel animation direction option.
 class DirectionSelectorOption extends StatelessWidget {
@@ -61,10 +60,7 @@ class DirectionSelectorOption extends StatelessWidget {
               // Option label ----------------------------------------------
               Text(
                 label,
-                style: TextStyle(
-                  fontFamily: AppTypography.fontRoboto,
-                  fontSize: AppTypography.sizeBodyMd,
-                  fontWeight: AppTypography.medium,
+                style: context.textTheme.labelLarge?.copyWith(
                   color: selected
                       ? context.colors.primary
                       : context.colors.onSurface,

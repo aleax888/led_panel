@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> {
                         padding: AppSpacing.screenPadding,
                         child: ElevatedButton(
                           onPressed: () => _goToConfig(),
-                          child: Text('+ NEW'),
+                          child: Text('+ NEW', style: context.textTheme.headlineLarge?.copyWith(color: context.colors.onPrimary)),
                         ),
                       ),
 
