@@ -63,36 +63,35 @@ class _HomePageState extends State<HomePage> {
                           child: MultiTabsView(
                             tabNames: ['RECENTS', 'FAVORITES'],
                             tabViews: [
-                              // Recents ----------------------------------------------
-                              ScrollableTab(
-                                children: state.configList
-                                    .where((e) => !e.favorite)
-                                    .map(
-                                      (e) => SavedConfigItem(
-                                        key: ValueKey(e.id),
-                                        config: e,
-                                      ),
-                                    )
-                                    .toList(),
-                              ),
-
-                              // Favorities ----------------------------------------------
-                              ScrollableTab(
-                                children: state.configList
-                                    .where((e) => e.favorite)
-                                    .map(
-                                      (e) => SavedConfigItem(
-                                        key: ValueKey(e.id),
-                                        config: e,
-                                      ),
-                                    )
-                                    .toList(),
-                              ),
+                            // Recents ----------------------------------------------
+                            ScrollableTab(
+                              children: state.configList
+                                  .where((e) => !e.favorite)
+                                  .map(
+                                    (e) => SavedConfigItem(
+                                      key: ValueKey(e.id),
+                                      config: e,
+                                    ),
+                                  )
+                                  .toList(),
+                            ),
+                      
+                            // Favorities ----------------------------------------------
+                            ScrollableTab(
+                              children: state.configList
+                                  .where((e) => e.favorite)
+                                  .map(
+                                    (e) => SavedConfigItem(
+                                      key: ValueKey(e.id),
+                                      config: e,
+                                    ),
+                                  )
+                                  .toList(),
+                            ),
                             ],
                           ),
                         ),
                       ),
-                      SizedBox(),
                     ],
                   ),
           ),

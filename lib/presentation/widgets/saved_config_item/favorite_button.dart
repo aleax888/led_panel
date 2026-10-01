@@ -59,14 +59,12 @@ class _FavoriteButtonState extends State<FavoriteButton>
       scale: _scaleAnimation,
       child: IconButton(
         tooltip: widget.isFavorite
-          ? 'Remove from favorites'
-          : 'Add to favorites',
+            ? 'Remove from favorites'
+            : 'Add to favorites',
         onPressed: _handleTap,
-        icon: Icon(
-          widget.isFavorite
-              ? Icons.star_rate_rounded
-              : Icons.star_border_rounded,
-        ),
+        icon: widget.isFavorite
+            ? Icon(Icons.star_rate_rounded, color: Colors.amber)
+            : Icon(Icons.star_border_rounded),
       ),
     );
   }

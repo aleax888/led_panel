@@ -74,10 +74,16 @@ class _SavedConfigItemState extends State<SavedConfigItem> {
               Row(
                 children: [
                   // Delete ----------------------------------------------
-                  IconButton(onPressed: _onDelete, icon: Icon(Icons.delete)),
+                  IconButton(
+                    onPressed: _onDelete,
+                    icon: Icon(Icons.delete_outline),
+                  ),
 
                   // Edit ----------------------------------------------
-                  IconButton(onPressed: _onEdit, icon: Icon(Icons.edit_square)),
+                  IconButton(
+                    onPressed: _onEdit,
+                    icon: Icon(Icons.edit_outlined),
+                  ),
 
                   SizedBox(
                     height: AppSizes.avatarSm,

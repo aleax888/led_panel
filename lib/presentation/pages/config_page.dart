@@ -4,6 +4,7 @@ import 'package:led_panel/bloc/led_panel/led_panel_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:led_panel/bloc/led_panel_list/led_panel_list_bloc.dart';
 import 'package:led_panel/data/models/led_panel/led_panel_config_model.dart';
+import 'package:led_panel/presentation/widgets/app_icon_button.dart';
 import 'package:led_panel/presentation/widgets/fields/leds_fields.dart';
 import 'package:led_panel/presentation/widgets/fields/text_fields.dart';
 
@@ -64,19 +65,13 @@ class _ConfigPageState extends State<ConfigPage>
     return Scaffold(
       appBar: AppBar(
         title: Text('CUSTOMIZATION', style: context.textTheme.labelLarge),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.share_outlined),
-            onPressed: () => ToastHandler.showInfo(
-              'Sharing functionality is not implemented yet.',
-            ),
-          ),
-        ],
       ),
       body: SafeArea(
         child: Column(
           spacing: AppSpacing.md,
           children: [
+            SizedBox(),
+
             // Led Panel Preview ----------------------------------------------
             Container(
               margin: AppSpacing.screenPadding,
@@ -109,12 +104,20 @@ class _ConfigPageState extends State<ConfigPage>
                   Positioned(
                     right: AppSpacing.xs,
                     top: AppSpacing.xs,
-                    child: IconButton(
-                      onPressed: _navigateToDisplay,
-                      icon: Icon(
-                        Icons.open_in_full_rounded,
-                        color: context.colors.onPrimary,
-                      ),
+                    child: Row(
+                      spacing: AppSpacing.xs,
+                      children: [
+                        AppIconButton(
+                          icon: Icons.share_outlined,
+                          onPressed: () => ToastHandler.showInfo(
+                            'Sharing functionality is not implemented yet.',
+                          ),
+                        ),
+                        AppIconButton(
+                          icon: Icons.open_in_full_rounded,
+                          onPressed: _navigateToDisplay,
+                        ),
+                      ],
                     ),
                   ),
                 ],

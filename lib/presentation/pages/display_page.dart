@@ -51,12 +51,17 @@ class _DisplayPageState extends State<DisplayPage> {
                       ),
 
                       // Lock/Unlock button ----------------------------------------------
-                      Positioned(
-                        right: AppSpacing.xs,
+                      Positioned.fill(
                         top: AppSpacing.xs,
-                        child: LockDisplayButton(
-                          isLocked: _isDisplayLocked,
-                          onPressed: _toggleDisplayLock,
+                        child: Row(
+                          crossAxisAlignment: .start,
+                          mainAxisAlignment: .center,
+                          children: [
+                            LockDisplayButton(
+                              isLocked: _isDisplayLocked,
+                              onPressed: _toggleDisplayLock,
+                            ),
+                          ],
                         ),
                       ),
                     ],

@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 
 import 'package:led_panel/data/models/led_panel/background_configs/image_config_model.dart';
+import 'package:led_panel/theme/constants/app_durations.dart';
 import 'package:led_panel/theme/constants/app_sizes.dart';
 
 enum _ImageSourceType { network, asset, file, none }
@@ -36,22 +37,21 @@ class ImageBackground extends StatelessWidget {
       child: switch (source) {
         _ImageSourceType.network => Image.network(
           value,
-          fit: BoxFit.cover,
+          fit: .cover,
           loadingBuilder: _loadingBuilder,
           errorBuilder: _errorBuilder,
         ),
         _ImageSourceType.asset => Image.asset(
           value,
-          fit: BoxFit.cover,
+          fit: .cover,
           frameBuilder: _frameBuilder,
           errorBuilder: _errorBuilder,
         ),
-        // Image.file no está soportado en web.
         _ImageSourceType.file when !kIsWeb => Image.file(
           value.startsWith('file://')
               ? File.fromUri(Uri.parse(value))
               : File(value),
-          fit: BoxFit.cover,
+          fit: .cover,
           frameBuilder: _frameBuilder,
           errorBuilder: _errorBuilder,
         ),
@@ -90,7 +90,7 @@ class ImageBackground extends StatelessWidget {
 
     return AnimatedOpacity(
       opacity: frame == null ? 0 : 1,
-      duration: const Duration(milliseconds: 300),
+      duration: AppDurations.slow,
       curve: Curves.easeOut,
       child: child,
     );
