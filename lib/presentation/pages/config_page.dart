@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 import 'package:led_panel/bloc/led_panel/led_panel_bloc.dart';
@@ -18,7 +20,8 @@ import 'package:led_panel/presentation/widgets/multi_tabs/separated_list_tab.dar
 import 'package:led_panel/theme/constants/app_radius.dart';
 import 'package:led_panel/theme/constants/app_spacing.dart';
 import 'package:led_panel/utils/panel_size_handler.dart';
-import 'package:led_panel/utils/toast_handler.dart';
+import 'package:led_panel/utils/share_handler.dart';
+import 'package:led_panel/utils/widget_capture_handler.dart';
 
 /// Configuration page.
 class ConfigPage extends StatefulWidget {
@@ -38,6 +41,7 @@ class _ConfigPageState extends State<ConfigPage>
   final FocusNode _messageFocusNode = FocusNode();
   final TextFields _textFields = TextFields();
   final LedsFields _ledsFields = LedsFields();
+  final _ledPanelKey = GlobalKey();
 
   @override
   void initState() {
@@ -89,30 +93,44 @@ class _ConfigPageState extends State<ConfigPage>
                               context,
                               AppSpacing.screenPadding,
                             );
-                        return LedPanel(
-                          panelWidth: fixedDimensions.width,
-                          panelHeight: fixedDimensions.height,
-                          borderRadius: AppRadius.borderRadiusLg,
-                          config: state.config.copyWithProportion(
-                            fixedDimensions.proportion,
+                        return RepaintBoundary(
+                          key: _ledPanelKey,
+                          child: LedPanel(
+                            panelWidth: fixedDimensions.width,
+                            panelHeight: fixedDimensions.height,
+                            borderRadius: AppRadius.borderRadiusLg,
+                            config: state.config.copyWithProportion(
+                              fixedDimensions.proportion,
+                            ),
                           ),
                         );
                       },
                     ),
                   ),
-                  // Play Button ----------------------------------------------
                   Positioned(
                     right: AppSpacing.xs,
                     top: AppSpacing.xs,
                     child: Row(
                       spacing: AppSpacing.xs,
                       children: [
+                        // Share Button ----------------------------------------------
                         AppIconButton(
                           icon: Icons.share_outlined,
-                          onPressed: () => ToastHandler.showInfo(
-                            'Sharing functionality is not implemented yet.',
-                          ),
+                          onPressed: () async {
+                            final file = await WidgetCaptureHandler.toXFile(
+                              _ledPanelKey,
+                            );
+                            if (file != null) {
+                              await ShareHandler.shareFiles(
+                                [file],
+                                text: jsonEncode(
+                                  ledPanelBloc.state.config.toJson(),
+                                ),
+                              );
+                            }
+                          },
                         ),
+                        // Play Button ----------------------------------------------
                         AppIconButton(
                           icon: Icons.open_in_full_rounded,
                           onPressed: _navigateToDisplay,

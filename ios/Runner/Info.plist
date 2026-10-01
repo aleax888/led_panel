@@ -66,5 +66,14 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app needs access to your photo library so you can select photos to use as backgrounds on your LED panel.</string>
+
+	<key>NSCameraUsageDescription</key>
+	<string>This app needs access to your camera so you can take photos to use as backgrounds on your LED panel.</string>
+
+	<key>NSMicrophoneUsageDescription</key>
+	<string>This app needs access to your microphone to record videos that can be used as backgrounds on your LED panel.</string>
 </dict>
 </plist>

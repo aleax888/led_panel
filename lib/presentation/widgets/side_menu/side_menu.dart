@@ -7,6 +7,7 @@ import 'package:led_panel/presentation/widgets/side_menu/side_menu_option.dart';
 import 'package:led_panel/presentation/widgets/side_menu/side_menu_switch_option.dart';
 import 'package:led_panel/theme/constants/app_radius.dart';
 import 'package:led_panel/theme/constants/app_spacing.dart';
+import 'package:led_panel/utils/share_handler.dart';
 import 'package:led_panel/utils/toast_handler.dart';
 
 /// Side menu.
@@ -56,8 +57,8 @@ class SideMenu extends StatelessWidget {
               SideMenuOption(
                 icon: Icons.share_outlined,
                 label: 'SHARE APP',
-                onTap: () => ToastHandler.showInfo(
-                  'Sharing functionality is not implemented yet.',
+                onTap: () => ShareHandler.shareUri(
+                  Uri.https('github.com', '/aleax888/led_panel'),
                 ),
               ),
               SideMenuSwitchOption(
