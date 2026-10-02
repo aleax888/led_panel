@@ -11,13 +11,13 @@ import 'package:led_panel/theme/constants/app_spacing.dart';
 
 /// Provides a color field with a preview, picker dialog, and quick color options.
 class ColorPickerField extends StatefulWidget {
-  final String label;
+  final String? label;
   final Color? color;
   final ValueChanged<Color> onChanged;
 
   const ColorPickerField({
     super.key,
-    this.label = 'COLOR',
+    this.label,
     required this.color,
     required this.onChanged,
   });
@@ -68,7 +68,7 @@ class _ColorPickerFieldState extends State<ColorPickerField> {
         GestureDetector(
           onTap: () => _openColorPicker(context),
           child: InputLabel(
-            label: widget.label,
+            label: widget.label ?? context.locale.color,
             child: ColorPreview(color: _selectedColor),
           ),
         ),

@@ -12,7 +12,7 @@ class LocaleSelectionDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     final localeCubit = context.read<LocaleCubit>();
     return AlertDialog(
-      title: Text('Locale', style: context.textTheme.titleLarge),
+      title: Text(context.locale.locale, style: context.textTheme.titleLarge),
       content: SizedBox(
         width: double.maxFinite,
         child: LocaleSelector(
@@ -27,13 +27,16 @@ class LocaleSelectionDialog extends StatelessWidget {
         // Cancel ----------------------------------------------
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: Text('Cancel', style: context.textTheme.labelLarge),
+          child: Text(
+            context.locale.cancel,
+            style: context.textTheme.labelLarge,
+          ),
         ),
 
         // Done button ----------------------------------------------
         ElevatedButton(
           onPressed: () => Navigator.pop(context),
-          child: Text('Done'),
+          child: Text(context.locale.done),
         ),
       ],
     );

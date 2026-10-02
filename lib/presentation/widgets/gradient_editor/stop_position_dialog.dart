@@ -16,9 +16,12 @@ class _StopPositionDialogState extends State<StopPositionDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Stop position', style: context.textTheme.titleLarge),
+      title: Text(
+        context.locale.stopPosition,
+        style: context.textTheme.titleLarge,
+      ),
       content: NumericValueSelector(
-        label: 'Position',
+        label: context.locale.position,
         unit: '%',
         value: _position,
         minValue: 0,
@@ -29,13 +32,13 @@ class _StopPositionDialogState extends State<StopPositionDialog> {
         // Cancel ----------------------------------------------
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Cancel'),
+          child: Text(context.locale.cancel),
         ),
 
         // Add ----------------------------------------------
         ElevatedButton(
           onPressed: () => Navigator.of(context).pop(_position),
-          child: const Text('Add'),
+          child: Text(context.locale.add),
         ),
       ],
     );

@@ -33,7 +33,10 @@ class _HomePageState extends State<HomePage> {
         return Scaffold(
           drawer: SideMenu(),
           appBar: AppBar(
-            title: Text('HOME', style: context.textTheme.labelLarge),
+            title: Text(
+              context.locale.home,
+              style: context.textTheme.labelLarge,
+            ),
           ),
           body: SafeArea(
             child: state.isLoading
@@ -53,7 +56,7 @@ class _HomePageState extends State<HomePage> {
                         child: ElevatedButton(
                           onPressed: () => _goToConfig(),
                           child: Text(
-                            '+ NEW',
+                            context.locale.newConfig,
                             style: context.textTheme.headlineLarge?.copyWith(
                               color: context.colors.onPrimary,
                             ),
@@ -66,7 +69,10 @@ class _HomePageState extends State<HomePage> {
                         child: Container(
                           padding: AppSpacing.screenPadding,
                           child: MultiTabsView(
-                            tabNames: ['RECENTS', 'FAVORITES'],
+                            tabNames: [
+                              context.locale.recents,
+                              context.locale.favorites,
+                            ],
                             tabViews: [
                               // Recents ----------------------------------------------
                               ScrollableTab(

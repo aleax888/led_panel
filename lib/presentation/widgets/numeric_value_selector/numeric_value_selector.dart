@@ -88,7 +88,12 @@ class _NumericValueSelectorState extends State<NumericValueSelector> {
                 textAlign: .end,
                 decoration: InputDecoration(
                   isDense: true,
-                  suffix: widget.unit != null ? Text(' ${widget.unit}', style: context.textTheme.labelMedium) : null,
+                  suffix: widget.unit != null
+                      ? Text(
+                          ' ${widget.unit}',
+                          style: context.textTheme.labelMedium,
+                        )
+                      : null,
                 ),
                 style: Theme.of(context).textTheme.titleMedium,
               ),

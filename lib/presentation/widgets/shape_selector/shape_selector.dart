@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:led_panel/utils/extensions/context_extension.dart';
 import 'package:led_panel/data/enums/dot_shape_enum.dart';
 
 import 'package:led_panel/presentation/widgets/input_label.dart';
@@ -11,16 +12,12 @@ class ShapeSelector extends StatelessWidget {
   final DotShapeEnum selectedShape;
   final ValueChanged<DotShapeEnum>? onChanged;
 
-  const ShapeSelector({
-    super.key,
-    required this.selectedShape,
-    this.onChanged,
-  });
+  const ShapeSelector({super.key, required this.selectedShape, this.onChanged});
 
   @override
   Widget build(BuildContext context) {
     return InputLabel(
-      label: 'LEDs SHAPE',
+      label: context.locale.ledsShape,
       child: SizedBox(
         height: AppSizes.avatarLg,
         child: ListView.separated(
@@ -30,8 +27,7 @@ class ShapeSelector extends StatelessWidget {
           itemCount: DotShapeEnum.values.length,
           separatorBuilder: (_, _) => const SizedBox(width: AppSpacing.sm),
           itemBuilder: (context, index) {
-            final DotShapeEnum shape =
-                DotShapeEnum.values[index];
+            final DotShapeEnum shape = DotShapeEnum.values[index];
             return ShapeOption(
               animationType: shape,
               selected: shape == selectedShape,

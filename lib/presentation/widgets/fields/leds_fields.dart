@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:led_panel/utils/extensions/context_extension.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:led_panel/bloc/configs/leds/leds_cubit.dart';
 import 'package:led_panel/data/models/led_panel/animation_configs/leds_config_model.dart';
@@ -23,7 +24,7 @@ class LedsFields {
     return [
       // Color ----------------------------------------------
       ColorPickerField(
-        label: 'LEDs',
+        label: context.locale.leds,
         color: config.color,
         onChanged: (color) => ledsCubit.onColorChanged(color),
       ),
@@ -36,7 +37,7 @@ class LedsFields {
 
       // Size ----------------------------------------------
       NumericValueSelector(
-        label: 'LEDs SIZE',
+        label: context.locale.ledsSize,
         unit: 'pt',
         value: config.size.round(),
         minValue: 8,
@@ -48,7 +49,7 @@ class LedsFields {
 
       // Padding ----------------------------------------------
       NumericValueSelector(
-        label: 'LEDs PADDING',
+        label: context.locale.ledsPadding,
         unit: 'pt',
         value: config.padding.round(),
         minValue: 0,

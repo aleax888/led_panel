@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:led_panel/utils/extensions/context_extension.dart';
 import 'package:led_panel/data/enums/animation_type_enum.dart';
 
 import 'package:led_panel/presentation/widgets/animation_selector/animation_option.dart';
@@ -20,7 +21,7 @@ class AnimationSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InputLabel(
-      label: 'ANIMATION',
+      label: context.locale.animation,
       child: SizedBox(
         height: AppSizes.avatarLg,
         child: ListView.separated(

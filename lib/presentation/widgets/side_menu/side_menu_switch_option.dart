@@ -19,7 +19,7 @@ class SideMenuSwitchOption extends StatelessWidget {
       value: value,
       onChanged: onChanged,
       secondary: Icon(icon),
-      title: Text('THEME', style: context.textTheme.labelLarge),
+      title: Text(context.locale.theme, style: context.textTheme.labelLarge),
       contentPadding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
     );
   }

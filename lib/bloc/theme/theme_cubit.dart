@@ -3,7 +3,6 @@ import 'package:led_panel/data/repositories/theme/theme_repository.dart';
 import 'package:led_panel/data/repositories/theme/shared_preferences_theme_repository.dart';
 
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
 
 part 'theme_state.dart';
 

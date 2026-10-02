@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:led_panel/utils/extensions/context_extension.dart';
 import 'package:led_panel/theme/constants/app_durations.dart';
 
 /// Displays a button for toggling a configuration's favorite status.
@@ -59,8 +60,8 @@ class _FavoriteButtonState extends State<FavoriteButton>
       scale: _scaleAnimation,
       child: IconButton(
         tooltip: widget.isFavorite
-            ? 'Remove from favorites'
-            : 'Add to favorites',
+            ? context.locale.removeFromFavorites
+            : context.locale.addToFavorites,
         onPressed: _handleTap,
         icon: widget.isFavorite
             ? Icon(Icons.star_rate_rounded, color: Colors.amber)

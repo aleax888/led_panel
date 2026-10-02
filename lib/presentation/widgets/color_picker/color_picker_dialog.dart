@@ -18,7 +18,10 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Select color', style: context.textTheme.titleLarge),
+      title: Text(
+        context.locale.selectColor,
+        style: context.textTheme.titleLarge,
+      ),
       content: SingleChildScrollView(
         // Main color selection control ----------------------------------------------
         child: ColorPicker(
@@ -30,13 +33,13 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
         // Cancel button ----------------------------------------------
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: Text('Cancel'),
+          child: Text(context.locale.cancel),
         ),
 
         // Done button ----------------------------------------------
         ElevatedButton(
           onPressed: () => Navigator.pop(context, _pickedColor),
-          child: Text('Done'),
+          child: Text(context.locale.done),
         ),
       ],
     );

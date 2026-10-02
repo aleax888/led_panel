@@ -9,23 +9,29 @@ class DeleteValidationDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Delete configuration', style: context.textTheme.titleLarge),
+      title: Text(
+        context.locale.deleteConfiguration,
+        style: context.textTheme.titleLarge,
+      ),
       content: Text(
-        'Are you sure you want to delete this?\nThis action cannot be undone.',
+        context.locale.deleteConfigurationMessage,
         style: context.textTheme.bodyMedium,
       ),
       actions: [
         // Cancel ----------------------------------------------
         TextButton(
           onPressed: () => Navigator.pop(context, false),
-          child: Text('Cancel', style: context.textTheme.labelLarge),
+          child: Text(
+            context.locale.cancel,
+            style: context.textTheme.labelLarge,
+          ),
         ),
 
         // Delete ----------------------------------------------
         ElevatedButton(
           onPressed: () => Navigator.pop(context, true),
           style: ElevatedButton.styleFrom(backgroundColor: AppColors.error),
-          child: Text('Delete'),
+          child: Text(context.locale.delete),
         ),
       ],
     );

@@ -69,7 +69,7 @@ class _SavedConfigItemState extends State<SavedConfigItem> {
               // Date ----------------------------------------------
               Expanded(
                 child: Text(
-                  AppDateFormater.long(widget.config.createdAt),
+                  AppDateFormater.compact(widget.config.createdAt, context.locale),
                   style: context.textTheme.bodyMedium,
                 ),
               ),

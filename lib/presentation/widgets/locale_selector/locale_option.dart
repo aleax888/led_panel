@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:led_panel/l10n/localization_extensions.dart';
 import 'package:led_panel/data/enums/locale_enum.dart';
 import 'package:led_panel/theme/constants/app_sizes.dart';
 import 'package:led_panel/utils/extensions/context_extension.dart';
@@ -18,7 +19,7 @@ class LocaleOption extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String label = locale.name.toUpperCase();
+    final String label = locale.localizedLabel(context.locale);
 
     return Semantics(
       button: true,

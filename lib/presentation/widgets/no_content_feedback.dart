@@ -23,7 +23,7 @@ class NoContentFeedback extends StatelessWidget {
               color: context.theme.disabledColor,
             ),
             Text(
-              'You don\'t have any items yet',
+              context.locale.emptyItems,
               style: context.textTheme.bodyLarge?.copyWith(
                 color: context.theme.disabledColor,
               ),

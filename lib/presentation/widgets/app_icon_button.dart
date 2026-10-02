@@ -27,7 +27,7 @@ class AppIconButton extends StatelessWidget {
       child: IconButton(
         tooltip: toolTip,
         onPressed: onPressed,
-        icon: Icon(icon, color: context.colors.onSurface,),
+        icon: Icon(icon, color: context.colors.onSurface),
         style: IconButton.styleFrom(
           fixedSize: fixedSize == null ? null : Size.square(fixedSize!),
           padding: EdgeInsets.zero,

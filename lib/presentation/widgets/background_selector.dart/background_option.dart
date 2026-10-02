@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:led_panel/l10n/localization_extensions.dart';
 import 'package:led_panel/data/enums/background_type_enum.dart';
 import 'package:led_panel/theme/constants/app_sizes.dart';
 import 'package:led_panel/utils/extensions/context_extension.dart';
@@ -21,7 +22,7 @@ class BackgroundOption extends StatelessWidget {
     return Semantics(
       button: true,
       selected: selected,
-      label: backgroundType.label,
+      label: backgroundType.localizedLabel(context.locale),
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(AppSizes.avatarLg),

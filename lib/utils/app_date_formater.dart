@@ -1,27 +1,18 @@
 import 'package:intl/intl.dart';
+import 'package:led_panel/l10n/app_localizations.dart';
 
-/// A utility class for formatting dates in various styles.
+/// A utility class for formatting dates in various localized styles.
 class AppDateFormater {
   AppDateFormater._();
 
-  static const String _nullFeedback = 'No date available';
-  static const String _rightNowFeedback = 'Right now';
-
-  static final DateFormat _compactFormat = DateFormat('dd/MM/yyyy');
-  static final DateFormat _longFormat = DateFormat('EEEE, d MMMM y', 'es');
-  static final DateFormat _fullFormat = DateFormat('dd MMMM yyyy HH:mm', 'es');
-  static final DateFormat _shortTimeFormat = DateFormat('HH:mm');
-  static final DateFormat _dbFormat = DateFormat('yyyy-MM-dd');
-  static final DateFormat _monthYearFormat = DateFormat('MMMM yyyy', 'es');
-  static final DateFormat _weekdayFormat = DateFormat('EEEE', 'es');
-
   static String _formatDate(
     DateTime? date,
-    DateFormat formatter, {
+    String pattern,
+    AppLocalizations l10n, {
     bool dateOnly = false,
   }) {
     if (date == null) {
-      return _nullFeedback;
+      return l10n.noDateAvailable;
     }
 
     final DateTime now = DateTime.now();
@@ -31,7 +22,7 @@ class AppDateFormater {
         : difference;
 
     if (absDifference <= const Duration(minutes: 1)) {
-      return _rightNowFeedback;
+      return l10n.rightNow;
     }
 
     if (dateOnly) {
@@ -40,46 +31,46 @@ class AppDateFormater {
       final int dayDifference = targetCalendar.difference(todayCalendar).inDays;
 
       if (dayDifference == 0) {
-        return 'Today';
+        return l10n.today;
       }
 
       if (dayDifference == -1) {
-        return 'Yesterday';
+        return l10n.yesterday;
       }
 
       if (dayDifference == 1) {
-        return 'Tomorrow';
+        return l10n.tomorrow;
       }
     }
 
-    return formatter.format(date);
+    return DateFormat(pattern, l10n.localeName).format(date);
   }
 
-  static String compact(DateTime? date) {
-    return _formatDate(date, _compactFormat, dateOnly: true);
+  static String compact(DateTime? date, AppLocalizations l10n) {
+    return _formatDate(date, 'dd/MM/yyyy', l10n, dateOnly: true);
   }
 
-  static String long(DateTime? date) {
-    return _formatDate(date, _longFormat, dateOnly: true);
+  static String long(DateTime? date, AppLocalizations l10n) {
+    return _formatDate(date, 'EEEE, d MMMM y', l10n, dateOnly: true);
   }
 
-  static String full(DateTime? date) {
-    return _formatDate(date, _fullFormat);
+  static String full(DateTime? date, AppLocalizations l10n) {
+    return _formatDate(date, 'dd MMMM yyyy HH:mm', l10n);
   }
 
-  static String shortTime(DateTime? date) {
-    return _formatDate(date, _shortTimeFormat);
+  static String shortTime(DateTime? date, AppLocalizations l10n) {
+    return _formatDate(date, 'HH:mm', l10n);
   }
 
-  static String database(DateTime? date) {
-    return _formatDate(date, _dbFormat, dateOnly: true);
+  static String database(DateTime? date, AppLocalizations l10n) {
+    return _formatDate(date, 'yyyy-MM-dd', l10n, dateOnly: true);
   }
 
-  static String monthYear(DateTime? date) {
-    return _formatDate(date, _monthYearFormat);
+  static String monthYear(DateTime? date, AppLocalizations l10n) {
+    return _formatDate(date, 'MMMM yyyy', l10n);
   }
 
-  static String weekday(DateTime? date) {
-    return _formatDate(date, _weekdayFormat);
+  static String weekday(DateTime? date, AppLocalizations l10n) {
+    return _formatDate(date, 'EEEE', l10n);
   }
 }

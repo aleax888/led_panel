@@ -84,7 +84,7 @@ class _GradientEditorState extends State<GradientEditor> {
         Padding(
           padding: const EdgeInsets.only(top: GradientEditorMetrics.trackTop),
           child: IconButton(
-            tooltip: 'Add stop',
+            tooltip: context.locale.addStop,
             onPressed: _addStop,
             icon: const Icon(Icons.add),
             style: IconButton.styleFrom(

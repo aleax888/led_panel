@@ -68,7 +68,10 @@ class _ConfigPageState extends State<ConfigPage>
     final LedPanelBloc ledPanelBloc = context.read<LedPanelBloc>();
     return Scaffold(
       appBar: AppBar(
-        title: Text('CUSTOMIZATION', style: context.textTheme.labelLarge),
+        title: Text(
+          context.locale.customization,
+          style: context.textTheme.labelLarge,
+        ),
       ),
       body: SafeArea(
         child: Column(
@@ -148,7 +151,12 @@ class _ConfigPageState extends State<ConfigPage>
                 padding: AppSpacing.screenPadding,
                 child: MultiTabsView(
                   controller: _tabController,
-                  tabNames: ['TEXT', 'ANIM', 'BG', 'LEDs'],
+                  tabNames: [
+                    context.locale.text,
+                    context.locale.anim,
+                    context.locale.bg,
+                    context.locale.leds,
+                  ],
                   tabViews: [
                     SeparatedListTab(
                       children: [

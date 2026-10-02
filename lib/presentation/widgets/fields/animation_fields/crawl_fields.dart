@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:led_panel/utils/extensions/context_extension.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:led_panel/bloc/configs/animations/crawl/crawl_cubit.dart';
 import 'package:led_panel/data/enums/crawl_direction_enum.dart';
@@ -32,7 +33,7 @@ class CrawlFields extends AnimationFields {
 
       // Speed ----------------------------------------------
       NumericValueSelector(
-        label: 'SPEED',
+        label: context.locale.speed,
         unit: 'px/s',
         value: config.speed.round(),
         minValue: 20,
@@ -44,8 +45,8 @@ class CrawlFields extends AnimationFields {
 
       // Tilt ----------------------------------------------
       NumericValueSelector(
-        label: 'TILT',
-        unit: '°',
+        label: context.locale.tilt,
+        unit: 'Â°',
         value: config.tiltDegrees.round(),
         minValue: -90,
         maxValue: 90,

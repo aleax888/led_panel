@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:led_panel/utils/extensions/context_extension.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:led_panel/bloc/configs/animations/wave/wave_cubit.dart';
 import 'package:led_panel/data/models/led_panel/animation_configs/animation_config_model.dart';
@@ -23,7 +24,7 @@ class WaveFields extends AnimationFields {
     return [
       // Amplitude ----------------------------------------------
       NumericValueSelector(
-        label: 'AMPLITUDE',
+        label: context.locale.amplitude,
         unit: 'px',
         value: config.amplitude.round(),
         minValue: 0,
@@ -36,7 +37,7 @@ class WaveFields extends AnimationFields {
 
       // Frequency ----------------------------------------------
       NumericValueSelector(
-        label: 'FREQUENCY',
+        label: context.locale.frequency,
         unit: 'Hz',
         value: config.frequency.round(),
         minValue: 0,
@@ -49,8 +50,8 @@ class WaveFields extends AnimationFields {
 
       // Phase Step ----------------------------------------------
       NumericValueSelector(
-        label: 'PHASE STEP',
-        unit: '°',
+        label: context.locale.phaseStep,
+        unit: 'Â°',
         value: config.phaseStepDegrees.round(),
         minValue: 0,
         maxValue: 180,

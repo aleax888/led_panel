@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:led_panel/utils/extensions/context_extension.dart';
 import 'package:led_panel/data/enums/background_type_enum.dart';
 import 'package:led_panel/presentation/widgets/background_selector.dart/background_option.dart';
 import 'package:led_panel/presentation/widgets/input_label.dart';
@@ -19,7 +20,7 @@ class BackgroundSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InputLabel(
-      label: 'BACKGROUND',
+      label: context.locale.background,
       child: SizedBox(
         height: AppSizes.avatarLg,
         child: ListView.separated(

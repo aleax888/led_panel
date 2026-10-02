@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:led_panel/l10n/localization_extensions.dart';
 import 'package:led_panel/data/enums/animation_type_enum.dart';
 import 'package:led_panel/utils/extensions/context_extension.dart';
 
@@ -22,7 +23,7 @@ class AnimationOption extends StatelessWidget {
     return Semantics(
       button: true,
       selected: selected,
-      label: animationType.label,
+      label: animationType.localizedLabel(context.locale),
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(AppSizes.avatarLg),

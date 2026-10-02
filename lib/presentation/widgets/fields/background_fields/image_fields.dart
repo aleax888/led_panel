@@ -103,14 +103,17 @@ class _GetUrlDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('From network', style: context.textTheme.titleMedium),
+      title: Text(
+        context.locale.fromNetwork,
+        style: context.textTheme.titleMedium,
+      ),
       content: TextFormField(
         controller: controller,
         onEditingComplete: () => Focus.of(context).unfocus(),
         onTapOutside: (event) => Focus.of(context).unfocus(),
         maxLines: 2,
         minLines: 1,
-        decoration: InputDecoration(hintText: 'Paste your URL...'),
+        decoration: InputDecoration(hintText: context.locale.pasteYourUrl),
       ),
       actionsPadding: const EdgeInsets.symmetric(
         horizontal: AppSpacing.md,
@@ -120,14 +123,17 @@ class _GetUrlDialog extends StatelessWidget {
         // Cancel ----------------------------------------------
         TextButton(
           onPressed: () => Navigator.pop(context, null),
-          child: Text('Cancel', style: context.textTheme.labelLarge),
+          child: Text(
+            context.locale.cancel,
+            style: context.textTheme.labelLarge,
+          ),
         ),
 
         // Delete ----------------------------------------------
         ElevatedButton(
           onPressed: () => Navigator.pop(context, controller.text),
           child: Text(
-            'Done',
+            context.locale.done,
             style: context.textTheme.labelLarge?.copyWith(
               color: context.colors.onPrimary,
             ),

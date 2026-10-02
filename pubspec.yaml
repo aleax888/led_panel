@@ -1,4 +1,4 @@
-name: led_panel
+﻿name: led_panel
 description: "A new Flutter project."
 version: 2.0.0+1
 
@@ -15,7 +15,9 @@ dependencies:
   cupertino_icons: ^1.0.8
 
   flutter_bloc: ^9.1.1
+  bloc: ^9.2.1
   intl: ^0.20.3
+  meta: ^1.19.0
   shared_preferences: ^2.5.5
   flutter_colorpicker: ^1.1.0
   package_info_plus: ^10.2.1

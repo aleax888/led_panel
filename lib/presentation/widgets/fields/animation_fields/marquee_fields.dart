@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:led_panel/utils/extensions/context_extension.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:led_panel/bloc/configs/animations/marquee/marquee_cubit.dart';
 import 'package:led_panel/data/enums/marquee_direction_enum.dart';
@@ -32,7 +33,7 @@ class MarqueeFields extends AnimationFields {
 
       // Speed ----------------------------------------------
       NumericValueSelector(
-        label: 'SPEED',
+        label: context.locale.speed,
         unit: 'px/s',
         value: config.speed.round(),
         minValue: 20,

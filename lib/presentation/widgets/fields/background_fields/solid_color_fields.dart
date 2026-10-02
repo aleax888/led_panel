@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:led_panel/utils/extensions/context_extension.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:led_panel/bloc/configs/backgrounds/solid_color/solid_color_cubit.dart';
 import 'package:led_panel/data/models/led_panel/background_configs/background_config_model.dart';
@@ -23,7 +24,7 @@ class SolidColorFields implements BackgroundFields {
     return [
       // Color ----------------------------------------------
       ColorPickerField(
-        label: 'COLOR',
+        label: context.locale.color,
         color: config.color,
         onChanged: (color) => solidColorCubit.onColorChanged(color),
       ),

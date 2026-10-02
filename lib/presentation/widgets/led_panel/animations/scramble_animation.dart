@@ -40,13 +40,13 @@ class _ScrambleAnimationState extends State<ScrambleAnimation>
   void didUpdateWidget(covariant ScrambleAnimation oldWidget) {
     super.didUpdateWidget(oldWidget);
     final bool animationConfigChanged =
-      oldWidget.textConfig.message != widget.textConfig.message ||
-      oldWidget.animationConfig.characterDuration !=
-        widget.animationConfig.characterDuration ||
-      oldWidget.animationConfig.completionPause !=
-        widget.animationConfig.completionPause ||
-      oldWidget.animationConfig.scrambleCharacters !=
-        widget.animationConfig.scrambleCharacters;
+        oldWidget.textConfig.message != widget.textConfig.message ||
+        oldWidget.animationConfig.characterDuration !=
+            widget.animationConfig.characterDuration ||
+        oldWidget.animationConfig.completionPause !=
+            widget.animationConfig.completionPause ||
+        oldWidget.animationConfig.scrambleCharacters !=
+            widget.animationConfig.scrambleCharacters;
 
     if (animationConfigChanged) {
       _cycleStart = _elapsed;
@@ -90,9 +90,9 @@ class _ScrambleAnimationState extends State<ScrambleAnimation>
     if (characterCount == 0) return;
 
     final Duration typingDuration =
-      widget.animationConfig.characterDuration * characterCount;
+        widget.animationConfig.characterDuration * characterCount;
     final Duration cycleDuration =
-      typingDuration + widget.animationConfig.completionPause;
+        typingDuration + widget.animationConfig.completionPause;
     final Duration cycleElapsed = elapsed - _cycleStart;
 
     if (cycleElapsed >= cycleDuration) {
@@ -102,8 +102,8 @@ class _ScrambleAnimationState extends State<ScrambleAnimation>
     }
 
     final int nextCount =
-      (cycleElapsed.inMicroseconds /
-          widget.animationConfig.characterDuration.inMicroseconds)
+        (cycleElapsed.inMicroseconds /
+                widget.animationConfig.characterDuration.inMicroseconds)
             .floor()
             .clamp(0, characterCount);
     _updateRevealedCharacterCount(nextCount);

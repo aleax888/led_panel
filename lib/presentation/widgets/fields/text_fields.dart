@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:led_panel/utils/extensions/context_extension.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:led_panel/bloc/configs/text/text_cubit.dart';
 import 'package:led_panel/data/models/led_panel/text_config_model.dart';
@@ -31,7 +32,7 @@ class TextFields {
         onTapOutside: (event) => focusNode.unfocus(),
         maxLines: 2,
         minLines: 1,
-        decoration: InputDecoration(hintText: 'Type your message...'),
+        decoration: InputDecoration(hintText: context.locale.typeYourMessage),
       ),
 
       // Color ----------------------------------------------
@@ -48,7 +49,7 @@ class TextFields {
 
       // Font Size ----------------------------------------------
       NumericValueSelector(
-        label: 'SIZE',
+        label: context.locale.size,
         unit: 'pt',
         value: config.fontSize.round(),
         minValue: 100,
@@ -60,7 +61,7 @@ class TextFields {
 
       // Glow Radius ----------------------------------------------
       NumericValueSelector(
-        label: 'GLOW',
+        label: context.locale.glow,
         unit: 'pt',
         value: config.glowRadius.round(),
         minValue: 0,
@@ -72,7 +73,7 @@ class TextFields {
 
       // Letter Spacing ----------------------------------------------
       NumericValueSelector(
-        label: 'LETTER SPACING',
+        label: context.locale.letterSpacing,
         unit: 'pt',
         value: config.letterSpacing.round(),
         minValue: -10,
@@ -85,7 +86,7 @@ class TextFields {
 
       // Word Spacing ----------------------------------------------
       NumericValueSelector(
-        label: 'WORD SPACING',
+        label: context.locale.wordSpacing,
         unit: 'pt',
         value: config.wordSpacing.round(),
         minValue: -10,

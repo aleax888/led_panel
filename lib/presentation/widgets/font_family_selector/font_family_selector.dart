@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:led_panel/utils/extensions/context_extension.dart';
 
 import 'package:led_panel/presentation/widgets/font_family_selector/font_family_option.dart';
 import 'package:led_panel/presentation/widgets/input_label.dart';
@@ -31,7 +32,7 @@ class FontFamilySelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InputLabel(
-      label: 'FONT',
+      label: context.locale.font,
       child: SizedBox(
         height: AppSizes.avatarLg,
         // Options ----------------------------------------------
@@ -40,7 +41,7 @@ class FontFamilySelector extends StatelessWidget {
           physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.only(top: AppSpacing.sm),
           itemCount: _fontFamilies.length,
-          separatorBuilder: (_, __) => const SizedBox(width: AppSpacing.sm),
+          separatorBuilder: (_, _) => const SizedBox(width: AppSpacing.sm),
           itemBuilder: (context, index) {
             final String fontFamily = _fontFamilies[index];
             return FontFamilyOption(

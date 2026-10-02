@@ -6,7 +6,11 @@ class StyledAnimation extends StatelessWidget {
   final TextConfigModel textConfig;
   final int? maxLines;
 
-  const StyledAnimation({super.key, required this.textConfig, this.maxLines = 1});
+  const StyledAnimation({
+    super.key,
+    required this.textConfig,
+    this.maxLines = 1,
+  });
 
   @override
   Widget build(BuildContext context) {

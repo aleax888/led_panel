@@ -8,7 +8,10 @@ class NoneFields extends AnimationFields {
   const NoneFields();
 
   @override
-  List<Widget> build(BuildContext context, void Function(AnimationConfigModel) sync) => [];
+  List<Widget> build(
+    BuildContext context,
+    void Function(AnimationConfigModel) sync,
+  ) => [];
 
   @override
   AnimationConfigModel currentConfig(BuildContext context) =>

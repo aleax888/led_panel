@@ -35,7 +35,10 @@ class SideMenu extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: .start,
                   children: [
-                    Text('LED PANEL', style: context.textTheme.displayLarge),
+                    Text(
+                      context.locale.appName,
+                      style: context.textTheme.displayLarge,
+                    ),
                     AppVersion(),
                   ],
                 ),
@@ -45,7 +48,7 @@ class SideMenu extends StatelessWidget {
               // Language ----------------------------------------------
               SideMenuOption(
                 icon: Icons.language_outlined,
-                label: 'LANGUAGE',
+                label: context.locale.language,
                 onTap: () async => await showDialog<Color>(
                   context: context,
                   builder: (_) => LocaleSelectionDialog(),
@@ -55,7 +58,7 @@ class SideMenu extends StatelessWidget {
               // Share App  ----------------------------------------------
               SideMenuOption(
                 icon: Icons.share_outlined,
-                label: 'SHARE APP',
+                label: context.locale.shareApp,
                 onTap: () => ShareHandler.shareUri(
                   Uri.https('github.com', '/aleax888/led_panel'),
                 ),

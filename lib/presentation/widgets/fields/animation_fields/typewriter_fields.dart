@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:led_panel/utils/extensions/context_extension.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:led_panel/bloc/configs/animations/typewritter/typewritter_cubit.dart';
 import 'package:led_panel/data/models/led_panel/animation_configs/animation_config_model.dart';
@@ -23,7 +24,7 @@ class TypewriterFields extends AnimationFields {
     return [
       // Character Duration ----------------------------------------------
       NumericValueSelector(
-        label: 'CHARACTER DURATION',
+        label: context.locale.characterDuration,
         unit: 'ms',
         value: config.characterDuration.inMilliseconds,
         minValue: 20,
@@ -36,7 +37,7 @@ class TypewriterFields extends AnimationFields {
 
       // Noise ----------------------------------------------
       NumericValueSelector(
-        label: 'CHARACTER DURATION NOISE',
+        label: context.locale.characterDurationNoise,
         unit: 'ms',
         value: config.characterDurationNoise.inMilliseconds,
         minValue: 0,
@@ -49,7 +50,7 @@ class TypewriterFields extends AnimationFields {
 
       // Completion Pause ----------------------------------------------
       NumericValueSelector(
-        label: 'COMPLETION PAUSE',
+        label: context.locale.completionPause,
         unit: 'ms',
         value: config.completionPause.inMilliseconds,
         minValue: 0,

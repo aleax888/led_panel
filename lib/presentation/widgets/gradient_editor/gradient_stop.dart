@@ -4,6 +4,7 @@ import 'dart:ui';
 class GradientStop {
   /// The position of the gradient stop, represented as a percentage (0-100).
   final int position;
+
   /// The color of the gradient stop.
   final Color color;
 

@@ -3,7 +3,6 @@ import 'package:led_panel/data/models/led_panel/background_configs/linear_gradie
 import 'package:led_panel/utils/angle_handler.dart';
 
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
 
 part 'linear_gradient_state.dart';
 
