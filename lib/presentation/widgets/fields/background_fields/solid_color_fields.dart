@@ -5,6 +5,7 @@ import 'package:led_panel/data/models/led_panel/background_configs/background_co
 import 'package:led_panel/presentation/widgets/color_picker/color_picker_field.dart';
 import 'package:led_panel/presentation/widgets/fields/background_fields/background_fields.dart';
 
+/// Class that builds the solid color fields for the solid color background configuration.
 class SolidColorFields implements BackgroundFields {
   const SolidColorFields();
 

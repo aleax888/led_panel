@@ -2,12 +2,19 @@ import 'package:led_panel/data/enums/animation_type_enum.dart';
 import 'package:led_panel/data/models/led_panel/animation_configs/animation_config_model.dart';
 import 'package:led_panel/utils/angle_handler.dart';
 
+/// Model class representing the configuration for a wave animation.
 class WaveConfigModel extends AnimationConfigModel {
+  /// The type of animation, which is set to [AnimationTypeEnum.wave].
   @override
   final AnimationTypeEnum type = AnimationTypeEnum.wave;
+  /// The amplitude of the wave animation, affecting the height of the wave.
   final double amplitude;
+  /// The frequency of the wave animation, affecting how many waves are displayed.
   final double frequency;
+  /// The phase step of the wave animation, affecting the speed of the wave's movement.
   final double phaseStep;
+  
+  /// Returns the phase step in degrees, which is useful for understanding the wave's movement in a more intuitive unit.
   double get phaseStepDegrees => AngleHandler.radiansToDegrees(phaseStep);
 
   const WaveConfigModel({

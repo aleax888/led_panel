@@ -7,6 +7,7 @@ import 'package:led_panel/presentation/widgets/gradient_editor/gradient_editor.d
 import 'package:led_panel/presentation/widgets/gradient_editor/gradient_stop.dart';
 import 'package:led_panel/presentation/widgets/numeric_value_selector/numeric_value_selector.dart';
 
+/// Class that builds the linear gradient fields for the linear gradient background configuration.
 class LinearGradientFields implements BackgroundFields {
   const LinearGradientFields();
 

@@ -20,8 +20,9 @@ import 'package:led_panel/presentation/widgets/led_panel/animation_renderers/scr
 import 'package:led_panel/presentation/widgets/led_panel/animation_renderers/typewritter_renderer.dart';
 import 'package:led_panel/presentation/widgets/led_panel/animation_renderers/wave_renderer.dart';
 
+/// Enum representing different types of animations for text.
 enum AnimationTypeEnum {
-  // No animation, static text
+  /// No animation, static text
   none(
     label: 'None',
     asset: 'assets/animations/none.gif',
@@ -30,7 +31,8 @@ enum AnimationTypeEnum {
     fields: NoneFields(),
     renderer: NoneRenderer(),
   ),
-  // Scrolling text from one side to the other
+
+  /// Scrolling text from one side to the other
   marquee(
     label: 'Marquee',
     asset: 'assets/animations/marquee.gif',
@@ -39,7 +41,8 @@ enum AnimationTypeEnum {
     fields: MarqueeFields(),
     renderer: MarqueeRenderer(),
   ),
-  // Text appears one character at a time
+
+  /// Text appears one character at a time
   typewriter(
     label: 'Typewriter',
     asset: 'assets/animations/typewriter.gif',
@@ -48,7 +51,8 @@ enum AnimationTypeEnum {
     fields: TypewriterFields(),
     renderer: TypewriterRenderer(),
   ),
-  // Text appears in a wave-like motion
+
+  /// Text appears in a wave-like motion
   wave(
     label: 'Wave',
     asset: 'assets/animations/wave.gif',
@@ -57,7 +61,8 @@ enum AnimationTypeEnum {
     fields: WaveFields(),
     renderer: WaveRenderer(),
   ),
-  // Text appears in a scrambled manner before revealing the final message
+
+  /// Text appears in a scrambled manner before revealing the final message
   scramble(
     label: 'Scramble',
     asset: 'assets/animations/scramble.gif',
@@ -66,7 +71,8 @@ enum AnimationTypeEnum {
     fields: ScrambleFields(),
     renderer: ScrambleRenderer(),
   ),
-  // Text appears to crawl across the screen (STAR WARS style)
+
+  /// Text appears to crawl across the screen (STAR WARS style)
   crawl(
     label: 'Crawl',
     asset: 'assets/animations/crawl.gif',
@@ -85,20 +91,18 @@ enum AnimationTypeEnum {
     required this.renderer,
   });
 
+  /// The human-readable label for the animation type.
   final String label;
+  /// The path to the asset representing the animation type.
   final String asset;
+  /// A function to deserialize the animation configuration from JSON.
   final Function fromJson;
+  /// A factory function to create a default configuration for the animation type.
   final AnimationConfigModel Function() defaultConfigFactory;
+  /// The fields widget associated with the animation type, used for user input.
   final AnimationFields fields;
+  /// The renderer widget associated with the animation type, used to display the animation.
   final AnimationRenderer renderer;
 
   AnimationConfigModel get defaultConfig => defaultConfigFactory();
 }
-
-// blink — encender/apagar rápidamente.
-// fade — aparecer y desaparecer gradualmente.
-// pulse — similar a fade, pero más rítmico.
-// flash — destellos rápidos.
-// bounce — el contenido rebota de un lado a otro.
-// shake — pequeño movimiento horizontal/vertical.
-// zoom — crecer y reducir el contenido.

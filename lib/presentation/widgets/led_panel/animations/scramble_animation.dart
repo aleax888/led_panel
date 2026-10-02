@@ -6,6 +6,7 @@ import 'package:led_panel/data/models/led_panel/animation_configs/scramble_confi
 import 'package:led_panel/data/models/led_panel/text_config_model.dart';
 import 'package:led_panel/presentation/widgets/led_panel/animations/styled_animation.dart';
 
+/// A widget that implements a scramble animation for a LED panel.
 class ScrambleAnimation extends StatefulWidget {
   final TextConfigModel textConfig;
   final ScrambleConfigModel animationConfig;
@@ -71,6 +72,7 @@ class _ScrambleAnimationState extends State<ScrambleAnimation>
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          /// Animated text ----------------------------------------------
           for (var index = 0; index < _characters.length; index++)
             StyledAnimation(
               textConfig: widget.textConfig.copyWith(

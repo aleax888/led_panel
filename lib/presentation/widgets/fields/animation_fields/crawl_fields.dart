@@ -7,6 +7,7 @@ import 'package:led_panel/presentation/widgets/direction_selector/direction_sele
 import 'package:led_panel/presentation/widgets/fields/animation_fields/animation_fields.dart';
 import 'package:led_panel/presentation/widgets/numeric_value_selector/numeric_value_selector.dart';
 
+/// Class that builds the crawl fields for the crawl animation configuration.
 class CrawlFields extends AnimationFields {
   const CrawlFields();
 
@@ -22,11 +23,14 @@ class CrawlFields extends AnimationFields {
     final config = crawlCubit.state.config;
 
     return [
+      // Direction ----------------------------------------------
       DirectionSelector(
         options: CrawlTextDirectionEnum.values,
         selectedDirection: config.direction,
         onChanged: (direction) => crawlCubit.onDirectionChanged(direction),
       ),
+
+      // Speed ----------------------------------------------
       NumericValueSelector(
         label: 'SPEED',
         unit: 'px/s',
@@ -37,6 +41,8 @@ class CrawlFields extends AnimationFields {
         decrementStep: 5,
         onChanged: (speed) => crawlCubit.onSpeedChanged(speed.toDouble()),
       ),
+
+      // Tilt ----------------------------------------------
       NumericValueSelector(
         label: 'TILT',
         unit: '°',

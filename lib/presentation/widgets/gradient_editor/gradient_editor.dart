@@ -10,6 +10,7 @@ import 'package:led_panel/theme/constants/app_sizes.dart';
 import 'package:led_panel/theme/constants/app_spacing.dart';
 import 'package:led_panel/utils/extensions/context_extension.dart';
 
+/// Class that builds the gradient editor widget, which allows users to edit a gradient by adding, removing, and moving gradient stops.
 class GradientEditor extends StatefulWidget {
   final List<GradientStop> stops;
   final ValueChanged<List<GradientStop>>? onChanged;
@@ -43,6 +44,7 @@ class _GradientEditorState extends State<GradientEditor> {
               builder: (context, constraints) => Stack(
                 key: _trackKey,
                 children: [
+                  // Gradient Track ----------------------------------------------
                   Positioned(
                     top: GradientEditorMetrics.trackTop,
                     left: 0,
@@ -62,6 +64,8 @@ class _GradientEditorState extends State<GradientEditor> {
                       ),
                     ),
                   ),
+
+                  // Gradient Stops ----------------------------------------------
                   for (final (index, stop) in _stops.indexed)
                     GradientStopField(
                       stop: stop,
@@ -75,6 +79,8 @@ class _GradientEditorState extends State<GradientEditor> {
             ),
           ),
         ),
+
+        // Add Stop Button ----------------------------------------------
         Padding(
           padding: const EdgeInsets.only(top: GradientEditorMetrics.trackTop),
           child: IconButton(
@@ -92,6 +98,7 @@ class _GradientEditorState extends State<GradientEditor> {
     );
   }
 
+  /// Show a dialog to add a new stop and add it to the list of stops if the user confirms.
   Future<void> _addStop() async {
     final int? position = await showDialog<int>(
       context: context,
@@ -105,6 +112,7 @@ class _GradientEditorState extends State<GradientEditor> {
     _notifyChanged();
   }
 
+  /// Show a dialog to confirm the deletion of the stop at [index] and remove it from the list of stops if the user confirms.
   Future<void> _deleteStop(int index) async {
     final bool? confirmDelete = await showDialog<bool>(
       context: context,
@@ -117,6 +125,7 @@ class _GradientEditorState extends State<GradientEditor> {
     }
   }
 
+  /// Show a dialog to edit the color of the stop at [index] and update its color if the user selects one.
   Future<void> _editColor(int index) async {
     final Color? color = await showDialog<Color>(
       context: context,
@@ -128,6 +137,7 @@ class _GradientEditorState extends State<GradientEditor> {
     _notifyChanged();
   }
 
+  /// Move the stop at [index] to the position corresponding to [globalX] and update the list of stops.
   void _move(int index, double globalX) {
     final RenderBox track =
         _trackKey.currentContext!.findRenderObject() as RenderBox;
@@ -142,7 +152,7 @@ class _GradientEditorState extends State<GradientEditor> {
     _notifyChanged();
   }
 
-  /// Interpola el color del degradado actual en [position].
+  /// Returns the color of the gradient at the specified position.
   Color _colorAt(int position) {
     final List<GradientStop> sorted = _sorted;
     final int end = sorted.indexWhere((s) => s.position >= position);
@@ -154,5 +164,6 @@ class _GradientEditorState extends State<GradientEditor> {
     return Color.lerp(a.color, b.color, t)!;
   }
 
+  /// Notifies the listeners that the list of stops has changed.
   void _notifyChanged() => widget.onChanged?.call(List.unmodifiable(_sorted));
 }

@@ -6,6 +6,7 @@ import 'package:led_panel/data/models/led_panel/animation_configs/wave_config_mo
 import 'package:led_panel/data/models/led_panel/text_config_model.dart';
 import 'package:led_panel/presentation/widgets/led_panel/animations/styled_animation.dart';
 
+/// A widget that implements a wave animation for a LED panel.
 class WaveAnimation extends StatefulWidget {
   final TextConfigModel textConfig;
   final WaveConfigModel animationConfig;
@@ -52,6 +53,7 @@ class _WaveAnimationState extends State<WaveAnimation>
         children: [
           for (final (index, character)
               in widget.textConfig.message.characters.indexed)
+            // Animation for each character in the message, applying a vertical translation based on a sine wave function.
             Transform.translate(
               offset: Offset(
                 0,

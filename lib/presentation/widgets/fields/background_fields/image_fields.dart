@@ -8,6 +8,7 @@ import 'package:led_panel/theme/constants/app_spacing.dart';
 import 'package:led_panel/utils/extensions/context_extension.dart';
 import 'package:led_panel/utils/image_getter.dart';
 
+/// Class that builds the image fields for the image background configuration.
 class ImageFields implements BackgroundFields {
   const ImageFields();
 
@@ -75,6 +76,9 @@ class ImageFields implements BackgroundFields {
               ),
             ),
           ),
+
+          // Opacity ----------------------------------------------
+          // TODO
         ],
       ),
     ];

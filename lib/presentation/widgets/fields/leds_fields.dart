@@ -6,6 +6,7 @@ import 'package:led_panel/presentation/widgets/color_picker/color_picker_field.d
 import 'package:led_panel/presentation/widgets/numeric_value_selector/numeric_value_selector.dart';
 import 'package:led_panel/presentation/widgets/shape_selector/shape_selector.dart';
 
+/// Class that builds the LED fields for the LED configuration.
 class LedsFields {
   const LedsFields();
 

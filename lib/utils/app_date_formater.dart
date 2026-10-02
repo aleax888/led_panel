@@ -1,5 +1,6 @@
 import 'package:intl/intl.dart';
 
+/// A utility class for formatting dates in various styles.
 class AppDateFormater {
   AppDateFormater._();
 

@@ -79,7 +79,6 @@ class _MarqueeAnimationState extends State<MarqueeAnimation>
 
   @override
   Widget build(BuildContext context) {
-    // Animated text ----------------------------------------------
     return OverflowBox(
       minWidth: 0,
       maxWidth: double.infinity,
@@ -89,6 +88,7 @@ class _MarqueeAnimationState extends State<MarqueeAnimation>
       child: ValueListenableBuilder<double>(
         valueListenable: _offset,
         builder: (context, offset, child) {
+          // Apply horizontal translation to the content based on the current offset and animation direction.
           return Transform.translate(
             offset: Offset(
               offset * widget.animationConfig.direction.multiplier,

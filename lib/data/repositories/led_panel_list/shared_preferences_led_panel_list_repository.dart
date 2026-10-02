@@ -4,6 +4,7 @@ import 'package:led_panel/data/models/led_panel/led_panel_config_model.dart';
 import 'package:led_panel/data/repositories/led_panel_list/led_panel_list_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+/// Implementation of [LedPanelListRepository] that uses SharedPreferences for data persistence.
 class SharedPrefsLedPanelListRepository implements LedPanelListRepository {
   static const _key = 'led_panel_list';
 

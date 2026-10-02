@@ -7,61 +7,49 @@ import 'package:led_panel/data/models/led_panel/background_configs/background_co
 import 'package:led_panel/data/models/led_panel/background_configs/solid_color_config_model.dart';
 import 'package:led_panel/data/models/led_panel/text_config_model.dart';
 
+/// Model class representing the configuration for an LED panel, including metadata, text style, animation, background, and LED settings.
 class LedPanelConfigModel {
-  // Metadata
+  /// The unique identifier for the LED panel configuration.
   final String? id;
+  /// The creation date and time of the LED panel configuration.
   final DateTime? createdAt;
+  /// Indicates whether the LED panel configuration is marked as a favorite.
   final bool favorite;
-  // Text Style
+  /// The text configuration for the LED panel, including font, size, and color.
   final TextConfigModel text;
-  // Animation
+  /// The animation configuration for the LED panel, including type and specific settings.
   final AnimationConfigModel animation;
-  // Background
+  /// The background configuration for the LED panel, including type and specific settings.
   final BackgroundConfigModel background;
-  // Leds
+  /// The LED configuration for the LED panel, including settings for individual LEDs.
   final LedsConfigModel leds;
 
   const LedPanelConfigModel({
-    // Metadata
     this.id,
     this.createdAt,
     this.favorite = false,
-    // Text Style
     this.text = const TextConfigModel(),
-    // Animation
     this.animation = const MarqueeConfigModel(),
-    // Background
     this.background = const SolidColorConfigModel(),
-    // Leds
     this.leds = const LedsConfigModel(),
   });
 
   LedPanelConfigModel copyWith({
-    // Metadata
     String? id,
     DateTime? createdAt,
     bool? favorite,
-    // Text Style
     TextConfigModel? text,
-    // Animation
     AnimationConfigModel? animation,
-    // Background
     BackgroundConfigModel? background,
-    // Leds
     LedsConfigModel? leds,
   }) {
     return LedPanelConfigModel(
-      // Metadata
       id: id ?? this.id,
       createdAt: createdAt ?? this.createdAt,
       favorite: favorite ?? this.favorite,
-      // Text Style
       text: text ?? this.text,
-      // Animation
       animation: animation ?? this.animation,
-      // Background
       background: background ?? this.background,
-      // Leds
       leds: leds ?? this.leds,
     );
   }

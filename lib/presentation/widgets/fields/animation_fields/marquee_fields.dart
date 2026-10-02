@@ -7,6 +7,7 @@ import 'package:led_panel/presentation/widgets/direction_selector/direction_sele
 import 'package:led_panel/presentation/widgets/fields/animation_fields/animation_fields.dart';
 import 'package:led_panel/presentation/widgets/numeric_value_selector/numeric_value_selector.dart';
 
+/// Class that builds the marquee fields for the marquee animation configuration.
 class MarqueeFields extends AnimationFields {
   const MarqueeFields();
 
@@ -22,11 +23,14 @@ class MarqueeFields extends AnimationFields {
     final config = marqueeCubit.state.config;
 
     return [
+      // Direction ----------------------------------------------
       DirectionSelector(
         options: MarqueeDirectionEnum.values,
         selectedDirection: config.direction,
         onChanged: (direction) => marqueeCubit.onDirectionChanged(direction),
       ),
+
+      // Speed ----------------------------------------------
       NumericValueSelector(
         label: 'SPEED',
         unit: 'px/s',

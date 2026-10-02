@@ -4,6 +4,7 @@ import 'package:led_panel/bloc/locale/locale_cubit.dart';
 import 'package:led_panel/presentation/widgets/locale_selector/locale_selector.dart';
 import 'package:led_panel/utils/extensions/context_extension.dart';
 
+/// A dialog widget that allows users to select a locale from a list of available locales.
 class LocaleSelectionDialog extends StatelessWidget {
   const LocaleSelectionDialog({super.key});
 

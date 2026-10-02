@@ -6,6 +6,7 @@ import 'package:led_panel/theme/constants/app_radius.dart';
 import 'package:led_panel/theme/constants/app_sizes.dart';
 import 'package:led_panel/utils/extensions/context_extension.dart';
 
+/// Class that builds a field for a single gradient stop, which includes a draggable thumb and a label showing the stop's position.
 class GradientStopField extends StatefulWidget {
   final GradientStop stop;
   final double width;
@@ -44,6 +45,7 @@ class _GradientStopFieldState extends State<GradientStopField> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
+        /// Thumb (draggable) ----------------------------------------------
         Positioned(
           left: _center - GradientEditorMetrics.thumbWidth / 2,
           top: GradientEditorMetrics.thumbTop,
@@ -80,6 +82,8 @@ class _GradientStopFieldState extends State<GradientStopField> {
             ),
           ),
         ),
+
+        // Tag (percentage) ----------------------------------------------
         Positioned(
           left: _labelLeft,
           top: GradientEditorMetrics.labelTop,

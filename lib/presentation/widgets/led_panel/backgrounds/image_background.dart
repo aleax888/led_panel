@@ -7,14 +7,16 @@ import 'package:led_panel/data/models/led_panel/background_configs/image_config_
 import 'package:led_panel/theme/constants/app_durations.dart';
 import 'package:led_panel/theme/constants/app_sizes.dart';
 
+/// An enum representing the different types of image sources that can be used for the LED panel background.
 enum _ImageSourceType { network, asset, file, none }
 
+/// A widget that displays an image background for a LED panel, supporting different image sources (network, asset, file).
 class ImageBackground extends StatelessWidget {
   final ImageConfigModel config;
 
   const ImageBackground({super.key, required this.config});
 
-  /// Decide de dónde viene la imagen según el formato del string.
+  /// Resolves the image source type based on the provided URL or path.
   static _ImageSourceType _resolveSource(String value) {
     if (value.isEmpty) return _ImageSourceType.none;
 
@@ -24,7 +26,7 @@ class ImageBackground extends StatelessWidget {
     }
     if (value.startsWith('assets/')) return _ImageSourceType.asset;
 
-    // Rutas locales: /storage/..., /data/user/..., file:///...
+    // Local paths: /storage/..., /data/user/..., file:///...
     return _ImageSourceType.file;
   }
 
@@ -62,7 +64,7 @@ class ImageBackground extends StatelessWidget {
     );
   }
 
-  /// Solo para Image.network: muestra el progreso de descarga.
+  /// Displays a loading indicator while the image is being loaded from the network.
   static Widget _loadingBuilder(
     BuildContext context,
     Widget child,
@@ -73,13 +75,12 @@ class ImageBackground extends StatelessWidget {
     final total = progress.expectedTotalBytes;
     return _ImagePlaceholder(
       child: CircularProgressIndicator(
-        // null => indicador indeterminado si el servidor no envía el tamaño.
         value: total != null ? progress.cumulativeBytesLoaded / total : null,
       ),
     );
   }
 
-  /// Para asset/file: fade-in suave cuando el primer frame está listo.
+  /// Displays a fade-in effect for images that are loaded from assets or files.
   static Widget _frameBuilder(
     BuildContext context,
     Widget child,
@@ -96,6 +97,7 @@ class ImageBackground extends StatelessWidget {
     );
   }
 
+  /// Displays a placeholder with an error icon when the image fails to load.
   static Widget _errorBuilder(
     BuildContext context,
     Object error,
@@ -107,6 +109,7 @@ class ImageBackground extends StatelessWidget {
   }
 }
 
+/// A private widget that serves as a placeholder for the image background, displaying a grey box with a centered child widget (e.g., an icon or loading indicator).
 class _ImagePlaceholder extends StatelessWidget {
   final Widget child;
 

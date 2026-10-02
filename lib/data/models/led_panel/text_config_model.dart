@@ -2,13 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:led_panel/theme/constants/app_colors.dart';
 import 'package:led_panel/theme/constants/app_typography.dart';
 
+/// Model class representing the configuration for text display on the LED panel.
 class TextConfigModel {
+  /// The message to be displayed on the LED panel.
   final String message;
+  /// The color of the text, represented as a [Color].
   final Color color;
+  /// The font size of the text, affecting its visual appearance.
   final double fontSize;
+  /// The font family used for the text, determining its style.
   final String fontFamily;
+  /// The letter spacing for the text, affecting the space between individual letters.
   final double letterSpacing;
+  /// The word spacing for the text, affecting the space between words.
   final double wordSpacing;
+  /// The glow radius for the text, affecting the intensity of the glow effect around the text.
   final double glowRadius;
 
   const TextConfigModel({

@@ -1,11 +1,16 @@
 import 'package:led_panel/data/enums/animation_type_enum.dart';
 import 'package:led_panel/data/models/led_panel/animation_configs/animation_config_model.dart';
 
+/// Model class representing the configuration for a scramble animation.
 class ScrambleConfigModel extends AnimationConfigModel {
+  /// The type of animation, which is set to [AnimationTypeEnum.scramble].
   @override
   final AnimationTypeEnum type = AnimationTypeEnum.scramble;
+  /// The duration for each character in the scramble animation, affecting how long each character is displayed.
   final Duration characterDuration;
+  /// The duration to pause after the scramble animation is complete.
   final Duration completionPause;
+  /// The set of characters to use in the scramble animation.
   final String scrambleCharacters;
 
   const ScrambleConfigModel({

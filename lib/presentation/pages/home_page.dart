@@ -45,9 +45,7 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       SizedBox(),
 
-                      Text(context.locale.hello),
-
-                      // New config ----------------------------------------------
+                      // New Configuration Button ----------------------------------------------
                       Container(
                         width: .infinity,
                         height: AppSizes.buttonHeightXl,
@@ -63,7 +61,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
 
-                      // History ----------------------------------------------
+                      // Configurations List ----------------------------------------------
                       Expanded(
                         child: Container(
                           padding: AppSpacing.screenPadding,

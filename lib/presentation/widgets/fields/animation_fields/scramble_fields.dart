@@ -6,6 +6,7 @@ import 'package:led_panel/presentation/widgets/input_label.dart';
 import 'package:led_panel/presentation/widgets/fields/animation_fields/animation_fields.dart';
 import 'package:led_panel/presentation/widgets/numeric_value_selector/numeric_value_selector.dart';
 
+/// Class that builds the scramble fields for the scramble animation configuration.
 class ScrambleFields extends AnimationFields {
   const ScrambleFields();
 
@@ -21,6 +22,7 @@ class ScrambleFields extends AnimationFields {
     final config = scrambleCubit.state.config;
 
     return [
+      // Character Duration ----------------------------------------------
       NumericValueSelector(
         label: 'CHARACTER DURATION',
         unit: 'ms',
@@ -32,6 +34,8 @@ class ScrambleFields extends AnimationFields {
         onChanged: (duration) =>
             scrambleCubit.onCharacterDurationChanged(duration),
       ),
+
+      // Completion Pause ----------------------------------------------
       NumericValueSelector(
         label: 'COMPLETION PAUSE',
         unit: 'ms',
@@ -43,6 +47,8 @@ class ScrambleFields extends AnimationFields {
         onChanged: (duration) =>
             scrambleCubit.onCompletionPauseChanged(duration),
       ),
+
+      // Scramble Characters ----------------------------------------------
       InputLabel(
         label: 'SCRAMBLE CHARACTERS',
         child: TextFormField(

@@ -6,6 +6,7 @@ import 'package:led_panel/theme/constants/app_spacing.dart';
 import 'package:led_panel/utils/extensions/context_extension.dart';
 import 'package:led_panel/utils/global_context.dart';
 
+/// A utility class for displaying toast messages with different styles (success, warning, error, info) using a global context.
 class ToastHandler {
   ToastHandler._();
 

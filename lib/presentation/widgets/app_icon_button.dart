@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:led_panel/utils/extensions/context_extension.dart';
 
+/// A customizable icon button widget that can be used throughout the application.
 class AppIconButton extends StatelessWidget {
   final IconData icon;
   final int alpha;

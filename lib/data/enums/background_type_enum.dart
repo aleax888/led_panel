@@ -11,7 +11,9 @@ import 'package:led_panel/presentation/widgets/led_panel/background_renderers/im
 import 'package:led_panel/presentation/widgets/led_panel/background_renderers/linear_gradient_renderer.dart';
 import 'package:led_panel/presentation/widgets/led_panel/background_renderers/solid_color_renderer.dart';
 
+/// Enum representing different types of backgrounds for the LED panel.
 enum BackgroundTypeEnum {
+  /// Solid color background
   solidColor(
     label: 'Solid',
     icon: Icons.color_lens_outlined,
@@ -19,6 +21,8 @@ enum BackgroundTypeEnum {
     fields: SolidColorFields(),
     renderer: SolidColorRenderer(),
   ),
+
+  /// Linear gradient background
   linearGradient(
     label: 'Gradient',
     icon: Icons.gradient_outlined,
@@ -26,6 +30,8 @@ enum BackgroundTypeEnum {
     fields: LinearGradientFields(),
     renderer: LinearGradientRenderer(),
   ),
+
+  /// Image background
   image(
     label: 'Image',
     icon: Icons.image,
@@ -42,9 +48,14 @@ enum BackgroundTypeEnum {
     required this.renderer,
   });
 
+  /// The human-readable label for the background type.
   final String label;
+  /// The icon representing the background type, used in the UI.
   final IconData icon;
+  /// A function that takes a JSON map and returns an instance of the corresponding background configuration model.
   final Function fromJson;
+  /// The fields widget associated with the background type, used for user input.
   final BackgroundFields fields;
+  /// The renderer widget associated with the background type, used to display the background.
   final BackgroundRenderer renderer;
 }

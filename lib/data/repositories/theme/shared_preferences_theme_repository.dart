@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:led_panel/data/repositories/theme/theme_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+/// Implementation of [ThemeRepository] that uses SharedPreferences for data persistence.
 class SharedPrefsThemeRepository implements ThemeRepository {
   static const String _key = 'theme_mode';
 

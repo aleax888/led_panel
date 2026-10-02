@@ -23,7 +23,7 @@ import 'package:led_panel/utils/panel_size_handler.dart';
 import 'package:led_panel/utils/share_handler.dart';
 import 'package:led_panel/utils/widget_capture_handler.dart';
 
-/// Configuration page.
+/// A page that allows users to customize the configuration of an LED panel, including text, animation, background, and LED settings. It provides a preview of the LED panel and options to save or share the configuration.
 class ConfigPage extends StatefulWidget {
   final LedPanelConfigModel? initialConfig;
   const ConfigPage({super.key, this.initialConfig});
@@ -76,7 +76,6 @@ class _ConfigPageState extends State<ConfigPage>
           children: [
             SizedBox(),
 
-            // Led Panel Preview ----------------------------------------------
             Container(
               margin: AppSpacing.screenPadding,
               child: Stack(
@@ -93,6 +92,7 @@ class _ConfigPageState extends State<ConfigPage>
                               context,
                               AppSpacing.screenPadding,
                             );
+                        // Led Panel Preview ----------------------------------------------
                         return RepaintBoundary(
                           key: _ledPanelKey,
                           child: LedPanel(

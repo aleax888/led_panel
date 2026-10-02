@@ -9,7 +9,6 @@ import 'package:led_panel/presentation/widgets/side_menu/side_menu_switch_option
 import 'package:led_panel/theme/constants/app_radius.dart';
 import 'package:led_panel/theme/constants/app_spacing.dart';
 import 'package:led_panel/utils/share_handler.dart';
-import 'package:led_panel/utils/toast_handler.dart';
 
 /// Side menu.
 class SideMenu extends StatelessWidget {
@@ -30,6 +29,7 @@ class SideMenu extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              /// Header ----------------------------------------------
               Padding(
                 padding: const EdgeInsets.all(AppSpacing.md),
                 child: Column(
@@ -41,6 +41,8 @@ class SideMenu extends StatelessWidget {
                 ),
               ),
               Divider(height: AppSpacing.md),
+
+              // Language ----------------------------------------------
               SideMenuOption(
                 icon: Icons.language_outlined,
                 label: 'LANGUAGE',
@@ -49,13 +51,8 @@ class SideMenu extends StatelessWidget {
                   builder: (_) => LocaleSelectionDialog(),
                 ),
               ),
-              SideMenuOption(
-                icon: Icons.delete_outline,
-                label: 'TRASH',
-                onTap: () => ToastHandler.showInfo(
-                  'Trash functionality is not implemented yet.',
-                ),
-              ),
+
+              // Share App  ----------------------------------------------
               SideMenuOption(
                 icon: Icons.share_outlined,
                 label: 'SHARE APP',
@@ -63,6 +60,8 @@ class SideMenu extends StatelessWidget {
                   Uri.https('github.com', '/aleax888/led_panel'),
                 ),
               ),
+
+              // Theme Switch ----------------------------------------------
               SideMenuSwitchOption(
                 value: context.theme.brightness == Brightness.dark,
                 icon: context.theme.brightness == Brightness.dark

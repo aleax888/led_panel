@@ -3,6 +3,7 @@ import 'package:led_panel/data/models/led_panel/animation_configs/typewriter_con
 import 'package:led_panel/presentation/widgets/led_panel/animation_renderers/animation_renderer.dart';
 import 'package:led_panel/presentation/widgets/led_panel/animations/typewriter_animation.dart';
 
+/// A concrete implementation of AnimationRenderer for rendering typewriter animations on a LED panel.
 class TypewriterRenderer extends AnimationRenderer<TypewriterConfigModel> {
   const TypewriterRenderer();
 

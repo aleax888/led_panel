@@ -5,6 +5,7 @@ import 'package:led_panel/data/models/led_panel/text_config_model.dart';
 import 'package:led_panel/presentation/widgets/led_panel/animations/styled_animation.dart';
 import 'package:led_panel/presentation/widgets/led_panel/height_spacer.dart';
 
+/// A widget that implements a crawl animation for a LED panel.
 class CrawlAnimation extends StatefulWidget {
   final TextConfigModel textConfig;
   final CrawlConfigModel animationConfig;
@@ -92,6 +93,7 @@ class _CrawlAnimationState extends State<CrawlAnimation>
       child: ValueListenableBuilder<double>(
         valueListenable: _offset,
         builder: (context, offset, child) {
+          // Apply 3D transformations to the content based on the animation configuration and current offset.
           return Transform(
             alignment: widget.animationConfig.direction.alignment,
             transform: Matrix4.identity()

@@ -5,14 +5,21 @@ import 'package:led_panel/data/enums/crawl_direction_enum.dart';
 import 'package:led_panel/data/models/led_panel/animation_configs/animation_config_model.dart';
 import 'package:led_panel/utils/angle_handler.dart';
 
+/// Model class representing the configuration for a crawl animation.
 class CrawlConfigModel extends AnimationConfigModel {
+  /// The type of animation, which is set to [AnimationTypeEnum.crawl].
   @override
   final AnimationTypeEnum type = AnimationTypeEnum.crawl;
+  /// The perspective of the crawl animation, affecting the 3D effect.
   final double perspective;
+  /// The tilt angle of the crawl animation, affecting the direction of the crawl.
   final double tilt;
+  /// The speed of the crawl animation, affecting how fast the text moves.
   final double speed;
+  /// The direction in which the text crawls, represented by [CrawlTextDirectionEnum].
   final CrawlTextDirectionEnum direction;
-
+  
+  /// Returns the tilt angle in degrees, which is useful for understanding the crawl's orientation in a more intuitive unit.
   double get tiltDegrees => AngleHandler.radiansToDegrees(tilt);
 
   const CrawlConfigModel({
@@ -42,6 +49,7 @@ class CrawlConfigModel extends AnimationConfigModel {
     return copyWith(speed: speed * proportion);
   }
 
+  /// Returns a new [CrawlConfigModel] with the specified [tilt] while preserving the perceived depth of the animation.
   CrawlConfigModel copyWithPreservedDepth({required double tilt}) {
     const minTilt = 0.001;
 

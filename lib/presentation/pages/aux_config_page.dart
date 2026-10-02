@@ -21,6 +21,7 @@ import 'package:led_panel/data/models/led_panel/background_configs/solid_color_c
 import 'package:led_panel/data/models/led_panel/led_panel_config_model.dart';
 import 'package:led_panel/presentation/pages/config_page.dart';
 
+/// Bloc provider for the auxiliary configuration page, which sets up the necessary state management for text, animations, backgrounds, and LED settings based on an optional initial configuration.
 class AuxConfigPage extends StatelessWidget {
   final LedPanelConfigModel? initialConfig;
   const AuxConfigPage({super.key, this.initialConfig});
@@ -29,11 +30,11 @@ class AuxConfigPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        // Text
+        // Text ----------------------------------------------
         BlocProvider<TextCubit>(
           create: (context) => TextCubit(config: initialConfig?.text),
         ),
-        // Animations
+        // Animations ----------------------------------------------
         BlocProvider<MarqueeCubit>(
           create: (context) => MarqueeCubit(
             config: initialConfig?.animation is MarqueeConfigModel
@@ -69,7 +70,7 @@ class AuxConfigPage extends StatelessWidget {
                 : null,
           ),
         ),
-        // Background
+        // Background ----------------------------------------------
         BlocProvider<SolidColorCubit>(
           create: (context) => SolidColorCubit(
             config: initialConfig?.background is SolidColorConfigModel
@@ -91,7 +92,7 @@ class AuxConfigPage extends StatelessWidget {
                 : null,
           ),
         ),
-        // Leds
+        // Leds ----------------------------------------------
         BlocProvider<LedsCubit>(
           create: (context) => LedsCubit(config: initialConfig?.leds),
         ),

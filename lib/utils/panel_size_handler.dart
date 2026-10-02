@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:led_panel/utils/extensions/context_extension.dart';
 
+/// A utility class for calculating fixed dimensions for a panel based on the screen size, padding, and a specified relation.
 class PanelSizehandler {
   const PanelSizehandler._();
 

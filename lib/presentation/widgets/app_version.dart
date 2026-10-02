@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:led_panel/utils/extensions/context_extension.dart';
 import 'package:led_panel/utils/app_info_getter.dart';
 
+/// A widget that displays the current version of the application, retrieved asynchronously.
 class AppVersion extends StatelessWidget {
   const AppVersion({super.key});
 

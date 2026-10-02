@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:led_panel/presentation/widgets/numeric_value_selector/numeric_value_selector.dart';
 import 'package:led_panel/utils/extensions/context_extension.dart';
 
+/// Class that builds a dialog for selecting the stop position in a gradient editor.
 class StopPositionDialog extends StatefulWidget {
   const StopPositionDialog({super.key});
 
@@ -25,10 +26,13 @@ class _StopPositionDialogState extends State<StopPositionDialog> {
         onChanged: (value) => setState(() => _position = value),
       ),
       actions: [
+        // Cancel ----------------------------------------------
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
           child: const Text('Cancel'),
         ),
+
+        // Add ----------------------------------------------
         ElevatedButton(
           onPressed: () => Navigator.of(context).pop(_position),
           child: const Text('Add'),

@@ -4,6 +4,7 @@ import 'package:led_panel/data/enums/locale_enum.dart';
 import 'package:led_panel/data/repositories/locale/locale_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+/// Implementation of [LocaleRepository] that uses SharedPreferences for data persistence.
 class SharedPrefsLocaleRepository implements LocaleRepository {
   static const String _key = 'locale';
 

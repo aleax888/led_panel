@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:led_panel/data/enums/dot_shape_enum.dart';
 
+/// Model class representing the configuration for the LED panel's LEDs.
 class LedsConfigModel {
+  /// The color of the LEDs, represented as a [Color].
   final Color color;
+  /// The shape of the LEDs, represented by [DotShapeEnum].
   final DotShapeEnum shape;
+  /// The size of the LEDs, affecting their visual appearance.
   final double size;
+  /// The padding for each LED.
   final double padding;
 
   const LedsConfigModel({

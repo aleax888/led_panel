@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:share_plus/share_plus.dart';
 
+/// A utility class for handling sharing functionality, allowing the sharing of text, URLs, and files from the application.
 class ShareHandler {
   ShareHandler._();
 

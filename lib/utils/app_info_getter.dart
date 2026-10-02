@@ -1,5 +1,6 @@
 import 'package:package_info_plus/package_info_plus.dart';
 
+/// A utility class for retrieving application information such as version.
 class AppInfoGetter {
   AppInfoGetter._();
 

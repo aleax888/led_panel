@@ -1,5 +1,6 @@
 import 'dart:math';
 
+/// A utility class for handling angle conversions between degrees and radians.
 class AngleHandler {
   AngleHandler._();
 

@@ -5,6 +5,7 @@ import 'package:led_panel/data/models/led_panel/animation_configs/animation_conf
 import 'package:led_panel/presentation/widgets/fields/animation_fields/animation_fields.dart';
 import 'package:led_panel/presentation/widgets/numeric_value_selector/numeric_value_selector.dart';
 
+/// Class that builds the typewriter fields for the typewriter animation configuration.
 class TypewriterFields extends AnimationFields {
   const TypewriterFields();
 
@@ -20,6 +21,7 @@ class TypewriterFields extends AnimationFields {
     final config = typewritterCubit.state.config;
 
     return [
+      // Character Duration ----------------------------------------------
       NumericValueSelector(
         label: 'CHARACTER DURATION',
         unit: 'ms',
@@ -31,6 +33,8 @@ class TypewriterFields extends AnimationFields {
         onChanged: (duration) =>
             typewritterCubit.onCharacterDurationChanged(duration),
       ),
+
+      // Noise ----------------------------------------------
       NumericValueSelector(
         label: 'CHARACTER DURATION NOISE',
         unit: 'ms',
@@ -42,6 +46,8 @@ class TypewriterFields extends AnimationFields {
         onChanged: (duration) =>
             typewritterCubit.onCharacterDurationNoiseChanged(duration),
       ),
+
+      // Completion Pause ----------------------------------------------
       NumericValueSelector(
         label: 'COMPLETION PAUSE',
         unit: 'ms',

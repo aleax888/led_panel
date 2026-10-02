@@ -5,6 +5,7 @@ import 'package:led_panel/data/models/led_panel/animation_configs/animation_conf
 import 'package:led_panel/presentation/widgets/fields/animation_fields/animation_fields.dart';
 import 'package:led_panel/presentation/widgets/numeric_value_selector/numeric_value_selector.dart';
 
+/// Class that builds the wave fields for the wave animation configuration.
 class WaveFields extends AnimationFields {
   const WaveFields();
 
@@ -20,6 +21,7 @@ class WaveFields extends AnimationFields {
     final config = waveCubit.state.config;
 
     return [
+      // Amplitude ----------------------------------------------
       NumericValueSelector(
         label: 'AMPLITUDE',
         unit: 'px',
@@ -31,6 +33,8 @@ class WaveFields extends AnimationFields {
         onChanged: (amplitude) =>
             waveCubit.onAmplitudeChanged(amplitude.toDouble()),
       ),
+
+      // Frequency ----------------------------------------------
       NumericValueSelector(
         label: 'FREQUENCY',
         unit: 'Hz',
@@ -42,6 +46,8 @@ class WaveFields extends AnimationFields {
         onChanged: (frequency) =>
             waveCubit.onFrequencyChanged(frequency.toDouble()),
       ),
+
+      // Phase Step ----------------------------------------------
       NumericValueSelector(
         label: 'PHASE STEP',
         unit: '°',
