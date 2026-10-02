@@ -78,5 +78,7 @@
   "rightNow": "Right now",
   "today": "Today",
   "yesterday": "Yesterday",
-  "tomorrow": "Tomorrow"
+  "tomorrow": "Tomorrow",
+  "pasteTheConfig": "Paste the config...",
+  "importError": "Import error"
 }

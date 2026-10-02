@@ -571,6 +571,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Tomorrow'**
   String get tomorrow;
+
+  /// No description provided for @pasteTheConfig.
+  ///
+  /// In en, this message translates to:
+  /// **'Paste the config...'**
+  String get pasteTheConfig;
+
+  /// No description provided for @importError.
+  ///
+  /// In en, this message translates to:
+  /// **'Import error'**
+  String get importError;
 }
 
 class _AppLocalizationsDelegate

@@ -245,4 +245,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tomorrow => 'Tomorrow';
+
+  @override
+  String get pasteTheConfig => 'Paste the config...';
+
+  @override
+  String get importError => 'Import error';
 }

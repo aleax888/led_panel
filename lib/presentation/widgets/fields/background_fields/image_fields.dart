@@ -129,7 +129,7 @@ class _GetUrlDialog extends StatelessWidget {
           ),
         ),
 
-        // Delete ----------------------------------------------
+        // Done ----------------------------------------------
         ElevatedButton(
           onPressed: () => Navigator.pop(context, controller.text),
           child: Text(

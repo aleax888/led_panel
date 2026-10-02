@@ -48,7 +48,7 @@
   "theme": "TEMA",
   "lock": "Bloquear",
   "unlock": "Desbloquear",
-  "deleteConfiguration": "Eliminar configuracion",
+  "deleteConfiguration": "Eliminar configuración",
   "deleteConfigurationMessage": "Seguro que quieres eliminar esto?\nEsta accion no se puede deshacer.",
   "removeFromFavorites": "Quitar de favoritos",
   "addToFavorites": "Agregar a favoritos",
@@ -78,5 +78,7 @@
   "rightNow": "Ahora mismo",
   "today": "Hoy",
   "yesterday": "Ayer",
-  "tomorrow": "Manana"
+  "tomorrow": "Mañana",
+  "pasteTheConfig": "Pega la configuración...",
+  "importError": "Error al importar"
 }

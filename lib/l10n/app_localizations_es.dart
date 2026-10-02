@@ -153,7 +153,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get unlock => 'Desbloquear';
 
   @override
-  String get deleteConfiguration => 'Eliminar configuracion';
+  String get deleteConfiguration => 'Eliminar configuración';
 
   @override
   String get deleteConfigurationMessage =>
@@ -244,5 +244,11 @@ class AppLocalizationsEs extends AppLocalizations {
   String get yesterday => 'Ayer';
 
   @override
-  String get tomorrow => 'Manana';
+  String get tomorrow => 'Mañana';
+
+  @override
+  String get pasteTheConfig => 'Pega la configuración...';
+
+  @override
+  String get importError => 'Error al importar';
 }
