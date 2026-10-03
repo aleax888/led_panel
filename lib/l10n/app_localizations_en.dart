@@ -232,6 +232,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get localeEnglish => 'English';
 
   @override
+  String get localePortuguese => 'Portuguese';
+
+  @override
+  String get localeFrench => 'French';
+
+  @override
+  String get localeItalian => 'Italian';
+
+  @override
+  String get localeGerman => 'German';
+
+  @override
   String get noDateAvailable => 'No date available';
 
   @override
@@ -251,4 +263,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get importError => 'Import error';
+
+  @override
+  String get importConfig => 'Import configuration';
 }

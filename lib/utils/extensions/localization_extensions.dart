@@ -54,5 +54,9 @@ extension LocaleEnumLocalization on LocaleEnum {
   String localizedLabel(AppLocalizations l10n) => switch (this) {
     LocaleEnum.es => l10n.localeSpanish,
     LocaleEnum.en => l10n.localeEnglish,
+    LocaleEnum.pt => l10n.localePortuguese,
+    LocaleEnum.fr => l10n.localeFrench,
+    LocaleEnum.de => l10n.localeGerman,
+    LocaleEnum.it => l10n.localeItalian,
   };
 }

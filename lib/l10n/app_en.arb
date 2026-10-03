@@ -74,11 +74,16 @@
   "shapeHeart": "Heart",
   "localeSpanish": "Spanish",
   "localeEnglish": "English",
+  "localePortuguese": "Portuguese",
+  "localeFrench": "French",
+  "localeItalian": "Italian",
+  "localeGerman": "German",
   "noDateAvailable": "No date available",
   "rightNow": "Right now",
   "today": "Today",
   "yesterday": "Yesterday",
   "tomorrow": "Tomorrow",
   "pasteTheConfig": "Paste the config...",
-  "importError": "Import error"
+  "importError": "Import error",
+  "importConfig": "Import configuration"
 }

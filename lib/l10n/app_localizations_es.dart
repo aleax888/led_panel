@@ -12,7 +12,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get appName => 'LED PANEL';
 
   @override
-  String get customization => 'PERSONALIZACION';
+  String get customization => 'PERSONALIZACIÓN';
 
   @override
   String get home => 'INICIO';
@@ -30,7 +30,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get bg => 'FONDO';
 
   @override
-  String get leds => 'LEDs';
+  String get leds => 'LEDS';
 
   @override
   String get recents => 'RECIENTES';
@@ -39,13 +39,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get favorites => 'FAVORITOS';
 
   @override
-  String get animation => 'ANIMACION';
+  String get animation => 'ANIMACIÓN';
 
   @override
   String get background => 'FONDO';
 
   @override
-  String get direction => 'DIRECCION';
+  String get direction => 'DIRECCIÓN';
 
   @override
   String get color => 'COLOR';
@@ -93,10 +93,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get speed => 'VELOCIDAD';
 
   @override
-  String get tilt => 'INCLINACION';
+  String get tilt => 'INCLINACIÓN';
 
   @override
-  String get characterDuration => 'DURACION DE CARACTER';
+  String get characterDuration => 'DURACIÓN DE CARÁCTER';
 
   @override
   String get completionPause => 'PAUSA FINAL';
@@ -105,7 +105,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get scrambleCharacters => 'CARACTERES ALEATORIOS';
 
   @override
-  String get characterDurationNoise => 'VARIACION DE DURACION';
+  String get characterDurationNoise => 'VARIACIÓN DE DURACIÓN';
 
   @override
   String get amplitude => 'AMPLITUD';
@@ -123,10 +123,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get addStop => 'Agregar parada';
 
   @override
-  String get stopPosition => 'Posicion de parada';
+  String get stopPosition => 'Posición de parada';
 
   @override
-  String get position => 'Posicion';
+  String get position => 'Posición';
 
   @override
   String get fromNetwork => 'Desde internet';
@@ -157,7 +157,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get deleteConfigurationMessage =>
-      'Seguro que quieres eliminar esto?\nEsta accion no se puede deshacer.';
+      '¿Seguro que quieres eliminar esto?\nEsta acción no se puede deshacer.';
 
   @override
   String get removeFromFavorites => 'Quitar de favoritos';
@@ -166,7 +166,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get addToFavorites => 'Agregar a favoritos';
 
   @override
-  String get emptyItems => 'Todavia no tienes elementos';
+  String get emptyItems => 'Todavía no tienes elementos';
 
   @override
   String get animationNone => 'Ninguna';
@@ -175,7 +175,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get animationMarquee => 'Marquesina';
 
   @override
-  String get animationTypewriter => 'Maquina de escribir';
+  String get animationTypewriter => 'Máquina de escribir';
 
   @override
   String get animationWave => 'Onda';
@@ -187,7 +187,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get animationCrawl => 'Perspectiva';
 
   @override
-  String get backgroundSolid => 'Solido';
+  String get backgroundSolid => 'Sólido';
 
   @override
   String get backgroundGradient => 'Degradado';
@@ -208,7 +208,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get directionRight => 'Derecha';
 
   @override
-  String get shapeCircle => 'Circulo';
+  String get shapeCircle => 'Círculo';
 
   @override
   String get shapeSquare => 'Cuadrado';
@@ -223,13 +223,25 @@ class AppLocalizationsEs extends AppLocalizations {
   String get shapeCross => 'Cruz';
 
   @override
-  String get shapeHeart => 'Corazon';
+  String get shapeHeart => 'Corazón';
 
   @override
-  String get localeSpanish => 'Espanol';
+  String get localeSpanish => 'Español';
 
   @override
-  String get localeEnglish => 'Ingles';
+  String get localeEnglish => 'Inglés';
+
+  @override
+  String get localePortuguese => 'Portugués';
+
+  @override
+  String get localeFrench => 'Francés';
+
+  @override
+  String get localeItalian => 'Italiano';
+
+  @override
+  String get localeGerman => 'Alemán';
 
   @override
   String get noDateAvailable => 'Fecha no disponible';
@@ -251,4 +263,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get importError => 'Error al importar';
+
+  @override
+  String get importConfig => 'Importar configuración';
 }
