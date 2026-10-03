@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:led_panel/theme/constants/app_spacing.dart';
 import 'package:led_panel/utils/extensions/localization_extensions.dart';
 import 'package:led_panel/data/enums/animation_type_enum.dart';
 import 'package:led_panel/utils/extensions/context_extension.dart';
@@ -30,6 +31,7 @@ class AnimationOption extends StatelessWidget {
         child: Container(
           width: AppSizes.avatarLg,
           height: AppSizes.avatarLg,
+          padding: AppSpacing.listItemPadding,
           decoration: BoxDecoration(
             color: context.colors.surface,
             shape: .circle,
@@ -43,7 +45,7 @@ class AnimationOption extends StatelessWidget {
           clipBehavior: .antiAlias,
           child: Image.asset(
             animationType.asset,
-            fit: .cover,
+            fit: .scaleDown,
             errorBuilder: (_, _, _) => Icon(
               Icons.animation,
               size: AppSizes.iconMd,

@@ -100,7 +100,8 @@ flutter:
           weight: 700
 
   assets:
-    - assets/
+    - assets/images/animation_icons/
+    - assets/images/led_shapes/
 
 flutter_launcher_icons:
   android: "launcher_icon"

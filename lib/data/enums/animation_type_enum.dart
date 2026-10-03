@@ -20,12 +20,12 @@ import 'package:led_panel/presentation/widgets/led_panel/animation_renderers/scr
 import 'package:led_panel/presentation/widgets/led_panel/animation_renderers/typewritter_renderer.dart';
 import 'package:led_panel/presentation/widgets/led_panel/animation_renderers/wave_renderer.dart';
 
-/// Enum representing different types of animations for text.
+/// Enum representing different types of images/animation_icons for text.
 enum AnimationTypeEnum {
   /// No animation, static text
   none(
     label: 'None',
-    asset: 'assets/animations/none.gif',
+    asset: 'assets/images/animation_icons/none.png',
     fromJson: NoneConfigModel.fromJson,
     defaultConfigFactory: NoneConfigModel.new,
     fields: NoneFields(),
@@ -35,7 +35,7 @@ enum AnimationTypeEnum {
   /// Scrolling text from one side to the other
   marquee(
     label: 'Marquee',
-    asset: 'assets/animations/marquee.gif',
+    asset: 'assets/images/animation_icons/marquee.png',
     fromJson: MarqueeConfigModel.fromJson,
     defaultConfigFactory: MarqueeConfigModel.new,
     fields: MarqueeFields(),
@@ -45,7 +45,7 @@ enum AnimationTypeEnum {
   /// Text appears one character at a time
   typewriter(
     label: 'Typewriter',
-    asset: 'assets/animations/typewriter.gif',
+    asset: 'assets/images/animation_icons/typewriter.png',
     fromJson: TypewriterConfigModel.fromJson,
     defaultConfigFactory: TypewriterConfigModel.new,
     fields: TypewriterFields(),
@@ -55,7 +55,7 @@ enum AnimationTypeEnum {
   /// Text appears in a wave-like motion
   wave(
     label: 'Wave',
-    asset: 'assets/animations/wave.gif',
+    asset: 'assets/images/animation_icons/wave.png',
     fromJson: WaveConfigModel.fromJson,
     defaultConfigFactory: WaveConfigModel.new,
     fields: WaveFields(),
@@ -65,7 +65,7 @@ enum AnimationTypeEnum {
   /// Text appears in a scrambled manner before revealing the final message
   scramble(
     label: 'Scramble',
-    asset: 'assets/animations/scramble.gif',
+    asset: 'assets/images/animation_icons/scramble.png',
     fromJson: ScrambleConfigModel.fromJson,
     defaultConfigFactory: ScrambleConfigModel.new,
     fields: ScrambleFields(),
@@ -75,7 +75,7 @@ enum AnimationTypeEnum {
   /// Text appears to crawl across the screen (STAR WARS style)
   crawl(
     label: 'Crawl',
-    asset: 'assets/animations/crawl.gif',
+    asset: 'assets/images/animation_icons/crawl.png',
     fromJson: CrawlConfigModel.fromJson,
     defaultConfigFactory: CrawlConfigModel.new,
     fields: CrawlFields(),
