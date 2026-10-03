@@ -38,15 +38,65 @@ LED Panel is a Flutter mobile application that enables users to design and previ
   <tr style="border: none;">
     <td align="center" style="border: none;">
       <strong>Home</strong><br><br>
-      <img src="./docs/home.png" width="250" alt="Home view">
+      <img src="./docs/preview_home.png" width="250" alt="Home view">
     </td>
     <td align="center" style="border: none;">
-      <strong>Configuration</strong><br><br>
-      <img src="./docs/config.png" width="250" alt="Configuration editor">
+      <strong>Theme</strong><br><br>
+      <img src="./docs/preview_theme.png" width="250" alt="Darl and light theme">
     </td>
+    <td align="center" style="border: none;">
+      <strong>Text config</strong><br><br>
+      <img src="./docs/preview_text_config.png" width="250" alt="Text configuration">
+    </td>;
+  </tr>
+</table>
+
+<table align="center" style="border: none; border-collapse: collapse;">
+  <tr style="border: none;">
+    <td align="center" style="border: none;">
+      <strong>Animation config</strong><br><br>
+      <img src="./docs/preview_anim_config.png" width="250" alt="Animation configuration">
+    </td>
+    <td align="center" style="border: none;">
+      <strong>BG config</strong><br><br>
+      <img src="./docs/preview_bg_config.png" width="250" alt="Background configuration">
+    </td>
+    <td align="center" style="border: none;">
+      <strong>LEDs config</strong><br><br>
+      <img src="./docs/preview_leds_config.png" width="250" alt="LEDs configuration">
+    </td>
+  </tr>
+</table>
+
+<table align="center" style="border: none; border-collapse: collapse;">
+  <tr>
     <td align="center" style="border: none;">
       <strong>Animated Preview</strong><br><br>
-      <img src="./docs/led_panel_gif.gif" width="250" alt="Animated preview">
+      <img src="./docs/gif_marquee.gif" width="500" alt="Animated preview">
+    </td>
+  </tr>
+  <tr>
+    <td align="center" style="border: none;">
+      <strong>Animated Preview</strong><br><br>
+      <img src="./docs/gif_typewriter.gif" width="500" alt="Animated preview">
+    </td>
+  </tr>
+  <tr>
+    <td align="center" style="border: none;">
+      <strong>Animated Preview</strong><br><br>
+      <img src="./docs/gif_wave.gif" width="500" alt="Animated preview">
+    </td>
+  </tr>
+  <tr>
+    <td align="center" style="border: none;">
+      <strong>Animated Preview</strong><br><br>
+      <img src="./docs/gif_scramble.gif" width="500" alt="Animated preview">
+    </td>
+  </tr>
+  <tr>
+    <td align="center" style="border: none;">
+      <strong>Animated Preview</strong><br><br>
+      <img src="./docs/gif_crawl.gif" width="500" alt="Animated preview">
     </td>
   </tr>
 </table>
@@ -54,12 +104,15 @@ LED Panel is a Flutter mobile application that enables users to design and previ
 
 ## Features
 
-- Create and edit LED-style messages with custom text.
-- Adjust text color, background color, and LED color.
-- Select font family and size, letter and word spacing.
-- Control glow/brightness and scrolling speed/direction.
-- Save, delete, and mark configurations as favorites.
-- Fullscreen immersive display mode (landscape).
+- Choose from six animation types: none, marquee, typewriter, wave, scramble, and crawl, each with its own settings.
+- Customize text, background, and LED colors.
+- Select font family and size, and adjust letter and word spacing.
+- Fine-tune glow, brightness, animation speed, and direction.
+- Switch between light and dark themes.
+- Save, delete, and favorite configurations.
+- Import and share configurations.
+- Choose from six languages: Spanish, English, Italian, German, Portuguese, and French.
+- Display messages in immersive fullscreen landscape mode.
 
 ### Highlighted Capabilities
 
@@ -107,25 +160,36 @@ flutter run
 
 ```text
 .
+├── assets/
 ├── lib/
-│   ├── main.dart
 │   ├── bloc/
+│   │   ├── configs/
+│   │   │   ├── animations/
+│   │   │   ├── backgrounds/
+│   │   │   ├── leds/
+│   │   │   └── text/
 │   │   ├── led_panel/
-│   │   └── led_panel_list/
+│   │   ├── led_panel_list/
+│   │   ├── locale/
+│   │   └── theme/
 │   ├── data/
-│   │   ├── led_panel_config_model.dart
-│   │   ├── led_panel_list_repository.dart
-│   │   └── shared_preferences_led_panel_list_repository.dart
+│   │   ├── enums
+│   │   ├── models
+│   │   └── repositories
+│   │       ├── led_panel_list/
+│   │       ├── locale/
+│   │       └── theme/
+│   ├── l10n/
 │   ├── presentation/
 │   │   ├── pages/
 │   │   └── widgets/
 │   ├── theme/
-│   └── utils/
-├── assets/
-├── android/
-├── ios/
-├── test/
-└── README.md
+│   │   ├── constants/
+│   │   ├── styles/
+│   │   └── themes/
+│   ├── utils/
+│   │   └── extensions/
+│   └── main.dart
 ```
 
 ## Architecture
@@ -134,6 +198,11 @@ The app uses a small, modular architecture centered on BLoC for state management
 
 ```mermaid
 flowchart LR
-    UI["Presentation <br> Widgets and Pages"] <--> B[Logic <br> BLoC]
-    B <--> R[Data <br> Models and Repositories]
+    UI["Presentation<br/>Widgets and Pages"]
+    UI -->|"Event"| B["Logic<br/>BLoCs and Cubits"]
+    B -->|"Config type"| S["Strategy pattern<br/>Polymorphic configuration"]
+    S -->|"Form and Render"| B
+    B -->|"State"| UI
+    B -->|"Request"| D["Data<br/>Models and Repositories"]
+    D -->|"Response"| B
 ```

@@ -109,8 +109,6 @@ class _GetUrlDialog extends StatelessWidget {
       ),
       content: TextFormField(
         controller: controller,
-        onEditingComplete: () => Focus.of(context).unfocus(),
-        onTapOutside: (event) => Focus.of(context).unfocus(),
         maxLines: 2,
         minLines: 1,
         decoration: InputDecoration(hintText: context.locale.pasteYourUrl),
